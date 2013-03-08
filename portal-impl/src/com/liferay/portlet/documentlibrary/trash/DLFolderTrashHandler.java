@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -62,6 +64,10 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		}
 
 		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
 
 		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
 			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);
@@ -140,7 +146,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
 
-		return new DLFolderTrashRenderer(folder);
+		return new DLFolderAssetRenderer(folder);
 	}
 
 	@Override
@@ -169,11 +175,21 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFolder dlFolder = getDLFolder(classPK);
 
-			if (dlFolder.isInTrash() || dlFolder.isInTrashFolder()) {
-				return true;
-			}
-
+			return dlFolder.isInTrash();
+		}
+		catch (InvalidRepositoryException ire) {
 			return false;
+		}
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		try {
+			DLFolder dlFolder = getDLFolder(classPK);
+
+			return dlFolder.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;
@@ -187,7 +203,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFolder dlFolder = getDLFolder(classPK);
 
-			return !dlFolder.isInTrashFolder();
+			return !dlFolder.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;

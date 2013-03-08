@@ -37,7 +37,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DL;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -86,7 +86,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	/**
-	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, String, ServiceContext)}
 	 */
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
@@ -279,7 +279,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		throws PortalException, SystemException;
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long, ServiceContext)}
 	 */
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
@@ -292,7 +292,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long, String, long,
 	 *             ServiceContext)}
 	 */
 	public Lock lockFileEntry(
@@ -408,7 +408,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		throws NoSuchRepositoryEntryException, SystemException {
 
 		boolean webDAVCheckInMode = GetterUtil.getBoolean(
-			serviceContext.getAttribute(DLUtil.WEBDAV_CHECK_IN_MODE));
+			serviceContext.getAttribute(DL.WEBDAV_CHECK_IN_MODE));
 
 		if (webDAVCheckInMode) {
 			return;
@@ -434,7 +434,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		throws NoSuchRepositoryEntryException, SystemException {
 
 		boolean manualCheckInRequired = GetterUtil.getBoolean(
-			serviceContext.getAttribute(DLUtil.MANUAL_CHECK_IN_REQUIRED));
+			serviceContext.getAttribute(DL.MANUAL_CHECK_IN_REQUIRED));
 
 		if (!manualCheckInRequired) {
 			return;

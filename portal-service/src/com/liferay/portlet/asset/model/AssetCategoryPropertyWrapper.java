@@ -349,6 +349,16 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_assetCategoryProperty.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_assetCategoryProperty.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_assetCategoryProperty.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -395,7 +405,7 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public AssetCategoryProperty getWrappedAssetCategoryProperty() {
 		return _assetCategoryProperty;

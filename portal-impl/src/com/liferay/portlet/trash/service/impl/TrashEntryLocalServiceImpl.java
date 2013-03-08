@@ -318,7 +318,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<TrashVersion> getVersions(long entryId) throws SystemException {
-		return trashEntryPersistence.getTrashVersions(entryId);
+		return trashVersionPersistence.findByEntryId(entryId);
 	}
 
 	/**
@@ -376,7 +376,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		int maxAge = TrashUtil.getMaxAge(group);
 
-		calendar.add(Calendar.DATE, -maxAge);
+		calendar.add(Calendar.MINUTE, -maxAge);
 
 		return calendar.getTime();
 	}

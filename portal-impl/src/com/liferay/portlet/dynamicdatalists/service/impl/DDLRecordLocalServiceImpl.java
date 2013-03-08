@@ -249,8 +249,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getCompanyRecords(long, int, int, int, int,
-	 *             OrderByComparator)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
+	 *             int, int, int, OrderByComparator)}
 	 */
 	public List<DDLRecord> getCompanyRecords(
 			long companyId, int scope, int start, int end,
@@ -263,7 +263,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getCompanyRecordsCount(long, int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
+	 *             int, int)}
 	 */
 	public int getCompanyRecordsCount(long companyId, int scope)
 		throws SystemException {
@@ -430,8 +431,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		String ddmStructureName = ddmStructure.getName(locale);
+
+		String recordSetName = recordSet.getName(locale);
+
 		String title = LanguageUtil.format(
-			locale, "new-record-for-list-x", recordSet.getName(locale));
+			locale, "new-x-for-list-x",
+			new Object[] {ddmStructureName, recordSetName});
 
 		if (addDraftAssetEntry) {
 			assetEntryLocalService.updateEntry(

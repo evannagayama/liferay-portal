@@ -19,7 +19,7 @@ import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.BaseRepository;
@@ -105,8 +105,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #addRepository(long, long, long, long, String, String,
-	 *             String, UnicodeProperties, boolean, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #addRepository(long, long,
+	 *             long, long, String, String, String, UnicodeProperties,
+	 *             boolean, ServiceContext)}
 	 */
 	public long addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
@@ -408,7 +409,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 		else if (baseRepository instanceof BaseRepositoryProxyBean) {
 			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean) baseRepository;
+				(BaseRepositoryProxyBean)baseRepository;
 
 			ClassLoaderBeanHandler classLoaderBeanHandler =
 				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
@@ -432,7 +433,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		setupRepository(repositoryId, repository, baseRepository);
 
-		if (!ImportExportThreadLocal.isImportInProcess()) {
+		if (!ExportImportThreadLocal.isImportInProcess()) {
 			baseRepository.initRepository();
 		}
 

@@ -56,7 +56,7 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -81,6 +81,14 @@ public class AssetVocabularyServiceUtil {
 		return getService()
 				   .addVocabulary(title, titleMap, descriptionMap, settings,
 			serviceContext);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addVocabulary(title, serviceContext);
 	}
 
 	public static void deleteVocabularies(long[] vocabularyIds)
@@ -156,6 +164,14 @@ public class AssetVocabularyServiceUtil {
 		return getService().getGroupVocabulariesCount(groupId, name);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupVocabulariesDisplay(groupId, name, start, end, obc);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -180,7 +196,7 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
@@ -220,7 +236,7 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(AssetVocabularyService service) {
 	}

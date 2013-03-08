@@ -302,7 +302,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
+	String, ServiceContext)}
 	*/
 	public static void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid)
@@ -321,7 +322,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #checkOutFileEntry(long, long, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
+	long, ServiceContext)}
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId)
@@ -340,8 +342,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #checkOutFileEntry(long, long, String, long,
-	ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
+	long, String, long, ServiceContext)}
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId, java.lang.String owner,
@@ -628,10 +630,9 @@ public class DLFileEntryLocalServiceUtil {
 
 	public static void incrementViewCounter(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		boolean incrementCounter, int increment)
+		int increment)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.incrementViewCounter(dlFileEntry, incrementCounter, increment);
+		getService().incrementViewCounter(dlFileEntry, increment);
 	}
 
 	public static boolean isFileEntryCheckedOut(long fileEntryId)
@@ -730,7 +731,7 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(DLFileEntryLocalService service) {
 	}

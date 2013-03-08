@@ -84,6 +84,12 @@ public class Field implements Serializable {
 		values.add(value);
 	}
 
+	public void addValues(Locale locale, List<Serializable> values) {
+		for (Serializable value : values) {
+			addValue(locale, value);
+		}
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Field)) {
@@ -173,7 +179,7 @@ public class Field implements Serializable {
 			boolean repeatable = isRepeatable();
 
 			if (repeatable) {
-				return FieldConstants.getSerializable(getType(), values);
+				return FieldConstants.getSerializable(getDataType(), values);
 			}
 
 			return values.get(0);
@@ -188,6 +194,10 @@ public class Field implements Serializable {
 	public Serializable getValue(Locale locale, int index) {
 		List<Serializable> values = _getValues(locale);
 
+		if (index >= values.size()) {
+			return null;
+		}
+
 		return values.get(index);
 	}
 
@@ -197,6 +207,17 @@ public class Field implements Serializable {
 
 	public Map<Locale, List<Serializable>> getValuesMap() {
 		return _valuesMap;
+	}
+
+	public boolean isPrivate() {
+		try {
+			DDMStructure ddmStructure = getDDMStructure();
+
+			return ddmStructure.isFieldPrivate(_name);
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean isRepeatable() throws PortalException, SystemException {
@@ -218,14 +239,17 @@ public class Field implements Serializable {
 	}
 
 	public void setValue(Locale locale, Serializable value) {
-		Class<?> clazz = value.getClass();
-
 		List<Serializable> values = null;
 
-		if (clazz.isArray()) {
-			values = ListUtil.fromArray((Serializable[])value);
+		if (value != null) {
+			Class<?> clazz = value.getClass();
+
+			if (clazz.isArray()) {
+				values = ListUtil.fromArray((Serializable[])value);
+			}
 		}
-		else {
+
+		if (values == null) {
 			values = new ArrayList<Serializable>();
 
 			values.add(value);
@@ -265,6 +289,10 @@ public class Field implements Serializable {
 
 		if (!availableLocales.contains(locale)) {
 			locale = getDefaultLocale();
+		}
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
 		}
 
 		return _valuesMap.get(locale);

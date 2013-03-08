@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -51,6 +54,41 @@ public class UserGroupRoleRoleChecker extends RowChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		Role role = (Role)obj;
+
+		try {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (isChecked(role)) {
+				if (SiteMembershipPolicyUtil.isRoleProtected(
+						permissionChecker, _user.getUserId(),
+						_group.getGroupId(), role.getRoleId()) ||
+					SiteMembershipPolicyUtil.isRoleRequired(
+						_user.getUserId(), _group.getGroupId(),
+						role.getRoleId())) {
+
+					return true;
+				}
+			}
+			else {
+				if (!SiteMembershipPolicyUtil.isRoleAllowed(
+						_user.getUserId(), _group.getGroupId(),
+						role.getRoleId())) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

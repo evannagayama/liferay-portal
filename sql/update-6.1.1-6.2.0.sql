@@ -1,5 +1,29 @@
 update BlogsEntry set status = 2 where status = 9;
 
+alter table BookmarksEntry add status INTEGER;
+alter table BookmarksEntry add statusByUserId LONG;
+alter table BookmarksEntry add statusByUserName VARCHAR(75) null;
+alter table BookmarksEntry add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update BookmarksEntry set status = 0;
+update BookmarksEntry set statusByUserId = userId;
+update BookmarksEntry set statusByUserName = userName;
+update BookmarksEntry set statusDate = modifiedDate;
+
+alter table BookmarksFolder add status INTEGER;
+alter table BookmarksFolder add statusByUserId LONG;
+alter table BookmarksFolder add statusByUserName VARCHAR(75) null;
+alter table BookmarksFolder add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update BookmarksFolder set status = 0;
+update BookmarksFolder set statusByUserId = userId;
+update BookmarksFolder set statusByUserName = userName;
+update BookmarksFolder set statusDate = modifiedDate;
+
 alter table Contact_ add classNameId LONG;
 alter table Contact_ add classPK LONG;
 alter table Contact_ add emailAddress VARCHAR(75) null;
@@ -267,8 +291,11 @@ alter table DDMTemplate add smallImageURL STRING;
 update DDMTemplate set type_ = 'display' where type_ = 'list';
 update DDMTemplate set type_ = 'form' where type_ = 'detail';
 
+alter table DLFileEntry add classNameId LONG;
+alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
 
+alter table DLFileRank add uuid_ VARCHAR(75) null;
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
@@ -303,9 +330,13 @@ COMMIT_TRANSACTION;
 
 update ExpandoRow set modifiedDate = CURRENT_TIMESTAMP;
 
+alter table Group_ add treePath STRING null;
+
 update Group_ set site = FALSE where name = 'Control Panel';
 
 drop table Groups_Permissions;
+
+alter table Image drop column text_;
 
 alter table JournalArticle add folderId LONG;
 
@@ -320,8 +351,17 @@ create table JournalFolder (
 	modifiedDate DATE null,
 	parentFolderId LONG,
 	name VARCHAR(100) null,
-	description STRING null
+	description STRING null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
+
+drop index IX_228562AD on Lock_;
+drop index IX_DD635956 on Lock_;
+
+alter table MBBan add uuid_ VARCHAR(75) null;
 
 alter table MBCategory add status INTEGER;
 alter table MBCategory add statusByUserId LONG;
@@ -337,23 +377,71 @@ update MBCategory set statusDate = modifiedDate;
 
 update MBMessage set status = 2 where status = 9;
 
+alter table MBMessage drop column attachments;
+
+alter table MBThread add uuid_ VARCHAR(75) null;
+alter table MBThread add userId LONG;
+alter table MBThread add userName VARCHAR(75) null;
+alter table MBThread add createDate DATE null;
+alter table MBThread add modifiedDate DATE null;
+
+alter table MBThreadFlag add uuid_ VARCHAR(75) null;
+alter table MBThreadFlag add groupId LONG;
+alter table MBThreadFlag add companyId LONG;
+alter table MBThreadFlag add userName VARCHAR(75) null;
+alter table MBThreadFlag add createDate DATE null;
+
 drop table OrgGroupPermission;
+
+alter table PasswordPolicy add regex VARCHAR(75) null;
+
+drop index IX_C3A17327 on PasswordPolicyRel;
+drop index IX_ED7CF243 on PasswordPolicyRel;
 
 drop table Permission_;
 
+alter table PollsVote add uuid_ VARCHAR(75) null;
+alter table PollsVote add groupId LONG;
+
+alter table RepositoryEntry add companyId LONG;
+alter table RepositoryEntry add userId LONG;
+alter table RepositoryEntry add userName VARCHAR(75) null;
+alter table RepositoryEntry add createDate DATE null;
+alter table RepositoryEntry add modifiedDate DATE null;
 alter table RepositoryEntry add manualCheckInRequired BOOLEAN;
 
 drop table Resource_;
 
 drop table ResourceCode;
 
+drop index IX_88705859 on ResourcePermission;
+drop index IX_C94C7708 on ResourcePermission;
+drop index IX_8D83D0CE on ResourcePermission;
+drop index IX_4A1F4402 on ResourcePermission;
+drop index IX_8DB864A9 on ResourcePermission;
+
 drop table Roles_Permissions;
+
+alter table SocialActivity add activitySetId LONG;
 
 alter table SocialActivityCounter add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
 
 update SocialActivityCounter set active_ = TRUE;
+
+create table SocialActivitySet (
+	activitySetId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	modifiedDate LONG,
+	classNameId LONG,
+	classPK LONG,
+	type_ INTEGER,
+	activityCount INTEGER
+);
 
 create table TrashEntry (
 	entryId LONG not null primary key,

@@ -548,6 +548,14 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 			serviceContext);
 	}
 
+	public void updateDependentStatus(com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> categoriesAndThreads, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbCategoryLocalService.updateDependentStatus(user,
+			categoriesAndThreads, status);
+	}
+
 	public com.liferay.portlet.messageboards.model.MBCategory updateStatus(
 		long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -555,23 +563,15 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		return _mbCategoryLocalService.updateStatus(userId, categoryId, status);
 	}
 
-	public void updateStatuses(com.liferay.portal.model.User user,
-		java.util.List<java.lang.Object> categoriesAndThreads, int status)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mbCategoryLocalService.updateStatuses(user, categoriesAndThreads,
-			status);
-	}
-
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public MBCategoryLocalService getWrappedMBCategoryLocalService() {
 		return _mbCategoryLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedMBCategoryLocalService(
 		MBCategoryLocalService mbCategoryLocalService) {

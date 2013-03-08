@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Base64;
@@ -125,6 +126,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return getDefaultUser().getLocale();
 	}
 
+	@AutoEscape
 	public String getName() throws PortalException, SystemException {
 		return getAccount().getName();
 	}
@@ -180,7 +182,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public String getVirtualHostname() {
-		if (Validator.isNotNull(_virtualHostname)) {
+		if (_virtualHostname != null) {
 			return _virtualHostname;
 		}
 

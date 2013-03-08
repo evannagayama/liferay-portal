@@ -17,6 +17,7 @@ package com.liferay.portlet.social.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
 
@@ -72,6 +73,14 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	public void deleteActivityInterpreter(
 		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter>> getActivityInterpreters();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getActivitySetId(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Creates a human readable activity feed entry for the activity using an
 	* available compatible activity interpreter.
@@ -83,13 +92,17 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	* </p>
 	*
 	* @param activity the activity to be translated to human readable form
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
 	* @return the activity feed that is a human readable form of the activity
 	record or <code>null</code> if a compatible interpreter is not
 	found
 	*/
 	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String selector,
 		com.liferay.portlet.social.model.SocialActivity activity,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String selector,
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.service.ServiceContext serviceContext);
 }

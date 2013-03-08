@@ -287,6 +287,16 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_journalContentSearch.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_journalContentSearch.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_journalContentSearch.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -333,7 +343,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public JournalContentSearch getWrappedJournalContentSearch() {
 		return _journalContentSearch;

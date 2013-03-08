@@ -93,8 +93,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #addMessage(long, String, String, String,
-	 *             java.util.List, boolean, double, boolean,
+	 * @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
+	 *             String, String, java.util.List, boolean, double, boolean,
 	 *             com.liferay.portal.service.ServiceContext)}
 	 */
 	public MBMessage addMessage(
@@ -767,10 +767,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
 			}
-			else {
+			else if (message.isFormatBBCode()) {
 				value = BBCodeTranslatorUtil.getHTML(message.getBody());
 
 				value = MBUtil.replaceMessageBodyPaths(themeDisplay, value);
+			}
+			else {
+				value = message.getBody();
 			}
 
 			syndContent.setValue(value);
@@ -800,9 +803,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		selfSyndLink.setHref(feedURL);
 		selfSyndLink.setRel("self");
 
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(name);
-		syndFeed.setUri(feedURL);
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);

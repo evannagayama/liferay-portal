@@ -29,6 +29,8 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -38,6 +40,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
+import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -51,10 +54,13 @@ import java.util.List;
  */
 public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
-	public MBThread addThread(long categoryId, MBMessage message)
+	public MBThread addThread(
+			long categoryId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Thread
+
+		Date now = new Date();
 
 		long threadId = message.getThreadId();
 
@@ -64,8 +70,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.create(threadId);
 
+		thread.setUuid(serviceContext.getUuid());
 		thread.setGroupId(message.getGroupId());
 		thread.setCompanyId(message.getCompanyId());
+		thread.setUserId(message.getUserId());
+		thread.setUserName(message.getUserName());
+		thread.setCreateDate(serviceContext.getCreateDate(now));
+		thread.setModifiedDate(serviceContext.getModifiedDate(now));
 		thread.setCategoryId(categoryId);
 		thread.setRootMessageId(message.getMessageId());
 		thread.setRootMessageUserId(message.getUserId());
@@ -96,10 +107,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			assetEntryLocalService.updateEntry(
 				message.getUserId(), message.getGroupId(),
 				thread.getStatusDate(), thread.getLastPostDate(),
-				MBThread.class.getName(), thread.getThreadId(), null, 0,
-				new long[0], new String[0], false, null, null, null, null,
-				String.valueOf(thread.getRootMessageId()), null, null, null,
-				null, 0, 0, null, false);
+				MBThread.class.getName(), thread.getThreadId(),
+				thread.getUuid(), 0, new long[0], new String[0], false, null,
+				null, null, null, String.valueOf(thread.getRootMessageId()),
+				null, null, null, null, 0, 0, null, false);
 		}
 
 		return thread;
@@ -190,14 +201,17 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(rootMessage.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-				thread.getCategoryId());
+			try {
+				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+					thread.getCategoryId());
 
-			category.setThreadCount(category.getThreadCount() - 1);
-			category.setMessageCount(
-				category.getMessageCount() - thread.getMessageCount());
-
-			mbCategoryPersistence.update(category);
+				MBUtil.updateCategoryStatistics(category);
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!thread.isInTrash()) {
+					throw nsce;
+				}
+			}
 		}
 
 		// Thread Asset
@@ -233,6 +247,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				deleteThread(thread);
 			}
 		}
+
+		if (mbThreadPersistence.countByGroupId(groupId) == 0) {
+			PortletFileRepositoryUtil.deletePortletRepository(
+				groupId, PortletKeys.MESSAGE_BOARDS);
+		}
 	}
 
 	public MBThread fetchThread(long threadId) throws SystemException {
@@ -253,7 +272,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
+	 *             QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, int status, int start, int end)
@@ -301,8 +321,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, boolean, boolean, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	 *             boolean, boolean, QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
@@ -317,8 +337,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, boolean, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	 *             boolean, QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
@@ -332,8 +352,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	 *             QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, int start, int end)
@@ -371,8 +391,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	 *             QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(long groupId, int status)
 			throws SystemException {
@@ -418,8 +438,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	 *             long, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws SystemException {
@@ -430,8 +450,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, boolean, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	 *             long, boolean, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed)
@@ -444,8 +464,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, boolean, boolean, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	 *             long, boolean, boolean, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed,
@@ -559,7 +579,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
-	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@BufferedIncrement(
+		configuration = "MBThread", incrementClass = NumberIncrement.class)
 	public MBThread incrementViewCounter(long threadId, int increment)
 		throws PortalException, SystemException {
 
@@ -591,6 +612,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
 		}
 
+		// Thread
+
+		thread.setModifiedDate(new Date());
+		thread.setCategoryId(categoryId);
+
+		mbThreadPersistence.update(thread);
+
 		// Messages
 
 		List<MBMessage> messages = mbMessagePersistence.findByG_C_T(
@@ -611,28 +639,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 
-		// Thread
-
-		thread.setCategoryId(categoryId);
-
-		mbThreadPersistence.update(thread);
-
 		// Category
 
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
-			oldCategory.setThreadCount(oldCategory.getThreadCount() - 1);
-			oldCategory.setMessageCount(
-				oldCategory.getMessageCount() - thread.getMessageCount());
-
-			mbCategoryPersistence.update(oldCategory);
+			MBUtil.updateCategoryStatistics(oldCategory);
 		}
 
 		if ((category != null) && (categoryId != oldCategoryId)) {
-			category.setThreadCount(category.getThreadCount() + 1);
-			category.setMessageCount(
-				category.getMessageCount() + thread.getMessageCount());
-
-			mbCategoryPersistence.update(category);
+			MBUtil.updateCategoryStatistics(category);
 		}
 
 		return thread;
@@ -728,7 +742,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Create new thread
 
-		MBThread thread = addThread(message.getCategoryId(), message);
+		MBThread thread = addThread(
+			message.getCategoryId(), message, serviceContext);
+
+		oldThread.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+
+		mbThreadPersistence.update(oldThread);
 
 		// Update messages
 
@@ -784,22 +803,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update children
 
-		int messagesMoved = 1;
-
-		messagesMoved += moveChildrenMessages(
-			message, category, oldThread.getThreadId());
+		moveChildrenMessages(message, category, oldThread.getThreadId());
 
 		// Update new thread
 
-		thread.setMessageCount(messagesMoved);
-
-		mbThreadPersistence.update(thread);
+		MBUtil.updateThreadMessageCount(thread);
 
 		// Update old thread
 
-		oldThread.setMessageCount(oldThread.getMessageCount() - messagesMoved);
-
-		mbThreadPersistence.update(oldThread);
+		MBUtil.updateThreadMessageCount(oldThread);
 
 		// Category
 
@@ -808,9 +820,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category.setThreadCount(category.getThreadCount() + 1);
-
-			mbCategoryPersistence.update(category);
+			MBUtil.updateCategoryThreadCount(category);
 		}
 
 		return thread;
@@ -862,6 +872,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				mbMessagePersistence.update(rootMessage);
 			}
 
+			thread.setModifiedDate(now);
 			thread.setStatus(status);
 			thread.setStatusByUserId(user.getUserId());
 			thread.setStatusByUserName(user.getFullName());
@@ -871,7 +882,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Messages
 
-			updateStatus(threadId, status);
+			updateDependentStatus(threadId, status);
 
 			if (thread.getCategoryId() !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -881,18 +892,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
-					category.setThreadCount(category.getThreadCount() - 1);
-					category.setMessageCount(
-						category.getMessageCount() - thread.getMessageCount());
-				}
-				else {
-					category.setThreadCount(category.getThreadCount() + 1);
-					category.setMessageCount(
-						category.getMessageCount() + thread.getMessageCount());
-				}
-
-				mbCategoryPersistence.update(category);
+				MBUtil.updateCategoryStatistics(category);
 			}
 
 			// Stats
@@ -933,14 +933,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 		else {
-			updateStatus(threadId, status);
+			updateDependentStatus(threadId, status);
 		}
 
 		return thread;
 	}
 
 	/**
-	 * @deprecated {@link #incrementViewCounter(long, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
+	 *             int)}
 	 */
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {
@@ -954,11 +955,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
-	protected int moveChildrenMessages(
+	protected void moveChildrenMessages(
 			MBMessage parentMessage, MBCategory category, long oldThreadId)
 		throws PortalException, SystemException {
-
-		int messagesMoved = 0;
 
 		List<MBMessage> messages = mbMessagePersistence.findByT_P(
 			oldThreadId, parentMessage.getMessageId());
@@ -977,16 +976,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				indexer.reindex(message);
 			}
 
-			messagesMoved++;
-
-			messagesMoved += moveChildrenMessages(
-				message, category, oldThreadId);
+			moveChildrenMessages(message, category, oldThreadId);
 		}
-
-		return messagesMoved;
 	}
 
-	protected void updateStatus(long threadId, int status)
+	protected void updateDependentStatus(long threadId, int status)
 		throws PortalException, SystemException {
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -997,66 +991,62 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			updateStatus(message, status);
-		}
-	}
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 
-	protected void updateStatus(MBMessage message, int status)
-		throws PortalException, SystemException {
+				// Asset
 
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						false);
+				}
 
-			// Asset
+				// Social
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				assetEntryLocalService.updateVisible(
-					MBMessage.class.getName(), message.getMessageId(), false);
-			}
-
-			// Social
-
-			socialActivityCounterLocalService.disableActivityCounters(
-				MBMessage.class.getName(), message.getMessageId());
-
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			indexer.reindex(message);
-
-			// Workflow
-
-			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-				mbMessagePersistence.update(message);
-
-				workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-					message.getCompanyId(), message.getGroupId(),
+				socialActivityCounterLocalService.disableActivityCounters(
 					MBMessage.class.getName(), message.getMessageId());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+
+				// Workflow
+
+				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					mbMessagePersistence.update(message);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						message.getCompanyId(), message.getGroupId(),
+						MBMessage.class.getName(), message.getMessageId());
+				}
 			}
-		}
-		else {
+			else {
 
-			// Asset
+				// Asset
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				assetEntryLocalService.updateVisible(
-					MBMessage.class.getName(), message.getMessageId(), true);
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						true);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.enableActivityCounters(
+					MBMessage.class.getName(), message.getMessageId());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
 			}
-
-			// Social
-
-			socialActivityCounterLocalService.enableActivityCounters(
-				MBMessage.class.getName(), message.getMessageId());
-
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			indexer.reindex(message);
 		}
 	}
 

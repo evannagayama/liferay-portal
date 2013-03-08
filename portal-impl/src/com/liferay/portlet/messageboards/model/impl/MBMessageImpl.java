@@ -83,7 +83,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
 			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
 
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
@@ -177,7 +177,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public boolean isInTrashThread() throws PortalException, SystemException {
 		MBThread thread = getThread();
 
-		if (thread.isInTrash() || thread.isInTrashCategory()) {
+		if (thread.isInTrash() || thread.isInTrashContainer()) {
 			return true;
 		}
 		else {

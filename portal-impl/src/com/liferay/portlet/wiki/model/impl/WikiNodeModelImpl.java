@@ -171,7 +171,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_nodeId);
+		return _nodeId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
@@ -553,7 +553,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	/**
-	 * @deprecated {@link #isApproved}
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */
 	public boolean getApproved() {
 		return isApproved();
@@ -695,8 +695,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	public int compareTo(WikiNode wikiNode) {
 		int value = 0;
 
-		value = getName().toLowerCase()
-					.compareTo(wikiNode.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(wikiNode.getName());
 
 		if (value != 0) {
 			return value;

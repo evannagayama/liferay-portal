@@ -535,7 +535,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					groupId = group.getGroupId();
 				}
 
-				if (group.isLayout()) {
+				if (group.isLayout() &&
+					!ResourceBlockLocalServiceUtil.isSupported(name)) {
+
 					Layout layout = LayoutLocalServiceUtil.getLayout(
 						group.getClassPK());
 
@@ -661,6 +663,17 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public boolean isOrganizationAdmin(long organizationId) {
 		try {
 			return isOrganizationAdminImpl(organizationId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return false;
+		}
+	}
+
+	public boolean isOrganizationOwner(long organizationId) {
+		try {
+			return isOrganizationOwnerImpl(organizationId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1135,6 +1148,47 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	protected boolean isOrganizationOwnerImpl(long organizationId)
+		throws Exception {
+
+		if (!signedIn) {
+			return false;
+		}
+
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (organizationId <= 0) {
+			return false;
+		}
+
+		Organization organization =
+			OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+
+		if (organization == null) {
+			return false;
+		}
+
+		if (isCompanyAdmin(organization.getCompanyId())) {
+			return true;
+		}
+
+		PermissionCheckerBag bag = getUserBag(
+			user.getUserId(), organization.getGroupId());
+
+		if (bag == null) {
+			_log.error("Bag should never be null");
+		}
+
+		if (bag.isOrganizationOwner(this, organization)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void logHasUserPermission(
 		long groupId, String name, String primKey, String actionId,
 		StopWatch stopWatch, int block) {
@@ -1150,7 +1204,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 

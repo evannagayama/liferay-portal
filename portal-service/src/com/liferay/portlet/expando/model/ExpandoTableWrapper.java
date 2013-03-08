@@ -215,6 +215,16 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_expandoTable.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_expandoTable.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_expandoTable.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -265,7 +275,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ExpandoTable getWrappedExpandoTable() {
 		return _expandoTable;

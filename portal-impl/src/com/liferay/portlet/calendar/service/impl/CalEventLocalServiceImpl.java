@@ -260,9 +260,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #addEvent(long, String, String, String, int, int, int,
-	 *             int, int, int, int, boolean, boolean, String, boolean,
-	 *             TZSRecurrence, int, int, int, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #addEvent(long, String,
+	 *             String, String, int, int, int, int, int, int, int, boolean,
+	 *             boolean, String, boolean, TZSRecurrence, int, int, int,
+	 *             ServiceContext)}
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent addEvent(
@@ -851,9 +852,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEvent(long, long, String, String, String, int,
-	 *             int, int, int, int, int, int, boolean, boolean, String,
-	 *             boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEvent(long, long,
+	 *             String, String, String, int, int, int, int, int, int, int,
+	 *             boolean, boolean, String, boolean, TZSRecurrence, int, int,
+	 *             int, ServiceContext)}
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateEvent(
@@ -1405,7 +1407,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	protected net.fortuna.ical4j.model.Calendar toICalCalendar(
-		long userId, List<CalEvent> events)
+			long userId, List<CalEvent> events)
 		throws PortalException, SystemException {
 
 		net.fortuna.ical4j.model.Calendar iCal =

@@ -76,6 +76,8 @@ public interface Portal {
 
 	public static final String PATH_MAIN = "/c";
 
+	public static final String PATH_MODULE = "/o/";
+
 	public static final String PATH_PORTAL_LAYOUT = "/portal/layout";
 
 	public static final String PORTAL_REALM = "PortalRealm";
@@ -380,7 +382,7 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
-	 * @deprecated Replaced by the more general {@link #getCDNHost(boolean)}
+	 * @deprecated As of 6.2.0, replaced by the more general {@link #getCDNHost(boolean)}
 	 */
 	public String getCDNHost();
 
@@ -636,6 +638,9 @@ public interface Portal {
 
 	public String getFirstPageLayoutTypes(PageContext pageContext);
 
+	public String getFullName(
+		String firstName, String middleName, String lastName);
+
 	public String getGlobalLibDir();
 
 	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
@@ -684,8 +689,9 @@ public interface Portal {
 		PortletResponse portletResponse);
 
 	public String getJournalArticleActualURL(
-			long groupId, String mainPath, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, boolean privateLayout, String mainPath,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
 	public String getJsSafePortletId(String portletId);
@@ -774,6 +780,9 @@ public interface Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request);
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId(long)}
+	 */
 	public long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException;
 
@@ -789,6 +798,8 @@ public interface Portal {
 
 	public String getPathMain();
 
+	public String getPathModule();
+
 	public String getPathProxy();
 
 	public long getPlidFromFriendlyURL(long companyId, String friendlyURL);
@@ -803,7 +814,7 @@ public interface Portal {
 	public String getPortalLibDir();
 
 	/**
-	 * @deprecated Replaced by the more general {@link #getPortalPort(boolean)}
+	 * @deprecated As of 6.2.0, replaced by the more general {@link #getPortalPort(boolean)}
 	 */
 	public int getPortalPort();
 
@@ -835,7 +846,7 @@ public interface Portal {
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 
 	/**
-	 * @deprecated Renamed to {@link #getPortletBreadcrumbs(HttpServletRequest)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request);
@@ -945,6 +956,9 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
+	public long getSiteGroupId(long groupId)
 		throws PortalException, SystemException;
 
 	/**
@@ -1209,6 +1223,8 @@ public interface Portal {
 	public String[] stripURLAnchor(String url, String separator);
 
 	public String transformCustomSQL(String sql);
+
+	public String transformSQL(String sql);
 
 	public PortletMode updatePortletMode(
 		String portletId, User user, Layout layout, PortletMode portletMode,

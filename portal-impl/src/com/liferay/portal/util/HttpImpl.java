@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -99,6 +100,7 @@ import org.apache.commons.httpclient.protocol.Protocol;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
+@DoPrivileged
 public class HttpImpl implements Http {
 
 	public HttpImpl() {
@@ -378,7 +380,8 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated {@link #getHostConfiguration(String)}
+	 * @deprecated As of 6.1.0, replaced by {@link
+	 *             #getHostConfiguration(String)}
 	 */
 	public HostConfiguration getHostConfig(String location) throws IOException {
 		return getHostConfiguration(location);
@@ -996,8 +999,8 @@ public class HttpImpl implements Http {
 
 		org.apache.commons.httpclient.Cookie commonsCookie =
 			new org.apache.commons.httpclient.Cookie(
-			cookie.getDomain(), cookie.getName(), cookie.getValue(),
-			cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
+				cookie.getDomain(), cookie.getName(), cookie.getValue(),
+				cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
 
 		commonsCookie.setVersion(cookie.getVersion());
 

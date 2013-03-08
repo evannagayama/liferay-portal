@@ -269,7 +269,7 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
@@ -295,6 +295,14 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService()
 				   .addVocabulary(userId, title, titleMap, descriptionMap,
 			settings, serviceContext);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addVocabulary(userId, title, serviceContext);
 	}
 
 	public static void addVocabularyResources(
@@ -400,7 +408,7 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
@@ -440,7 +448,7 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(AssetVocabularyLocalService service) {
 	}

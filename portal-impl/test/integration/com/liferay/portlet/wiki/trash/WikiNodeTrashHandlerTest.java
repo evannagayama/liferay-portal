@@ -22,6 +22,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -34,8 +36,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
@@ -49,7 +56,22 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	public void testTrashMoveBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashMyBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testTrashParentAndDeleteParent() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndDeleteTrashEntries() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -59,12 +81,22 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashVersionAndDelete() throws Exception {
+	public void testTrashRecentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	public void testTrashVersionAndRestore() throws Exception {
+	public void testTrashVersionBaseModelAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -78,14 +110,14 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		String randomTitle = ServiceTestUtil.randomString(
-			_NODE_NAME_MAX_LENGTH - getSearchKeywords().length());
+		String title = getSearchKeywords();
 
-		String nodeTitle = getSearchKeywords().concat(randomTitle);
+		title += ServiceTestUtil.randomString(
+			_NODE_NAME_MAX_LENGTH - title.length());
 
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), nodeTitle,
-			ServiceTestUtil.randomString(), serviceContext);
+			TestPropsValues.getUserId(), title, ServiceTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Override
@@ -106,7 +138,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiNodeLocalServiceUtil.getNodesCount(

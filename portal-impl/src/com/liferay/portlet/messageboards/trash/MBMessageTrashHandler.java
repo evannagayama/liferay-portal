@@ -24,7 +24,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 /**
- * Implements trash handling for message boards thread entity.
+ * Implements trash handling for message boards message entity.
  *
  * @author Zsolt Berentey
  */
@@ -37,17 +37,26 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		return MBMessageAssetRendererFactory.CLASS_NAME;
 	}
 
+	@Override
+	public boolean isDeletable() {
+		return false;
+	}
+
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
-		if (message.isInTrash() || message.isInTrashThread()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return message.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
+
+		return message.isInTrashThread();
 	}
 
 	public void restoreTrashEntries(long[] classPKs) {

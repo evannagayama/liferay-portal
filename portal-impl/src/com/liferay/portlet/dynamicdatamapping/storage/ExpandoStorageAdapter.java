@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -226,8 +227,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return false;
 	}
 
-	private void _checkExpandoColumns(
-			long ddmStructureId, ExpandoTable expandoTable, Fields fields)
+	private void _checkExpandoColumns(ExpandoTable expandoTable, Fields fields)
 		throws PortalException, SystemException {
 
 		for (String name : fields.getNames()) {
@@ -322,7 +322,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 						field.setDDMStructureId(ddmStructureId);
 						field.setName(fieldName);
 
-						String fieldType = ddmStructure.getFieldType(fieldName);
+						String fieldType = ddmStructure.getFieldDataType(
+							fieldName);
 
 						Map<Locale, List<Serializable>> valuesMap =
 							_getValuesMap(
@@ -381,7 +382,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				companyId, classNameId, String.valueOf(ddmStructureId));
 		}
 
-		_checkExpandoColumns(ddmStructureId, expandoTable, fields);
+		_checkExpandoColumns(expandoTable, fields);
 
 		return expandoTable;
 	}
@@ -498,8 +499,30 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return sb.toString();
 	}
 
+	private String[] _toStringArray(String type, Serializable[] values) {
+		String[] stringValues = new String[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			Serializable serializable = values[i];
+
+			if (FieldConstants.isNumericType(type) && (serializable == null)) {
+				serializable = _NUMERIC_NULL_VALUE;
+			}
+
+			stringValues[i] = String.valueOf(serializable);
+		}
+
+		return stringValues;
+	}
+
 	private List<Serializable> _transformValue(String type, String value) {
 		List<Serializable> serializables = new ArrayList<Serializable>();
+
+		if (FieldConstants.isNumericType(type) &&
+			_NUMERIC_NULL_VALUE.equals(value)) {
+
+			value = null;
+		}
 
 		Serializable serializable = FieldConstants.getSerializable(type, value);
 
@@ -512,6 +535,12 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		List<Serializable> serializables = new ArrayList<Serializable>();
 
 		for (String value : values) {
+			if (FieldConstants.isNumericType(type) &&
+				_NUMERIC_NULL_VALUE.equals(value)) {
+
+				value = null;
+			}
+
 			Serializable serializable = FieldConstants.getSerializable(
 				type, value);
 
@@ -525,7 +554,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			ExpandoTable expandoTable, long classPK, Fields fields)
 		throws PortalException, SystemException {
 
-		Iterator<Field> itr = fields.iterator();
+		Iterator<Field> itr = fields.iterator(true);
 
 		while (itr.hasNext()) {
 			Field field = itr.next();
@@ -537,10 +566,25 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 					new HashMap<Locale, String[]>();
 
 				for (Locale locale : field.getAvailableLocales()) {
-					String[] values = ArrayUtil.toStringArray(
-						(Object[])field.getValue(locale));
+					Serializable value = field.getValue(locale);
 
-					stringArrayMap.put(locale, values);
+					if (value instanceof Date[]) {
+						Date[] dates = (Date[])value;
+
+						String[] values = new String[dates.length];
+
+						for (int i = 0; i < dates.length; i++) {
+							values[i] = String.valueOf(dates[i].getTime());
+						}
+
+						stringArrayMap.put(locale, values);
+					}
+					else {
+						String[] values = _toStringArray(
+							field.getDataType(), (Serializable[])value);
+
+						stringArrayMap.put(locale, values);
+					}
 				}
 
 				dataMap = stringArrayMap;
@@ -549,9 +593,20 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				Map<Locale, String> stringMap = new HashMap<Locale, String>();
 
 				for (Locale locale : field.getAvailableLocales()) {
-					String value = String.valueOf(field.getValue(locale));
+					Serializable value = field.getValue(locale);
 
-					stringMap.put(locale, value);
+					if (FieldConstants.isNumericType(field.getDataType()) &&
+						(value == null)) {
+
+						value = _NUMERIC_NULL_VALUE;
+					}
+					else if (value instanceof Date) {
+						Date date = (Date)value;
+
+						value = date.getTime();
+					}
+
+					stringMap.put(locale, String.valueOf(value));
 				}
 
 				dataMap = stringMap;
@@ -563,6 +618,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				field.getName(), classPK, dataMap, field.getDefaultLocale());
 		}
 	}
+
+	private static final String _NUMERIC_NULL_VALUE = "NUMERIC_NULL_VALUE";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExpandoStorageAdapter.class);

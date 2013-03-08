@@ -46,7 +46,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
 			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(
@@ -71,7 +71,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return null;
 	}
 
-	public MBCategory getTrashCategory() {
+	public MBCategory getTrashContainer() {
 		try {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 				getCategoryId());
@@ -80,7 +80,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 				return category;
 			}
 
-			return category.getTrashCategory();
+			return category.getTrashContainer();
 		}
 		catch (Exception e) {
 			return null;
@@ -98,8 +98,8 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return false;
 	}
 
-	public boolean isInTrashCategory() {
-		if (getTrashCategory() != null) {
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
 			return true;
 		}
 		else {
@@ -109,6 +109,10 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 	public boolean isLocked() {
 		try {
+			if (isInTrash() || isInTrashContainer()) {
+				return true;
+			}
+
 			return LockLocalServiceUtil.isLocked(
 				MBThread.class.getName(), getThreadId());
 		}

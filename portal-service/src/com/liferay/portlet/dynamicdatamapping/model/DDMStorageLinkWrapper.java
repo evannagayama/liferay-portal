@@ -240,6 +240,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_ddmStorageLink.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_ddmStorageLink.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_ddmStorageLink.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -298,7 +308,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public DDMStorageLink getWrappedDDMStorageLink() {
 		return _ddmStorageLink;

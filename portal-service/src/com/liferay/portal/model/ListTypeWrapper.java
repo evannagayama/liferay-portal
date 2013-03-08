@@ -174,6 +174,16 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_listType.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_listType.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_listType.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -214,7 +224,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ListType getWrappedListType() {
 		return _listType;

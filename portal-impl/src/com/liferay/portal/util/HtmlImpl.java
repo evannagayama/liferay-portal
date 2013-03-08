@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -37,6 +38,7 @@ import net.htmlparser.jericho.TextExtractor;
  * @author Connor McKay
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class HtmlImpl implements Html {
 
 	public static final int ESCAPE_MODE_ATTRIBUTE = 1;
@@ -222,11 +224,11 @@ public class HtmlImpl implements Html {
 			String protocol = href.substring(0, 10).toLowerCase();
 
 			if (protocol.equals("javascript")) {
-				return StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
+				href = StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
 			}
 		}
 
-		return href;
+		return escapeAttribute(href);
 	}
 
 	public String escapeJS(String js) {

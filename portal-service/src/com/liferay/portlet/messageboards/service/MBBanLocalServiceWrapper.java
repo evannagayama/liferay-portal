@@ -183,6 +183,22 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	}
 
 	/**
+	* Returns the message boards ban with the UUID in the group.
+	*
+	* @param uuid the UUID of message boards ban
+	* @param groupId the group id of the message boards ban
+	* @return the message boards ban
+	* @throws PortalException if a message boards ban with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBBan getMBBanByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbBanLocalService.getMBBanByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards bans.
 	*
 	* <p>
@@ -304,14 +320,14 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public MBBanLocalService getWrappedMBBanLocalService() {
 		return _mbBanLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedMBBanLocalService(MBBanLocalService mbBanLocalService) {
 		_mbBanLocalService = mbBanLocalService;

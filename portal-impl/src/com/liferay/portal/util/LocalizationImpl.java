@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -40,6 +40,8 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -58,6 +60,7 @@ import org.apache.commons.collections.map.ReferenceMap;
  * @author Brian Wing Shun Chan
  * @author Connor McKay
  */
+@DoPrivileged
 public class LocalizationImpl implements Localization {
 
 	public Object deserialize(JSONObject jsonObject) {
@@ -181,15 +184,14 @@ public class LocalizationImpl implements Localization {
 
 		XMLStreamReader xmlStreamReader = null;
 
-		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -273,7 +275,7 @@ public class LocalizationImpl implements Localization {
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 
 			if (xmlStreamReader != null) {
@@ -288,6 +290,25 @@ public class LocalizationImpl implements Localization {
 		_setCachedValue(xml, requestedLanguageId, useDefault, value);
 
 		return value;
+	}
+
+	public Map<Locale, String> getLocalizationMap(
+		HttpServletRequest request, String parameter) {
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		Map<Locale, String> map = new HashMap<Locale, String>();
+
+		for (Locale locale : locales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String localeParameter = parameter.concat(
+				StringPool.UNDERLINE).concat(languageId);
+
+			map.put(locale, ParamUtil.getString(request, localeParameter));
+		}
+
+		return map;
 	}
 
 	public Map<Locale, String> getLocalizationMap(
@@ -528,15 +549,14 @@ public class LocalizationImpl implements Localization {
 		XMLStreamReader xmlStreamReader = null;
 		XMLStreamWriter xmlStreamWriter = null;
 
-		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -607,7 +627,7 @@ public class LocalizationImpl implements Localization {
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 
 			if (xmlStreamReader != null) {
@@ -728,15 +748,14 @@ public class LocalizationImpl implements Localization {
 		XMLStreamReader xmlStreamReader = null;
 		XMLStreamWriter xmlStreamWriter = null;
 
-		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -816,7 +835,7 @@ public class LocalizationImpl implements Localization {
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 
 			if (xmlStreamReader != null) {
@@ -944,15 +963,14 @@ public class LocalizationImpl implements Localization {
 
 		XMLStreamReader xmlStreamReader = null;
 
-		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -973,7 +991,7 @@ public class LocalizationImpl implements Localization {
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 
 			if (xmlStreamReader != null) {

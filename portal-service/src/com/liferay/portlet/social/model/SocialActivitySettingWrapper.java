@@ -291,6 +291,16 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_socialActivitySetting.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_socialActivitySetting.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_socialActivitySetting.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -337,7 +347,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public SocialActivitySetting getWrappedSocialActivitySetting() {
 		return _socialActivitySetting;

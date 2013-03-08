@@ -23,6 +23,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -31,6 +33,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -38,8 +41,12 @@ import org.junit.runner.RunWith;
 /**
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {
+	MainServletExecutionTestListener.class,
+	SynchronousDestinationExecutionTestListener.class
+})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
@@ -49,6 +56,26 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashMoveBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashMyBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashRecentBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -67,17 +94,9 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		title += ServiceTestUtil.randomString(
 			_PAGE_TITLE_MAX_LENGTH - title.length());
 
-		WikiPage page = WikiPageLocalServiceUtil.addPage(
-			TestPropsValues.getUserId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), title,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			true, serviceContext);
-
-		WikiPageLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), page.getResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		return page;
+		return WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), title, approved);
 	}
 
 	@Override
@@ -103,7 +122,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
@@ -155,15 +174,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected boolean isBaseModelMoveableFromTrash() {
 		return false;
-	}
-
-	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
-		throws Exception {
-
-		WikiPage page = (WikiPage)classedModel;
-
-		return page.isInTrashFolder();
 	}
 
 	@Override

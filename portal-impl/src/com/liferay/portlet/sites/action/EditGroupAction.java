@@ -27,9 +27,7 @@ import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,6 +35,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +48,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.model.Role;
@@ -57,6 +57,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
@@ -70,8 +72,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
+ * @author Josef Sustacek
  */
 public class EditGroupAction extends PortletAction {
 
@@ -105,11 +108,10 @@ public class EditGroupAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
 
 		try {
-			String closeRedirect = ParamUtil.getString(
-				actionRequest, "closeRedirect");
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				Object[] returnValue = updateGroup(actionRequest);
 
@@ -135,22 +137,13 @@ public class EditGroupAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteGroups(actionRequest);
 			}
-
-			if (Validator.isNotNull(closeRedirect)) {
-				redirect = HttpUtil.setParameter(
-					redirect, "closeRedirect", closeRedirect);
-
-				LiferayPortletConfig liferayPortletConfig =
-					(LiferayPortletConfig)portletConfig;
-
-				SessionMessages.add(
-					actionRequest,
-					liferayPortletConfig.getPortletId() +
-						SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
-					closeRedirect);
+			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
+				resetMergeFailCountAndMerge(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(
+				portletConfig, actionRequest, actionResponse, redirect,
+				closeRedirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchGroupException ||
@@ -174,14 +167,9 @@ public class EditGroupAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				if (cmd.equals(Constants.DEACTIVATE) ||
-					cmd.equals(Constants.DELETE) ||
-					cmd.equals(Constants.RESTORE)) {
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
+				sendRedirect(
+					portletConfig, actionRequest, actionResponse, redirect,
+					closeRedirect);
 			}
 			else {
 				throw e;
@@ -295,6 +283,40 @@ public class EditGroupAction extends PortletAction {
 		}
 
 		return teams;
+	}
+
+	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayoutSet = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSet");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayoutSet);
+
+		SitesUtil.resetPrototype(layoutSet);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+
+		layoutSetPrototype =
+			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		if (SitesUtil.getMergeFailCount(layoutSetPrototype) > 0) {
+			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
+		}
 	}
 
 	protected void updateActive(ActionRequest actionRequest, String cmd)
@@ -509,12 +531,11 @@ public class EditGroupAction extends PortletAction {
 			}
 			else {
 				String analyticsScript = ParamUtil.getString(
-					actionRequest, SitesUtil.ANALYTICS_PREFIX + analyticsType,
+					actionRequest, Sites.ANALYTICS_PREFIX + analyticsType,
 					typeSettingsProperties.getProperty(analyticsType));
 
 				typeSettingsProperties.setProperty(
-					SitesUtil.ANALYTICS_PREFIX + analyticsType,
-					analyticsScript);
+					Sites.ANALYTICS_PREFIX + analyticsType, analyticsScript);
 			}
 		}
 
@@ -528,11 +549,10 @@ public class EditGroupAction extends PortletAction {
 		typeSettingsProperties.setProperty("false-robots.txt", publicRobots);
 		typeSettingsProperties.setProperty("true-robots.txt", privateRobots);
 
-		int trashEnabled = ParamUtil.getInteger(
+		boolean trashEnabled = ParamUtil.getBoolean(
 			actionRequest, "trashEnabled",
-			GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("trashEnabled"),
-				TrashUtil.TRASH_DEFAULT_VALUE));
+			GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("trashEnabled"), true));
 
 		typeSettingsProperties.setProperty(
 			"trashEnabled", String.valueOf(trashEnabled));
@@ -555,6 +575,23 @@ public class EditGroupAction extends PortletAction {
 		else {
 			typeSettingsProperties.remove("trashEntriesMaxAge");
 		}
+
+		int contentSharingWithChildrenEnabled = ParamUtil.getInteger(
+			actionRequest, "contentSharingWithChildrenEnabled",
+			GetterUtil.getInteger(
+				typeSettingsProperties.getProperty(
+					"contentSharingWithChildrenEnabled"),
+				Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE));
+
+		typeSettingsProperties.setProperty(
+			"contentSharingWithChildrenEnabled",
+			String.valueOf(contentSharingWithChildrenEnabled));
+
+		UnicodeProperties formTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		typeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		// Virtual hosts
 

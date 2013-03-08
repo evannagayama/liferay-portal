@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -46,6 +47,7 @@ import java.util.Locale;
  * @author Bruno Basto
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class DDMXMLImpl implements DDMXML {
 
 	public String formatXML(Document document) throws SystemException {
@@ -178,7 +180,7 @@ public class DDMXMLImpl implements DDMXML {
 				rootElement = document.addElement("root");
 			}
 
-			Iterator<Field> itr = fields.iterator();
+			Iterator<Field> itr = fields.iterator(true);
 
 			while (itr.hasNext()) {
 				Field field = itr.next();
@@ -259,42 +261,24 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	protected void appendField(Element element, Field field) {
-		int dynamicElementCount = 0;
+		Element dynamicElementElement = element.addElement("dynamic-element");
+
+		dynamicElementElement.addAttribute(
+			"default-language-id",
+			LocaleUtil.toLanguageId(field.getDefaultLocale()));
+		dynamicElementElement.addAttribute("name", field.getName());
 
 		for (Locale locale : field.getAvailableLocales()) {
 			List<Serializable> values = field.getValues(locale);
 
-			if (dynamicElementCount < values.size()) {
-				dynamicElementCount = values.size();
-			}
-		}
-
-		for (int i = 0; i < dynamicElementCount; i++) {
-			Element dynamicElementElement = element.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute(
-				"default-language-id",
-				LocaleUtil.toLanguageId(field.getDefaultLocale()));
-			dynamicElementElement.addAttribute("name", field.getName());
-
-			for (Locale locale : field.getAvailableLocales()) {
-				List<Serializable> values = field.getValues(locale);
-
-				if (i >= values.size()) {
-					continue;
-				}
-
+			for (Serializable value : values) {
 				Element dynamicContentElement =
 					dynamicElementElement.addElement("dynamic-content");
 
 				dynamicContentElement.addAttribute(
 					"language-id", LocaleUtil.toLanguageId(locale));
 
-				Serializable value = field.getValue(locale, i);
-
-				updateField(
-					dynamicContentElement, locale, field.getName(), value);
+				updateField(dynamicContentElement, value);
 			}
 		}
 	}
@@ -346,8 +330,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	protected void updateField(
-		Element dynamicContentElement, Locale locale, String fieldName,
-		Serializable fieldValue) {
+		Element dynamicContentElement, Serializable fieldValue) {
 
 		dynamicContentElement.clearContent();
 

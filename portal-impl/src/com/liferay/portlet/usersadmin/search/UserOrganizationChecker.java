@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -69,14 +70,32 @@ public class UserOrganizationChecker extends RowChecker {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
+			if (isChecked(user)) {
+				if (OrganizationMembershipPolicyUtil.isMembershipProtected(
+						permissionChecker, user.getUserId(),
+						_organization.getOrganizationId()) ||
+					OrganizationMembershipPolicyUtil.isMembershipRequired(
+						user.getUserId(), _organization.getOrganizationId())) {
+
+					return true;
+				}
+			}
+			else {
+				if (!OrganizationMembershipPolicyUtil.isMembershipAllowed(
+						user.getUserId(), _organization.getOrganizationId())) {
+
+					return true;
+				}
+			}
+
 			return !UserPermissionUtil.contains(
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			return false;
 		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

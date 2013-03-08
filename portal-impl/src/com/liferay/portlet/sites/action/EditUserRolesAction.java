@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.WebKeys;
@@ -58,7 +59,10 @@ public class EditUserRolesAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof MembershipPolicyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.sites_admin.error");

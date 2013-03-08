@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
@@ -252,10 +251,7 @@ public class QuartzSchedulerEngineTest {
 
 			Assert.fail();
 		}
-		catch (SchedulerException se) {
-			Assert.assertEquals(
-				"Unable to parse cron text " + wrongCronTriggerContent,
-				se.getMessage());
+		catch (Exception e) {
 		}
 	}
 
@@ -452,7 +448,7 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 
 		IntervalTrigger intervalTrigger = new IntervalTrigger(
-		_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
 
 		_quartzSchedulerEngine.schedule(
 			intervalTrigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null);
@@ -688,7 +684,7 @@ public class QuartzSchedulerEngineTest {
 		public Object enableScheduler(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
 		}
 
 	}

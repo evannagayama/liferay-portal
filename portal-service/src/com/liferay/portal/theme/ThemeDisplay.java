@@ -238,21 +238,25 @@ public class ThemeDisplay
 		return _mdrRuleGroupInstance;
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroup}
+	 */
 	public Group getParentGroup() {
-		return _parentGroup;
+		return getSiteGroup();
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId}
+	 */
 	public long getParentGroupId() {
-		return _parentGroupId;
+		return getSiteGroupId();
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupName}
+	 */
 	public String getParentGroupName() throws PortalException, SystemException {
-		if (_parentGroup == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _parentGroup.getDescriptiveName();
-		}
+		return getSiteGroupName();
 	}
 
 	public String getPathApplet() {
@@ -308,7 +312,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated Use <code>getPathThemeImages</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #getPathThemeImages}
 	 */
 	public String getPathThemeImage() {
 		return getPathThemeImages();
@@ -347,7 +351,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated Use <code>getScopeGroupId</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #getScopeGroupId}
 	 */
 	public long getPortletGroupId() {
 		return getScopeGroupId();
@@ -377,6 +381,10 @@ public class ThemeDisplay
 		return _realUser.getUserId();
 	}
 
+	public long getRefererGroupId() {
+		return _refererGroupId;
+	}
+
 	public long getRefererPlid() {
 		return _refererPlid;
 	}
@@ -389,10 +397,13 @@ public class ThemeDisplay
 		return _scopeGroupId;
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupIdOrLiveGroupId}
+	 */
 	public long getScopeGroupIdOrLiveGroupId()
 		throws PortalException, SystemException {
 
-		return StagingUtil.getLiveGroupId(_scopeGroupId);
+		return getSiteGroupIdOrLiveGroupId();
 	}
 
 	public String getScopeGroupName() throws PortalException, SystemException {
@@ -426,6 +437,29 @@ public class ThemeDisplay
 
 	public String getSessionId() {
 		return _sessionId;
+	}
+
+	public Group getSiteGroup() {
+		return _siteGroup;
+	}
+
+	public long getSiteGroupId() {
+		return _siteGroupId;
+	}
+
+	public long getSiteGroupIdOrLiveGroupId()
+		throws PortalException, SystemException {
+
+		return StagingUtil.getLiveGroupId(_siteGroupId);
+	}
+
+	public String getSiteGroupName() throws PortalException, SystemException {
+		if (_siteGroup == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _siteGroup.getDescriptiveName();
+		}
 	}
 
 	public Theme getTheme() {
@@ -966,17 +1000,11 @@ public class ThemeDisplay
 		_mdrRuleGroupInstance = mdrRuleGroupInstance;
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #setSiteGroupId(long)}
+	 */
 	public void setParentGroupId(long parentGroupId) {
-		_parentGroupId = parentGroupId;
-
-		if (_parentGroupId > 0) {
-			try {
-				_parentGroup = GroupLocalServiceUtil.getGroup(_parentGroupId);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		setSiteGroupId(parentGroupId);
 	}
 
 	public void setPathApplet(String pathApplet) {
@@ -1090,6 +1118,10 @@ public class ThemeDisplay
 		_realUser = realUser;
 	}
 
+	public void setRefererGroupId(long refererGroupId) {
+		_refererGroupId = refererGroupId;
+	}
+
 	public void setRefererPlid(long refererPlid) {
 		_refererPlid = refererPlid;
 	}
@@ -1195,6 +1227,19 @@ public class ThemeDisplay
 
 	public void setSignedIn(boolean signedIn) {
 		_signedIn = signedIn;
+	}
+
+	public void setSiteGroupId(long siteGroupId) {
+		_siteGroupId = siteGroupId;
+
+		if (_siteGroupId > 0) {
+			try {
+				_siteGroup = GroupLocalServiceUtil.getGroup(_siteGroupId);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	public void setStateExclusive(boolean stateExclusive) {
@@ -1377,8 +1422,6 @@ public class ThemeDisplay
 	private boolean _lifecycleResource;
 	private Locale _locale;
 	private MDRRuleGroupInstance _mdrRuleGroupInstance;
-	private Group _parentGroup;
-	private long _parentGroupId;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
@@ -1405,6 +1448,7 @@ public class ThemeDisplay
 	private int _realCompanyLogoHeight;
 	private int _realCompanyLogoWidth;
 	private User _realUser;
+	private long _refererGroupId;
 	private long _refererPlid;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
@@ -1429,6 +1473,8 @@ public class ThemeDisplay
 	private boolean _showSiteSettingsIcon;
 	private boolean _showStagingIcon;
 	private boolean _signedIn;
+	private Group _siteGroup;
+	private long _siteGroupId;
 	private boolean _stateExclusive;
 	private boolean _stateMaximized;
 	private boolean _statePopUp;

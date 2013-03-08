@@ -111,7 +111,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated {@link #disableStaging(Group, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(Group, ServiceContext)}
 	 */
 	public static void disableStaging(
 			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
@@ -128,7 +128,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated {@link #disableStaging(PortletRequest, Group,
+	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(PortletRequest, Group,
 	 *             ServiceContext)}
 	 */
 	public static void disableStaging(
@@ -338,8 +338,8 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutBranchId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutBranchId)
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutBranchId)
 		throws SystemException {
 
 		getStaging().setRecentLayoutBranchId(
@@ -347,7 +347,7 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutBranchId(
-		User user, long layoutSetBranchId, long plid, long layoutBranchId)
+			User user, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws SystemException {
 
 		getStaging().setRecentLayoutBranchId(

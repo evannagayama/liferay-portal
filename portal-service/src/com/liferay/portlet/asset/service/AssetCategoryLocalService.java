@@ -254,6 +254,12 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.asset.model.AssetCategory addCategory(
+		long userId, java.lang.String title, long vocabularyId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void addCategoryResources(
 		com.liferay.portlet.asset.model.AssetCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -348,6 +354,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getSubcategoryIds(
+		long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -367,6 +378,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getVocabularyRootCategoriesCount(long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void mergeCategories(long fromCategoryId, long toCategoryId)

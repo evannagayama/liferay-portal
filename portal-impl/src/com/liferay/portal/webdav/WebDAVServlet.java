@@ -106,10 +106,10 @@ public class WebDAVServlet extends HttpServlet {
 			// Process the method
 
 			try {
-				WebDAVRequest webDavRequest = new WebDAVRequestImpl(
+				WebDAVRequest webDAVRequest = new WebDAVRequestImpl(
 					storage, request, response, userAgent, permissionChecker);
 
-				status = method.process(webDavRequest);
+				status = method.process(webDAVRequest);
 			}
 			catch (WebDAVException wde) {
 				boolean logError = false;
@@ -167,6 +167,8 @@ public class WebDAVServlet extends HttpServlet {
 	protected WebDAVStorage getStorage(HttpServletRequest request) {
 		String pathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
 			request.getPathInfo());
+
+		pathInfo = WebDAVUtil.stripOfficeExtension(pathInfo);
 
 		String[] pathArray = WebDAVUtil.getPathArray(pathInfo, true);
 

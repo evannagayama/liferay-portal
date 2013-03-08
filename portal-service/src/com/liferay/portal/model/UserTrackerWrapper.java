@@ -321,6 +321,16 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_userTracker.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_userTracker.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_userTracker.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -386,7 +396,7 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public UserTracker getWrappedUserTracker() {
 		return _userTracker;

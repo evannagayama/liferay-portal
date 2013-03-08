@@ -70,9 +70,9 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xmlrpc.XmlRpcServlet;
@@ -117,7 +117,7 @@ public class PortletBagFactory {
 
 			_servletContext = ServletContextPool.get(contextPath);
 
-			_classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			_classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 
 		Class<?> portletClass = null;
@@ -170,8 +170,8 @@ public class PortletBagFactory {
 		MessageListener popMessageListenerInstance = newPOPMessageListener(
 			portlet);
 
-		SocialActivityInterpreter socialActivityInterpreterInstance =
-			initSocialActivityInterpreterInstance(portlet);
+		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
+			newSocialActivityInterpreterInstances(portlet);
 
 		SocialRequestInterpreter socialRequestInterpreterInstance = null;
 
@@ -325,7 +325,7 @@ public class PortletBagFactory {
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			portletDisplayTemplateHandlerInstance,
 			portletLayoutListenerInstance, pollerProcessorInstance,
-			popMessageListenerInstance, socialActivityInterpreterInstance,
+			popMessageListenerInstance, socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, webDAVStorageInstance,
 			xmlRpcMethodInstance, controlPanelEntryInstance,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
@@ -522,7 +522,7 @@ public class PortletBagFactory {
 			schedulerEntry.setTriggerValue(triggerValue);
 		}
 
-		if (_classLoader == PACLClassLoaderUtil.getPortalClassLoader()) {
+		if (_classLoader == ClassLoaderUtil.getPortalClassLoader()) {
 			portletId = null;
 		}
 
@@ -544,28 +544,6 @@ public class PortletBagFactory {
 		for (SchedulerEntry schedulerEntry : schedulerEntries) {
 			initScheduler(schedulerEntry, portlet.getPortletId());
 		}
-	}
-
-	protected SocialActivityInterpreter initSocialActivityInterpreterInstance(
-			Portlet portlet)
-		throws Exception {
-
-		if (Validator.isNull(portlet.getSocialActivityInterpreterClass())) {
-			return null;
-		}
-
-		SocialActivityInterpreter socialActivityInterpreterInstance =
-			(SocialActivityInterpreter)newInstance(
-				SocialActivityInterpreter.class,
-				portlet.getSocialActivityInterpreterClass());
-
-		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
-			portlet.getPortletId(), socialActivityInterpreterInstance);
-
-		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
-			socialActivityInterpreterInstance);
-
-		return socialActivityInterpreterInstance;
 	}
 
 	protected AssetRendererFactory newAssetRendererFactoryInstance(
@@ -861,6 +839,45 @@ public class PortletBagFactory {
 		return (PortletLayoutListener)newInstance(
 			PortletLayoutListener.class,
 			portlet.getPortletLayoutListenerClass());
+	}
+
+	protected SocialActivityInterpreter newSocialActivityInterpreterInstance(
+			Portlet portlet, String socialActivityInterpreterClass)
+		throws Exception {
+
+		SocialActivityInterpreter socialActivityInterpreterInstance =
+			(SocialActivityInterpreter)newInstance(
+				SocialActivityInterpreter.class,
+				socialActivityInterpreterClass);
+
+		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
+			portlet.getPortletId(), socialActivityInterpreterInstance);
+
+		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
+			socialActivityInterpreterInstance);
+
+		return socialActivityInterpreterInstance;
+	}
+
+	protected List<SocialActivityInterpreter>
+			newSocialActivityInterpreterInstances(Portlet portlet)
+		throws Exception {
+
+		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
+			new ArrayList<SocialActivityInterpreter>();
+
+		for (String socialActivityInterpreterClass :
+				portlet.getSocialActivityInterpreterClasses()) {
+
+			SocialActivityInterpreter socialActivityInterpreterInstance =
+				newSocialActivityInterpreterInstance(
+					portlet, socialActivityInterpreterClass);
+
+			socialActivityInterpreterInstances.add(
+				socialActivityInterpreterInstance);
+		}
+
+		return socialActivityInterpreterInstances;
 	}
 
 	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(

@@ -67,6 +67,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getContainerModelClassName() {
+		return MBCategory.class.getName();
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return "category";
+	}
+
+	@Override
 	public List<ContainerModel> getContainerModels(
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
@@ -110,15 +120,22 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+		if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+			portletURL.setParameter("struts_action", "/message_boards/view");
+		}
+		else {
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view");
+		}
+
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(thread.getCategoryId()));
 
@@ -148,11 +165,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		if (thread.isInTrash() || thread.isInTrashCategory()) {
-			return true;
-		}
+		return thread.isInTrash();
+	}
 
-		return false;
+	@Override
+	public boolean isInTrashContainer(long classPK)
+			throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return thread.isInTrashContainer();
 	}
 
 	@Override

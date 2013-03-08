@@ -666,6 +666,16 @@ public class JournalStructureWrapper implements JournalStructure,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_journalStructure.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_journalStructure.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_journalStructure.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -722,7 +732,7 @@ public class JournalStructureWrapper implements JournalStructure,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public JournalStructure getWrappedJournalStructure() {
 		return _journalStructure;

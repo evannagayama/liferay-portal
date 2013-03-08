@@ -443,6 +443,16 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_layoutSetPrototype.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_layoutSetPrototype.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_layoutSetPrototype.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -520,7 +530,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public LayoutSetPrototype getWrappedLayoutSetPrototype() {
 		return _layoutSetPrototype;

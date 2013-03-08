@@ -216,10 +216,6 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 			<c:if test="<%= rle.getType() == RequiredLayoutException.FIRST_LAYOUT_TYPE %>">
 				<liferay-ui:message key="your-first-page-must-have-one-of-the-following-types" />: <%= PortalUtil.getFirstPageLayoutTypes(pageContext) %>
 			</c:if>
-
-			<c:if test="<%= rle.getType() == RequiredLayoutException.FIRST_LAYOUT_HIDDEN %>">
-				<liferay-ui:message key="your-first-page-must-not-be-hidden" />
-			</c:if>
 		</liferay-ui:error>
 
 		<liferay-ui:message key="set-the-display-order-of-child-pages" />
@@ -256,7 +252,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 
 		<br />
 
-		<input type="button" value="<liferay-ui:message key="update-display-order" />" onClick="<portlet:namespace />updateDisplayOrder();" />
+		<input onClick="<portlet:namespace />updateDisplayOrder();" type="button" value="<liferay-ui:message key="update-display-order" />" />
 	</c:when>
 	<c:when test='<%= tabs4.equals("merge-pages") %>'>
 

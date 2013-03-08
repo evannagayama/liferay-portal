@@ -248,6 +248,16 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_announcementsFlag.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_announcementsFlag.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_announcementsFlag.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -294,7 +304,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public AnnouncementsFlag getWrappedAnnouncementsFlag() {
 		return _announcementsFlag;

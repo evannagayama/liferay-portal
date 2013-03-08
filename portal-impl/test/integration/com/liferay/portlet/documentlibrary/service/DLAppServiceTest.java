@@ -35,10 +35,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -60,8 +63,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Before
@@ -76,9 +84,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			User user = ServiceTestUtil.addUser(
-				"DLAppServiceTest" + (i + 1), false,
-				new long[] {group.getGroupId()});
+			User user = UserTestUtil.addUser(
+				"DLAppServiceTest" + (i + 1), group.getGroupId());
 
 			_userIds[i] = user.getUserId();
 		}
@@ -92,6 +99,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		super.tearDown();
+
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			UserLocalServiceUtil.deleteUser(_userIds[i]);
+		}
 	}
 
 	@Test
@@ -337,8 +348,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
-
 		_fileEntry = fileEntry;
 
 		search(_fileEntry, false, "hello", true);
@@ -357,8 +366,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
-
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		_fileEntry = fileEntry;
 
@@ -472,8 +479,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	protected void searchFile(boolean rootFolder) throws Exception {
 		FileEntry fileEntry = addFileEntry(rootFolder);
-
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		search(fileEntry, rootFolder, "title", true);
 		search(fileEntry, rootFolder, "content", true);

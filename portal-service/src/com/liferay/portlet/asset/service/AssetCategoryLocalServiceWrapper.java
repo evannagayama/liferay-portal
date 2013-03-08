@@ -278,6 +278,15 @@ public class AssetCategoryLocalServiceWrapper
 			serviceContext);
 	}
 
+	public com.liferay.portlet.asset.model.AssetCategory addCategory(
+		long userId, java.lang.String title, long vocabularyId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.addCategory(userId, title,
+			vocabularyId, serviceContext);
+	}
+
 	public void addCategoryResources(
 		com.liferay.portlet.asset.model.AssetCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -398,6 +407,12 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.getEntryCategories(entryId);
 	}
 
+	public java.util.List<java.lang.Long> getSubcategoryIds(
+		long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getSubcategoryIds(parentCategoryId);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -425,6 +440,11 @@ public class AssetCategoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetCategoryLocalService.getVocabularyRootCategories(vocabularyId,
 			start, end, obc);
+	}
+
+	public int getVocabularyRootCategoriesCount(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getVocabularyRootCategoriesCount(vocabularyId);
 	}
 
 	public void mergeCategories(long fromCategoryId, long toCategoryId)
@@ -469,14 +489,14 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AssetCategoryLocalService getWrappedAssetCategoryLocalService() {
 		return _assetCategoryLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAssetCategoryLocalService(
 		AssetCategoryLocalService assetCategoryLocalService) {

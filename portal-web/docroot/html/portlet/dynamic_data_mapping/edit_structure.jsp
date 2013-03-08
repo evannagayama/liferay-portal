@@ -46,7 +46,12 @@ JSONArray scriptJSONArray = null;
 
 if (Validator.isNotNull(script)) {
 	if (structure != null) {
-		scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		try {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		}
+		catch (Exception e) {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDocument());
+		}
 	}
 	else {
 		scriptJSONArray = DDMXSDUtil.getJSONArray(script);
@@ -156,7 +161,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label="parent-data-definition">
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", scopeStructureName) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<c:choose>
@@ -186,14 +191,9 @@ if (Validator.isNotNull(script)) {
 						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
 					</aui:field-wrapper>
 
-					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
+					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:field-wrapper label="webdav-url">
-
-							<%
-							Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-							%>
-
-							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + scopeGroup.getFriendlyURL() + "/dynamic_data_mapping/ddmStructures/" + classPK %>' />
+							<liferay-ui:input-resource url="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>
@@ -214,6 +214,8 @@ if (Validator.isNotNull(script)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 		{
+			availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
+			classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 			ddmResource: '<%= ddmResource %>',
 			dialog: {
 				width: 820
@@ -266,13 +268,11 @@ if (Validator.isNotNull(script)) {
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			if (window.<portlet:namespace />formBuilder) {
-				document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
-			}
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getContentXSD();
 
 			submitForm(document.<portlet:namespace />fm);
 		},
-		['aui-base']
+		['aui-base', 'liferay-portlet-dynamic-data-mapping']
 	);
 
 	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">

@@ -265,10 +265,12 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.RepositoryEntry addRepositoryEntry(
-		long groupId, long repositoryId, java.lang.String mappedId,
+		long userId, long groupId, long repositoryId,
+		java.lang.String mappedId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _repositoryEntryLocalService.addRepositoryEntry(groupId,
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryEntryLocalService.addRepositoryEntry(userId, groupId,
 			repositoryId, mappedId, serviceContext);
 	}
 
@@ -281,14 +283,14 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public RepositoryEntryLocalService getWrappedRepositoryEntryLocalService() {
 		return _repositoryEntryLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedRepositoryEntryLocalService(
 		RepositoryEntryLocalService repositoryEntryLocalService) {

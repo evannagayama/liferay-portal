@@ -1271,6 +1271,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>portletNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1455,6 +1461,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>showRequiredLabel</name>
@@ -1787,7 +1799,7 @@
 	</tag>
 	<tag>
 		<name>tool</name>
-		<tag-class>com.liferay.taglib.aui.ToolTag</tag-class>
+		<tag-class>com.liferay.taglib.aui.ToolTagImpl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>handler</name>

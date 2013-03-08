@@ -443,7 +443,7 @@ public interface WikiPageModel extends BaseModel<WikiPage>, GroupedModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * @deprecated Renamed to {@link #isApproved()}
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
 	public boolean getApproved();
 
@@ -525,6 +525,10 @@ public interface WikiPageModel extends BaseModel<WikiPage>, GroupedModel,
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
 	public ExpandoBridge getExpandoBridge();
+
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
+
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 

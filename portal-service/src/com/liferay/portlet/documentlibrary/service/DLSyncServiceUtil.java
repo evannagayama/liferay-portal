@@ -56,7 +56,7 @@ public class DLSyncServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
-		long companyId, long repositoryId, java.util.Date lastAccessDate)
+		long companyId, long repositoryId, long lastAccessDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -98,7 +98,7 @@ public class DLSyncServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(DLSyncService service) {
 	}

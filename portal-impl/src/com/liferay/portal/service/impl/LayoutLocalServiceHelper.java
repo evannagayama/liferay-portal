@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.LayoutHiddenException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.LayoutTypeException;
@@ -152,8 +151,8 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		Group group = layoutSetPrototype.getGroup();
 
-		Layout layout = layoutPersistence.fetchByUUID_G(
-			layoutUuid, group.getGroupId());
+		Layout layout = layoutPersistence.fetchByUUID_G_P(
+			layoutUuid, group.getGroupId(), true);
 
 		if (layout != null) {
 			return true;
@@ -343,10 +342,6 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 					try {
 						validateFirstLayout(secondLayout.getType());
 					}
-					catch (LayoutHiddenException lhe) {
-						throw new LayoutParentLayoutIdException(
-							LayoutParentLayoutIdException.FIRST_LAYOUT_HIDDEN);
-					}
 					catch (LayoutTypeException lte) {
 						throw new LayoutParentLayoutIdException(
 							LayoutParentLayoutIdException.FIRST_LAYOUT_TYPE);
@@ -358,6 +353,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+
 	@BeanReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
 

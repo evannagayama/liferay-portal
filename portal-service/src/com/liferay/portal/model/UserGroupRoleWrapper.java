@@ -196,6 +196,16 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_userGroupRole.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_userGroupRole.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_userGroupRole.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -259,7 +269,7 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public UserGroupRole getWrappedUserGroupRole() {
 		return _userGroupRole;

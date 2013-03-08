@@ -361,6 +361,16 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_socialActivityLimit.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_socialActivityLimit.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_socialActivityLimit.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -419,7 +429,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public SocialActivityLimit getWrappedSocialActivityLimit() {
 		return _socialActivityLimit;

@@ -281,6 +281,15 @@ public class AssetCategoryLocalServiceUtil {
 			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
+		long userId, java.lang.String title, long vocabularyId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addCategory(userId, title, vocabularyId, serviceContext);
+	}
+
 	public static void addCategoryResources(
 		com.liferay.portlet.asset.model.AssetCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -402,6 +411,12 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getEntryCategories(entryId);
 	}
 
+	public static java.util.List<java.lang.Long> getSubcategoryIds(
+		long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSubcategoryIds(parentCategoryId);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -430,6 +445,11 @@ public class AssetCategoryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getVocabularyRootCategories(vocabularyId, start, end, obc);
+	}
+
+	public static int getVocabularyRootCategoriesCount(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getVocabularyRootCategoriesCount(vocabularyId);
 	}
 
 	public static void mergeCategories(long fromCategoryId, long toCategoryId)
@@ -486,7 +506,7 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(AssetCategoryLocalService service) {
 	}

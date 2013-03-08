@@ -20,6 +20,8 @@
 page import="com.liferay.portal.kernel.editor.EditorUtil" %><%@
 page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler" %><%@
 page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
+page import="com.liferay.portal.kernel.template.TemplateManagerUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
@@ -51,7 +53,8 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTempla
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %><%@
+page import="com.liferay.portlet.journal.model.JournalArticle" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
@@ -59,6 +62,8 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String ddmResource = ParamUtil.getString(request, "ddmResource");
 String ddmResourceActionId = ParamUtil.getString(request, "ddmResourceActionId");
+String refererPortletName = ParamUtil.getString(request, "refererPortletName");
+String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
 String scopeStorageType = ParamUtil.getString(request, "scopeStorageType");

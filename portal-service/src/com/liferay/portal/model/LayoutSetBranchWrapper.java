@@ -687,6 +687,16 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_layoutSetBranch.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_layoutSetBranch.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_layoutSetBranch.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -790,7 +800,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public LayoutSetBranch getWrappedLayoutSetBranch() {
 		return _layoutSetBranch;

@@ -225,6 +225,16 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_serviceComponent.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_serviceComponent.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_serviceComponent.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -283,7 +293,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ServiceComponent getWrappedServiceComponent() {
 		return _serviceComponent;

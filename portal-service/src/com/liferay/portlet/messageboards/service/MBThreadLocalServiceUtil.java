@@ -193,6 +193,22 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
+	* Returns the message boards thread with the UUID in the group.
+	*
+	* @param uuid the UUID of message boards thread
+	* @param groupId the group id of the message boards thread
+	* @return the message boards thread
+	* @throws PortalException if a message boards thread with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread getMBThreadByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMBThreadByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards threads.
 	*
 	* <p>
@@ -254,10 +270,11 @@ public class MBThreadLocalServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBThread addThread(
 		long categoryId,
-		com.liferay.portlet.messageboards.model.MBMessage message)
+		com.liferay.portlet.messageboards.model.MBMessage message,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addThread(categoryId, message);
+		return getService().addThread(categoryId, message, serviceContext);
 	}
 
 	public static void deleteThread(long threadId)
@@ -298,7 +315,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
+	QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, int status, int start, int end)
@@ -325,8 +343,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, boolean, boolean, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	boolean, boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
@@ -338,8 +356,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, boolean, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed, int start,
@@ -350,8 +368,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
+	QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end)
@@ -374,8 +392,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -401,8 +419,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	long, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -410,8 +428,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, boolean, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	long, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,
 		int status, boolean subscribed)
@@ -421,8 +439,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, boolean, boolean, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
+	long, boolean, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,
 		int status, boolean subscribed, boolean includeAnonymous)
@@ -557,7 +575,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #incrementViewCounter(long, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
+	int)}
 	*/
 	public static com.liferay.portlet.messageboards.model.MBThread updateThread(
 		long threadId, int viewCount)
@@ -578,7 +597,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(MBThreadLocalService service) {
 	}

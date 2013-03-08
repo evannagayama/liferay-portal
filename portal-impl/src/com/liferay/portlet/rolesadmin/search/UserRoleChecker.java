@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -47,6 +48,33 @@ public class UserRoleChecker extends RowChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		User user = (User)obj;
+
+		try {
+			if (isChecked(user)) {
+				if (RoleMembershipPolicyUtil.isRoleRequired(
+						user.getUserId(), _role.getRoleId())) {
+
+					return true;
+				}
+			}
+			else {
+				if (!RoleMembershipPolicyUtil.isRoleAllowed(
+						user.getUserId(), _role.getRoleId())) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserRoleChecker.class);

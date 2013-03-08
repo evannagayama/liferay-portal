@@ -23,6 +23,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -35,8 +37,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Eduardo Garcia
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
@@ -55,12 +62,27 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashVersionAndDelete() throws Exception {
+	public void testTrashMyBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	public void testTrashVersionAndRestore() throws Exception {
+	public void testTrashRecentBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionBaseModelAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -95,7 +117,7 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		MBCategory parentCategory = (MBCategory)parentBaseModel;
@@ -134,15 +156,6 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected boolean isIndexableBaseModel() {
 		return false;
-	}
-
-	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
-		throws Exception {
-
-		MBCategory category = (MBCategory)classedModel;
-
-		return category.isInTrashCategory();
 	}
 
 	@Override

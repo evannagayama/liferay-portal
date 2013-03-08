@@ -188,6 +188,23 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	/**
+	* Returns the document library file rank with the UUID in the group.
+	*
+	* @param uuid the UUID of document library file rank
+	* @param groupId the group id of the document library file rank
+	* @return the document library file rank
+	* @throws PortalException if a document library file rank with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileRank getDLFileRankByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.getDLFileRankByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the document library file ranks.
 	*
 	* <p>
@@ -250,7 +267,8 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
 		long groupId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileRankLocalService.addFileRank(groupId, companyId, userId,
 			fileEntryId, serviceContext);
 	}
@@ -313,20 +331,21 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(
 		long groupId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileRankLocalService.updateFileRank(groupId, companyId,
 			userId, fileEntryId, serviceContext);
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public DLFileRankLocalService getWrappedDLFileRankLocalService() {
 		return _dlFileRankLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedDLFileRankLocalService(
 		DLFileRankLocalService dlFileRankLocalService) {

@@ -32,6 +32,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ASSET_PUBLISHER_ABSTRACT_LENGTH = "ASSET_PUBLISHER_ABSTRACT_LENGTH";
 
+	public static final String ASSET_PUBLISHER_VIEW_URL = "ASSET_PUBLISHER_VIEW_URL";
+
 	public static final String ASSET_TAG = "ASSET_TAG";
 
 	public static final String ASSET_VOCABULARIES = "ASSET_VOCABULARIES";
@@ -117,6 +119,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String FACEBOOK_ACCESS_TOKEN = "FACEBOOK_ACCESS_TOKEN";
 
 	public static final String FACEBOOK_CANVAS_PAGE_URL = "FACEBOOK_CANVAS_PAGE_URL";
+
+	public static final String FACEBOOK_INCOMPLETE_USER_ID = "FACEBOOK_INCOMPLETE_USER_ID";
 
 	public static final String FACEBOOK_USER_EMAIL_ADDRESS = "FACEBOOK_USER_EMAIL_ADDRESS";
 

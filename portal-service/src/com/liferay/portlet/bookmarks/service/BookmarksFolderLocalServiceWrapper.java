@@ -276,17 +276,35 @@ public class BookmarksFolderLocalServiceWrapper
 			name, description, serviceContext);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folder);
+		return _bookmarksFolderLocalService.deleteFolder(folder);
 	}
 
-	public void deleteFolder(long folderId)
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
+		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folderId);
+		return _bookmarksFolderLocalService.deleteFolder(folder,
+			includeTrashedEntries);
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.deleteFolder(folderId);
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.deleteFolder(folderId,
+			includeTrashedEntries);
 	}
 
 	public void deleteFolders(long groupId)
@@ -333,10 +351,55 @@ public class BookmarksFolderLocalServiceWrapper
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getFolders(
+		long groupId, long parentFolderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFolders(groupId, parentFolderId,
+			status, start, end);
+	}
+
+	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFoldersAndEntries(groupId,
+			folderId);
+	}
+
+	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+		long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFoldersAndEntries(groupId,
+			folderId, status);
+	}
+
+	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+		long folderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFoldersAndEntries(groupId,
+			folderId, status, start, end);
+	}
+
+	public int getFoldersAndEntriesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFoldersAndEntriesCount(groupId,
+			folderId, status);
+	}
+
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksFolderLocalService.getFoldersCount(groupId,
 			parentFolderId);
+	}
+
+	public int getFoldersCount(long groupId, long parentFolderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getFoldersCount(groupId,
+			parentFolderId, status);
+	}
+
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getNoAssetFolders()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getNoAssetFolders();
 	}
 
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
@@ -344,6 +407,33 @@ public class BookmarksFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_bookmarksFolderLocalService.getSubfolderIds(folderIds, groupId,
 			folderId);
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolder(
+		long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolderFromTrash(
+		long userId, long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.moveFolderFromTrash(userId,
+			folderId, parentFolderId);
+	}
+
+	public void moveFolderToTrash(long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.moveFolderToTrash(userId, folderId);
+	}
+
+	public void restoreFolderFromTrash(long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.restoreFolderFromTrash(userId, folderId);
 	}
 
 	public void subscribeFolder(long userId, long groupId, long folderId)
@@ -358,26 +448,44 @@ public class BookmarksFolderLocalServiceWrapper
 		_bookmarksFolderLocalService.unsubscribeFolder(userId, groupId, folderId);
 	}
 
+	public void updateAsset(long userId,
+		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.updateAsset(userId, folder,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
+		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _bookmarksFolderLocalService.updateFolder(folderId,
+		return _bookmarksFolderLocalService.updateFolder(userId, folderId,
 			parentFolderId, name, description, mergeWithParentFolder,
 			serviceContext);
 	}
 
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateStatus(
+		long userId,
+		com.liferay.portlet.bookmarks.model.BookmarksFolder folder, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.updateStatus(userId, folder, status);
+	}
+
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public BookmarksFolderLocalService getWrappedBookmarksFolderLocalService() {
 		return _bookmarksFolderLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedBookmarksFolderLocalService(
 		BookmarksFolderLocalService bookmarksFolderLocalService) {

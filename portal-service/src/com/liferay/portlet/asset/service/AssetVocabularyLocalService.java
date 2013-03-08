@@ -246,7 +246,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
@@ -262,6 +262,12 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -345,7 +351,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,

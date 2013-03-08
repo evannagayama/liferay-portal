@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -132,6 +133,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
+import com.liferay.util.PwdGenerator;
 
 import java.awt.image.RenderedImage;
 
@@ -558,10 +560,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  userGroupIds the primary keys of the user's user groups
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
-	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can set the universally unique identifier
-	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
-	 *         tag names, and expando bridge attributes for the user.
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -662,10 +664,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  userGroupIds the primary keys of the user's user groups
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
-	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can set the universally unique identifier
-	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
-	 *         tag names, and expando bridge attributes for the user.
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -687,7 +689,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 		screenName = getScreenName(screenName);
-		openId = openId.trim();
+		openId = StringUtil.trim(openId);
 		Date now = new Date();
 
 		if (PrefsPropsUtil.getBoolean(
@@ -809,7 +811,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setOpenId(openId);
-		user.setLanguageId(locale.toString());
+		user.setLanguageId(LocaleUtil.toLanguageId(locale));
 		user.setTimeZoneId(defaultUser.getTimeZoneId());
 		user.setGreeting(greeting);
 		user.setFirstName(firstName);
@@ -1207,16 +1209,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = getUserByEmailAddress(companyId, username);
 		}
 		catch (NoSuchUserException nsue) {
+		}
+
+		if (user == null) {
 			try {
 				user = getUserByScreenName(companyId, username);
 			}
-			catch (NoSuchUserException nsue2) {
-				try {
-					user = getUserById(GetterUtil.getLong(username));
-				}
-				catch (NoSuchUserException nsue3) {
-					return 0;
-				}
+			catch (NoSuchUserException nsue) {
+			}
+		}
+
+		if (user == null) {
+			try {
+				user = getUserById(GetterUtil.getLong(username));
+			}
+			catch (NoSuchUserException nsue) {
+				return 0;
 			}
 		}
 
@@ -1553,10 +1561,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * the confirmation email.
 	 *
 	 * @param  user the user
-	 * @param  serviceContext the user's service context. Can set whether a
-	 *         password should be generated (with the <code>autoPassword</code>
-	 *         attribute) and whether the confirmation email should be sent
-	 *         (with the <code>sendEmail</code> attribute) for the user.
+	 * @param  serviceContext the service context to be applied. Can set whether
+	 *         a password should be generated (with the
+	 *         <code>autoPassword</code> attribute) and whether the confirmation
+	 *         email should be sent (with the <code>sendEmail</code> attribute)
+	 *         for the user.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2681,14 +2690,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user with the universally unique identifier.
+	 * Returns the user with the UUID.
 	 *
-	 * @param      uuid the user's universally unique identifier
-	 * @return     the user with the universally unique identifier
-	 * @throws     PortalException if a user with the universally unique
-	 *             identifier could not be found
+	 * @param      uuid the user's UUID
+	 * @return     the user with the UUID
+	 * @throws     PortalException if a user with the UUID could not be found
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getUserByUuidAndCompanyId(String, long)}
 	 */
 	public User getUserByUuid(String uuid)
 		throws PortalException, SystemException {
@@ -2704,13 +2713,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user with the universally unique identifier.
+	 * Returns the user with the UUID.
 	 *
-	 * @param  uuid the user's universally unique identifier
+	 * @param  uuid the user's UUID
 	 * @param  companyId the primary key of the user's company
-	 * @return the user with the universally unique identifier
-	 * @throws PortalException if a user with the universally unique identifier
-	 *         could not be found
+	 * @return the user with the UUID
+	 * @throws PortalException if a user with the UUID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public User getUserByUuidAndCompanyId(String uuid, long companyId)
@@ -3307,9 +3315,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  user the verification email recipient
 	 * @param  emailAddress the recipient's email address
-	 * @param  serviceContext the service context. Must set the portal URL, main
-	 *         path, primary key of the layout, remote address, remote host, and
-	 *         agent for the user.
+	 * @param  serviceContext the service context to be applied. Must set the
+	 *         portal URL, main path, primary key of the layout, remote address,
+	 *         remote host, and agent for the user.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3390,7 +3398,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         specified in <code>portal.properties</code> will be used.
 	 * @param  body the email body. If <code>null</code>, the body specified in
 	 *         <code>portal.properties</code> will be used.
-	 * @param  serviceContext the user's service context
+	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if a user with the email address could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
@@ -3425,6 +3433,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			if ((passwordPolicy != null) &&
 				(passwordPolicy.getResetTicketMaxAge() > 0)) {
+
 				expirationDate = new Date(
 					System.currentTimeMillis() +
 						(passwordPolicy.getResetTicketMaxAge() * 1000));
@@ -3621,7 +3630,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  userIds the primary keys of the users
-	 * @param  serviceContext the service context (optionally <code>null</code>)
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>)
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3629,7 +3639,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
+		userGroupRoleLocalService.deleteUserGroupRoles(
+			userIds, groupId, RoleConstants.TYPE_SITE);
 
 		userLocalService.unsetGroupTeamsUsers(groupId, userIds);
 
@@ -3658,9 +3669,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = organization.getGroup();
 
-		long groupId = group.getGroupId();
-
-		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
+		userGroupRoleLocalService.deleteUserGroupRoles(
+			userIds, group.getGroupId(), RoleConstants.TYPE_ORGANIZATION);
 
 		organizationPersistence.removeUsers(organizationId, userIds);
 
@@ -3698,7 +3708,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
-		if (role.getName().equals(RoleConstants.USER)) {
+		String roleName = role.getName();
+
+		if ((roleName.equals(RoleConstants.ADMINISTRATOR) &&
+			 (getRoleUsersCount(role.getRoleId()) <= 1)) ||
+			roleName.equals(RoleConstants.USER)) {
+
 			return;
 		}
 
@@ -3724,7 +3739,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
-		if (role.getName().equals(RoleConstants.USER)) {
+		String roleName = role.getName();
+
+		if (roleName.equals(RoleConstants.USER) ||
+			(roleName.equals(RoleConstants.ADMINISTRATOR) &&
+				getRoleUsersCount(role.getRoleId()) <= 1)) {
+
 			return;
 		}
 
@@ -3897,9 +3917,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  password the user's password
 	 * @param  emailAddress1 the user's new email address
 	 * @param  emailAddress2 the user's new email address confirmation
-	 * @param  serviceContext the service context. Must set the portal URL, main
-	 *         path, primary key of the layout, remote address, remote host, and
-	 *         agent for the user.
+	 * @param  serviceContext the service context to be applied. Must set the
+	 *         portal URL, main path, primary key of the layout, remote address,
+	 *         remote host, and agent for the user.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
@@ -3987,7 +4007,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  newGroupIds the primary keys of the groups
-	 * @param  serviceContext the service context (optionally <code>null</code>)
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>)
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4032,7 +4053,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  updateUserInformation whether to update the user's information
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
-	 * @param  serviceContext the user's service context (optionally
+	 * @param  serviceContext the service context to be applied (optionally
 	 *         <code>null</code>). Can set expando bridge attributes for the
 	 *         user.
 	 * @return the user
@@ -4057,6 +4078,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		User defaultUser = getDefaultUser(companyId);
+
+		if (facebookId > 0) {
+			autoPassword = false;
+
+			if ((password1 == null) || (password2 == null)) {
+				password1 = PwdGenerator.getPassword();
+				password2 = password1;
+			}
+
+			sendEmail = false;
+		}
 
 		if (updateUserInformation) {
 			autoScreenName = false;
@@ -4389,8 +4421,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  newOrganizationIds the primary keys of the organizations
-	 * @param  serviceContext the service context. Must set whether user
-	 *         indexing is enabled.
+	 * @param  serviceContext the service context to be applied. Must set
+	 *         whether user indexing is enabled.
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4757,10 +4789,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  roleIds the primary keys of the user's roles
 	 * @param  userGroupRoles the user user's group roles
 	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can set the universally unique identifier
-	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
-	 *         tag names, and expando bridge attributes for the user.
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 *         or if the new information was invalid

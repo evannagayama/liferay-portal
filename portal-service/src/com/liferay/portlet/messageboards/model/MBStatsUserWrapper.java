@@ -268,6 +268,16 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_mbStatsUser.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_mbStatsUser.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_mbStatsUser.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -314,7 +324,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public MBStatsUser getWrappedMBStatsUser() {
 		return _mbStatsUser;

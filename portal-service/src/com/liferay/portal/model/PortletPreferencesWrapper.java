@@ -250,6 +250,16 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_portletPreferences.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_portletPreferences.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_portletPreferences.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -296,7 +306,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public PortletPreferences getWrappedPortletPreferences() {
 		return _portletPreferences;

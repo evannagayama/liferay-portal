@@ -325,10 +325,10 @@ public interface TrashHandler {
 	public String getRootContainerModelName();
 
 	/**
-	 * Returns the name of the sub-container model (e.g. for a folder the
-	 * sub-container model name may be "subfolder").
+	 * Returns the name of the subcontainer model (e.g. for a folder the
+	 * subcontainer model name may be "subfolder").
 	 *
-	 * @return the name of the sub-container model
+	 * @return the name of the subcontainer model
 	 */
 	public String getSubcontainerModelName();
 
@@ -505,6 +505,15 @@ public interface TrashHandler {
 	public boolean isContainerModel();
 
 	/**
+	 * Returns <code>true</code> if the entity can be deleted from the Recycle
+	 * Bin.
+	 *
+	 * @return <code>true</code> if the entity can be deleted from the Recycle
+	 *         Bin.
+	 */
+	public boolean isDeletable();
+
+	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in
 	 * the Recycle Bin.
 	 *
@@ -516,6 +525,21 @@ public interface TrashHandler {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException;
+
+	/**
+	 * Returns <code>true</code> if the model entity with the primary key is in
+	 * a container that is in the Recycle Bin.
+	 *
+	 * @param  classPK the primary key of the model entity
+	 * @return <code>true</code> if the model entity with the primary key is in
+	 *         a container that is in the Recycle Bin; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a model entity with the primary key could not
+	 *         be found in the portal
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean isInTrashContainer(long classPK)
 		throws PortalException, SystemException;
 
 	/**
@@ -562,7 +586,7 @@ public interface TrashHandler {
 	 * @param  classPK the primary key of the model entity
 	 * @param  containerModelId the primary key of the destination container
 	 *         model
-	 * @param  serviceContext the service context
+	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if a model entity with the primary key or the
 	 *         destination container model with the primary key could not be
 	 *         found
@@ -570,6 +594,24 @@ public interface TrashHandler {
 	 */
 	public void moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	/**
+	 * Restores the model entity that is related to the model entity with the
+	 * class name and class PK. For example, {@link
+	 * com.liferay.portlet.wiki.trash.WikiPageTrashHandler#restoreRelatedTrashEntry(
+	 * String, long)} restores the attachment related to the wiki page with the
+	 * class name and class PK.
+	 *
+	 * @param  className the class name of the model entity with a related model
+	 *         entity to restore
+	 * @param  classPK the primary key of the model entity with a related model
+	 *         entity to restore
+	 * @throws PortalException if a model entity with the primary key could not
+	 *         be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException, SystemException;
 
 	/**

@@ -1465,7 +1465,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	/**
-	* @deprecated Renamed to {@link #isApproved()}
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	public boolean getApproved() {
 		return _layoutRevision.getApproved();
@@ -1582,6 +1582,16 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _layoutRevision.getExpandoBridge();
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_layoutRevision.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_layoutRevision.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	public void setExpandoBridgeAttributes(
@@ -1713,7 +1723,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public LayoutRevision getWrappedLayoutRevision() {
 		return _layoutRevision;

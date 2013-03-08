@@ -486,7 +486,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* @deprecated Renamed to {@link #isApproved()}
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	public boolean getApproved() {
 		return _ddlRecordVersion.getApproved();
@@ -606,6 +606,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_ddlRecordVersion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_ddlRecordVersion.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_ddlRecordVersion.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -659,7 +669,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public DDLRecordVersion getWrappedDDLRecordVersion() {
 		return _ddlRecordVersion;

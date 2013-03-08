@@ -44,6 +44,16 @@ try {
 }
 catch (NoSuchMailingListException nsmle) {
 }
+
+if ((category == null) && (mailingList == null)) {
+	try {
+		if (parentCategoryId > 0) {
+			mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(scopeGroupId, parentCategoryId);
+		}
+	}
+	catch (NoSuchMailingListException nsmle) {
+	}
+}
 %>
 
 <liferay-ui:header
@@ -96,7 +106,7 @@ catch (NoSuchMailingListException nsmle) {
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= parentCategoryName %></aui:a>
+					<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= HtmlUtil.escape(parentCategoryName) %></aui:a>
 				</aui:field-wrapper>
 			</c:if>
 		</c:if>

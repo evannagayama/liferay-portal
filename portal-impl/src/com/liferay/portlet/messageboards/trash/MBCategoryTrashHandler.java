@@ -81,6 +81,16 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getContainerModelClassName() {
+		return MBCategory.class.getName();
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return "category";
+	}
+
+	@Override
 	public List<ContainerModel> getContainerModels(
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
@@ -151,15 +161,22 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			category.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+		if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+			portletURL.setParameter("struts_action", "/message_boards/view");
+		}
+		else {
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view");
+		}
+
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(category.getParentCategoryId()));
 
@@ -212,7 +229,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		for (MBThread thread : threads) {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
-						MBThread.class.getName());
+					MBThread.class.getName());
 
 			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 				thread.getPrimaryKey());
@@ -299,11 +316,16 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		if (category.isInTrash() || category.isInTrashCategory()) {
-			return true;
-		}
+		return category.isInTrash();
+	}
 
-		return false;
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+
+		return category.isInTrashContainer();
 	}
 
 	@Override
@@ -317,7 +339,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return !category.isInTrashCategory();
+		return !category.isInTrashContainer();
 	}
 
 	@Override
@@ -363,7 +385,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		return MBCategoryPermission.contains(
-				permissionChecker, category, actionId);
+			permissionChecker, category, actionId);
 	}
 
 }

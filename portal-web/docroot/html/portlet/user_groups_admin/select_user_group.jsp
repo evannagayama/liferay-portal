@@ -17,11 +17,20 @@
 <%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
+String callback = ParamUtil.getString(request, "callback", "selectUserGroup");
 String target = ParamUtil.getString(request, "target");
+
+User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group");
+
+if (selUser != null) {
+	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+}
+
+portletURL.setParameter("callback", callback);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -38,22 +47,19 @@ portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group")
 
 		<%
 		UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 		%>
 
 		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
 
 			<%
 			if (filterManageableUserGroups) {
-				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
+				results = UsersAdminUtil.filterUserGroups(permissionChecker, results);
 
-				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
-
-				total = userGroups.size();
-				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), null);
+				total = results.size();
+				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			}
 
 			pageContext.setAttribute("results", results);
@@ -70,19 +76,24 @@ portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group")
 		>
 
 			<%
-			StringBundler sb = new StringBundler(9);
+			String rowHREF = null;
 
-			sb.append("javascript:opener.");
-			sb.append(renderResponse.getNamespace());
-			sb.append("selectUserGroup('");
-			sb.append(userGroup.getUserGroupId());
-			sb.append("', '");
-			sb.append(UnicodeFormatter.toString(userGroup.getName()));
-			sb.append("', '");
-			sb.append(target);
-			sb.append("'); window.close();");
+			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser != null ? selUser.getUserId() : 0, userGroup.getUserGroupId())) {
+				StringBundler sb = new StringBundler(10);
 
-			String rowHREF = sb.toString();
+				sb.append("javascript:opener.");
+				sb.append(renderResponse.getNamespace());
+				sb.append(callback);
+				sb.append("('");
+				sb.append(userGroup.getUserGroupId());
+				sb.append("', '");
+				sb.append(UnicodeFormatter.toString(userGroup.getName()));
+				sb.append("', '");
+				sb.append(target);
+				sb.append("'); window.close();");
+
+				rowHREF = sb.toString();
+			}
 			%>
 
 			<liferay-ui:search-container-column-text

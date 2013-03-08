@@ -16,15 +16,19 @@ package com.liferay.portlet.wiki.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -36,6 +40,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
+import com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +70,10 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 
 		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
 
 		WikiPageResource pageResource =
 			WikiPageResourceLocalServiceUtil.fetchPageResource(
@@ -147,9 +156,9 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			page.getGroupId(), PortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.WIKI_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -157,7 +166,13 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiNode node = page.getNode();
 
-		portletURL.setParameter("struts_action", "/wiki/view");
+		if (portletId.equals(PortletKeys.WIKI)) {
+			portletURL.setParameter("struts_action", "/wiki/view");
+		}
+		else {
+			portletURL.setParameter("struts_action", "/wiki_admin/view");
+		}
+
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
 
@@ -187,11 +202,34 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
-		if (page.isInTrash() || page.isInTrashFolder()) {
-			return true;
+		return page.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return page.isInTrashContainer();
+	}
+
+	@Override
+	public void restoreRelatedTrashEntry(String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (!className.equals(DLFileEntry.class.getName())) {
+			return;
 		}
 
-		return false;
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			classPK);
+
+		WikiPage page = WikiPageAttachmentsUtil.getPage(classPK);
+
+		WikiPageServiceUtil.restorePageAttachmentFromTrash(
+			page.getNodeId(), page.getTitle(), fileEntry.getTitle());
+
 	}
 
 	public void restoreTrashEntries(long[] classPKs)

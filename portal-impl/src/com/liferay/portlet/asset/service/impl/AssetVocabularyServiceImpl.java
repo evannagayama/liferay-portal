@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
@@ -46,7 +47,7 @@ import java.util.Map;
 public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary addVocabulary(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -71,6 +72,18 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return assetVocabularyLocalService.addVocabulary(
 			getUserId(), title, titleMap, descriptionMap, settings,
 			serviceContext);
+	}
+
+	public AssetVocabulary addVocabulary(
+			String title, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		AssetPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_VOCABULARY);
+
+		return assetVocabularyLocalService.addVocabulary(
+			getUserId(), title, serviceContext);
 	}
 
 	public void deleteVocabularies(long[] vocabularyIds)
@@ -160,6 +173,29 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return assetVocabularyFinder.filterCountByG_N(groupId, name);
 	}
 
+	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
+			long groupId, String name, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		List<AssetVocabulary> vocabularies;
+		int total = 0;
+
+		if (Validator.isNotNull(name)) {
+			name = (CustomSQLUtil.keywords(name))[0];
+
+			vocabularies = getGroupVocabularies(groupId, name, start, end, obc);
+			total = getGroupVocabulariesCount(groupId, name);
+		}
+		else {
+			vocabularies = getGroupVocabularies(groupId, start, end, obc);
+			total = getGroupVocabulariesCount(groupId);
+		}
+
+		return new AssetVocabularyDisplay(vocabularies, total, start, end);
+	}
+
+	@Deprecated
 	public JSONObject getJSONGroupVocabularies(
 			long groupId, String name, int start, int end,
 			OrderByComparator obc)
@@ -214,7 +250,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,

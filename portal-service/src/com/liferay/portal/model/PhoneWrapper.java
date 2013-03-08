@@ -442,6 +442,16 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_phone.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_phone.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_phone.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -493,7 +503,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public Phone getWrappedPhone() {
 		return _phone;

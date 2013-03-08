@@ -274,6 +274,20 @@ public class JournalArticleResourceLocalServiceWrapper
 			articleId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleResourceLocalService.fetchArticleResource(groupId,
+			articleId);
+	}
+
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleResourceLocalService.fetchArticleResource(uuid,
+			groupId);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
 		long articleResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -302,14 +316,14 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public JournalArticleResourceLocalService getWrappedJournalArticleResourceLocalService() {
 		return _journalArticleResourceLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedJournalArticleResourceLocalService(
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {

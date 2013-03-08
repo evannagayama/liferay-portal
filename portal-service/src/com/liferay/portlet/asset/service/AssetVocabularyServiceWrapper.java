@@ -51,7 +51,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -74,6 +74,14 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabularyService.addVocabulary(title, titleMap,
 			descriptionMap, settings, serviceContext);
+	}
+
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.addVocabulary(title, serviceContext);
 	}
 
 	public void deleteVocabularies(long[] vocabularyIds)
@@ -150,6 +158,14 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 		return _assetVocabularyService.getGroupVocabulariesCount(groupId, name);
 	}
 
+	public com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.getGroupVocabulariesDisplay(groupId,
+			name, start, end, obc);
+	}
+
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -174,7 +190,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
@@ -201,14 +217,14 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AssetVocabularyService getWrappedAssetVocabularyService() {
 		return _assetVocabularyService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAssetVocabularyService(
 		AssetVocabularyService assetVocabularyService) {

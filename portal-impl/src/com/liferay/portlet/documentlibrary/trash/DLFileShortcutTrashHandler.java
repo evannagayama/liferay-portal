@@ -81,8 +81,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getDLControlPanelLink(
 			portletRequest, fileShortcut.getFolderId());
@@ -92,8 +91,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getAbsolutePath(
 			portletRequest, fileShortcut.getFolderId());
@@ -103,8 +101,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return new DLFileShortcutTrashRenderer(fileShortcut);
 	}
@@ -127,14 +124,18 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
-		if (fileShortcut.isInTrash() || fileShortcut.isInTrashFolder()) {
-			return true;
-		}
+		return fileShortcut.isInTrash();
+	}
 
-		return false;
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
+
+		return fileShortcut.isInTrashContainer();
 	}
 
 	@Override
@@ -143,7 +144,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return !dlFileShortcut.isInTrashFolder();
+		return !dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override

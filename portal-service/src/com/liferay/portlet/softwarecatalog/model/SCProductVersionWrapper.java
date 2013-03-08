@@ -432,6 +432,16 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_scProductVersion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_scProductVersion.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_scProductVersion.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -487,7 +497,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public SCProductVersion getWrappedSCProductVersion() {
 		return _scProductVersion;

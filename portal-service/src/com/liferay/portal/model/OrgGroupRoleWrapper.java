@@ -176,6 +176,16 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_orgGroupRole.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_orgGroupRole.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_orgGroupRole.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -226,7 +236,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public OrgGroupRole getWrappedOrgGroupRole() {
 		return _orgGroupRole;

@@ -370,6 +370,16 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_blogsStatsUser.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_blogsStatsUser.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_blogsStatsUser.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -416,7 +426,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public BlogsStatsUser getWrappedBlogsStatsUser() {
 		return _blogsStatsUser;

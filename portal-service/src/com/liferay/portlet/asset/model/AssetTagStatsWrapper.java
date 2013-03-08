@@ -215,6 +215,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_assetTagStats.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_assetTagStats.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_assetTagStats.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -261,7 +271,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public AssetTagStats getWrappedAssetTagStats() {
 		return _assetTagStats;

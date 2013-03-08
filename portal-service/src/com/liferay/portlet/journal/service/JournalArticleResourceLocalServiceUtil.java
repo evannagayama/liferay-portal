@@ -276,6 +276,18 @@ public class JournalArticleResourceLocalServiceUtil {
 		getService().deleteArticleResource(groupId, articleId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchArticleResource(groupId, articleId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchArticleResource(uuid, groupId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
 		long articleResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -313,7 +325,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(JournalArticleResourceLocalService service) {
 	}

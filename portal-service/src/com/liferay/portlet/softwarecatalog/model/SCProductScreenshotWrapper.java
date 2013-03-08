@@ -277,6 +277,16 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_scProductScreenshot.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_scProductScreenshot.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_scProductScreenshot.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -323,7 +333,7 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public SCProductScreenshot getWrappedSCProductScreenshot() {
 		return _scProductScreenshot;

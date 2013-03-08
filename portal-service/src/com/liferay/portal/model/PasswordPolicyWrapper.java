@@ -64,6 +64,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("minNumbers", getMinNumbers());
 		attributes.put("minSymbols", getMinSymbols());
 		attributes.put("minUpperCase", getMinUpperCase());
+		attributes.put("regex", getRegex());
 		attributes.put("history", getHistory());
 		attributes.put("historyCount", getHistoryCount());
 		attributes.put("expireable", getExpireable());
@@ -200,6 +201,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (minUpperCase != null) {
 			setMinUpperCase(minUpperCase);
+		}
+
+		String regex = (String)attributes.get("regex");
+
+		if (regex != null) {
+			setRegex(regex);
 		}
 
 		Boolean history = (Boolean)attributes.get("history");
@@ -719,6 +726,24 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
+	* Returns the regex of this password policy.
+	*
+	* @return the regex of this password policy
+	*/
+	public java.lang.String getRegex() {
+		return _passwordPolicy.getRegex();
+	}
+
+	/**
+	* Sets the regex of this password policy.
+	*
+	* @param regex the regex of this password policy
+	*/
+	public void setRegex(java.lang.String regex) {
+		_passwordPolicy.setRegex(regex);
+	}
+
+	/**
 	* Returns the history of this password policy.
 	*
 	* @return the history of this password policy
@@ -1003,6 +1028,16 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_passwordPolicy.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_passwordPolicy.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -1048,7 +1083,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public PasswordPolicy getWrappedPasswordPolicy() {
 		return _passwordPolicy;

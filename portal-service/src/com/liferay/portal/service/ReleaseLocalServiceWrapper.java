@@ -251,17 +251,16 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		_releaseLocalService.createTablesAndPopulate();
 	}
 
+	public com.liferay.portal.model.Release fetchRelease(
+		java.lang.String servletContextName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _releaseLocalService.fetchRelease(servletContextName);
+	}
+
 	public int getBuildNumberOrCreate()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _releaseLocalService.getBuildNumberOrCreate();
-	}
-
-	public com.liferay.portal.model.Release getRelease(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _releaseLocalService.getRelease(servletContextName);
 	}
 
 	public com.liferay.portal.model.Release updateRelease(long releaseId,
@@ -273,14 +272,14 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ReleaseLocalService getWrappedReleaseLocalService() {
 		return _releaseLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {

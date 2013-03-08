@@ -79,10 +79,16 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	}
 	%>
 
-	<liferay-ui:search-container-results
-		results="<%= UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		total="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams) %>"
-	/>
+	<liferay-ui:search-container-results>
+		<c:choose>
+			<c:when test="<%= PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
+				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_index.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
+			</c:otherwise>
+		</c:choose>
+	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.UserGroup"
@@ -173,9 +179,11 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	<c:choose>
 		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-user-groups" : "x-user-group", total) %>'>
-				<aui:input inlineField="<%= true %>" label="" name='<%= DisplayTerms.KEYWORDS + "_user_groups" %>' size="30" value="" />
+				<span class="aui-search-bar">
+					<aui:input inlineField="<%= true %>" label="" name='<%= DisplayTerms.KEYWORDS + "_user_groups" %>' size="30" value="" />
 
-				<aui:button type="submit" value="search" />
+					<aui:button type="submit" value="search" />
+				</span>
 
 				<br /><br />
 

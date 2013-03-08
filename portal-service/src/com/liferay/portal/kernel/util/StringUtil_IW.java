@@ -106,7 +106,7 @@ public class StringUtil_IW {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords) {
@@ -114,7 +114,7 @@ public class StringUtil_IW {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords, java.lang.String highlight1,
@@ -144,6 +144,10 @@ public class StringUtil_IW {
 
 	public void lowerCase(java.lang.String... array) {
 		StringUtil.lowerCase(array);
+	}
+
+	public java.lang.String lowerCaseFirstLetter(java.lang.String s) {
+		return StringUtil.lowerCaseFirstLetter(s);
 	}
 
 	public boolean matches(java.lang.String s, java.lang.String pattern) {

@@ -315,6 +315,16 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_expandoValue.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_expandoValue.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_expandoValue.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -660,7 +670,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ExpandoValue getWrappedExpandoValue() {
 		return _expandoValue;

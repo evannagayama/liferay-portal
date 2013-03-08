@@ -483,6 +483,16 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_repository.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_repository.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_repository.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -537,7 +547,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public Repository getWrappedRepository() {
 		return _repository;

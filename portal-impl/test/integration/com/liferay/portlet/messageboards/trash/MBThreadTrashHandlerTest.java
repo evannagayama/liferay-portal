@@ -16,25 +16,26 @@ package com.liferay.portlet.messageboards.trash;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -43,8 +44,13 @@ import org.junit.runner.RunWith;
  * @author Zsolt Berentey
  * @author Eduardo Garcia
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
@@ -63,12 +69,17 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashVersionAndDelete() throws Exception {
+	public void testTrashVersionBaseModelAndDelete() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	public void testTrashVersionAndRestore() throws Exception {
+	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -80,15 +91,9 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			category.getCategoryId(), _SUBJECT, _BODY, serviceContext);
-
-		if (!approved) {
-			message = MBMessageLocalServiceUtil.updateStatus(
-				message.getStatusByUserId(), message.getMessageId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
-		}
+		MBMessage message = MBTestUtil.addMessage(
+			category.getCategoryId(), getSearchKeywords(), approved,
+			serviceContext);
 
 		return message.getThread();
 	}
@@ -104,7 +109,15 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+	protected int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return MBThreadServiceUtil.getGroupThreadsCount(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition(
@@ -121,15 +134,22 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		return MBTestUtil.addCategory(serviceContext);
 	}
 
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return MBCategory.class;
+	}
+
+	@Override
+	protected int getRecentBaseModelsCount(long groupId) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.HOUR, -1);
+
+		return MBThreadServiceUtil.getGroupThreadsCount(
+			groupId, 0, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -150,15 +170,6 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			((MBThread)classedModel).getRootMessageId());
 
 		return super.isAssetEntryVisible(rootMessage);
-	}
-
-	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
-		throws Exception {
-
-		MBThread thread = (MBThread)classedModel;
-
-		return thread.isInTrashCategory();
 	}
 
 	@Override
@@ -195,8 +206,6 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return super.searchBaseModelsCount(MBMessage.class, groupId);
 	}
-
-	private static final String _BODY = "Body";
 
 	private static final String _SUBJECT = "Subject";
 

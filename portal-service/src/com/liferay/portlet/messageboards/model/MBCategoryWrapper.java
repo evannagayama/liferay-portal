@@ -585,7 +585,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	/**
-	* @deprecated Renamed to {@link #isApproved()}
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	public boolean getApproved() {
 		return _mbCategory.getApproved();
@@ -750,6 +750,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_mbCategory.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_mbCategory.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_mbCategory.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -813,12 +823,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.getParentCategory();
 	}
 
-	public com.liferay.portlet.messageboards.model.MBCategory getTrashCategory() {
-		return _mbCategory.getTrashCategory();
+	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
+		return _mbCategory.getTrashContainer();
 	}
 
-	public boolean isInTrashCategory() {
-		return _mbCategory.isInTrashCategory();
+	public boolean isInTrashContainer() {
+		return _mbCategory.isInTrashContainer();
 	}
 
 	public boolean isRoot() {
@@ -826,7 +836,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public MBCategory getWrappedMBCategory() {
 		return _mbCategory;

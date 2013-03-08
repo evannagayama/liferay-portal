@@ -210,7 +210,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_layoutRevisionId);
+		return _layoutRevisionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
@@ -1267,7 +1267,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	/**
-	 * @deprecated {@link #isApproved}
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */
 	public boolean getApproved() {
 		return isApproved();

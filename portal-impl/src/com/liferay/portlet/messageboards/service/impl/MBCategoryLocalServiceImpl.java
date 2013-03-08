@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -449,14 +450,21 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			long groupId, long userId, int start, int end)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, null);
+
 		return mbCategoryFinder.findByS_G_U_P(
-			groupId, userId, null, start, end);
+			groupId, userId, null, queryDefinition);
 	}
 
 	public int getSubscribedCategoriesCount(long groupId, long userId)
 		throws SystemException {
 
-		return mbCategoryFinder.countByS_G_U_P(groupId, userId, null);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		return mbCategoryFinder.countByS_G_U_P(
+			groupId, userId, null, queryDefinition);
 	}
 
 	public void moveCategoriesToTrash(long groupId, long userId)
@@ -642,42 +650,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return category;
 	}
 
-	public MBCategory updateStatus(long userId, long categoryId, int status)
-		throws PortalException, SystemException {
-
-		// Category
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		category.setStatus(status);
-		category.setStatusByUserId(user.getUserId());
-		category.setStatusByUserName(user.getFullName());
-		category.setStatusDate(new Date());
-
-		mbCategoryPersistence.update(category);
-
-		// Categories and threads
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
-
-		updateStatuses(user, categoriesAndThreads, status);
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.addTrashEntry(
-				userId, category.getGroupId(), MBCategory.class.getName(),
-				categoryId, WorkflowConstants.STATUS_APPROVED, null, null);
-		}
-
-		return category;
-	}
-
-	public void updateStatuses(
+	public void updateDependentStatus(
 			User user, List<Object> categoriesAndThreads, int status)
 		throws PortalException, SystemException {
 
@@ -701,13 +674,48 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					continue;
 				}
 
-				updateStatuses(
+				updateDependentStatus(
 					user,
 					getCategoriesAndThreads(
 						category.getGroupId(), category.getCategoryId()),
 					status);
 			}
 		}
+	}
+
+	public MBCategory updateStatus(long userId, long categoryId, int status)
+		throws PortalException, SystemException {
+
+		// Category
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		category.setStatus(status);
+		category.setStatusByUserId(user.getUserId());
+		category.setStatusByUserName(user.getFullName());
+		category.setStatusDate(new Date());
+
+		mbCategoryPersistence.update(category);
+
+		// Categories and threads
+
+		List<Object> categoriesAndThreads = getCategoriesAndThreads(
+			category.getGroupId(), categoryId);
+
+		updateDependentStatus(user, categoriesAndThreads, status);
+
+		// Trash
+
+		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			trashEntryLocalService.addTrashEntry(
+				userId, category.getGroupId(), MBCategory.class.getName(),
+				categoryId, WorkflowConstants.STATUS_APPROVED, null, null);
+		}
+
+		return category;
 	}
 
 	protected long getParentCategoryId(long groupId, long parentCategoryId)

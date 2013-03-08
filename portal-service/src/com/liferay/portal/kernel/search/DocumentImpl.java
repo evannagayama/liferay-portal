@@ -51,6 +51,10 @@ import java.util.Set;
 public class DocumentImpl implements Document {
 
 	public static String getLocalizedName(Locale locale, String name) {
+		if (locale == null) {
+			return name;
+		}
+
 		String languageId = LocaleUtil.toLanguageId(locale);
 
 		String localizedName = name.concat(StringPool.UNDERLINE).concat(
@@ -65,7 +69,7 @@ public class DocumentImpl implements Document {
 	}
 
 	public static boolean isSortableTextField(String name) {
-		return _sortableTextFields.contains(name);
+		return _defaultSortableTextFields.contains(name);
 	}
 
 	public void add(Field field) {
@@ -295,94 +299,107 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate() {
 		addModifiedDate(new Date());
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate(Date modifiedDate) {
 		addDate(Field.MODIFIED, modifiedDate);
 	}
 
 	public void addNumber(String name, double value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Double.class);
 	}
 
 	public void addNumber(String name, Double value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Double.class);
 	}
 
 	public void addNumber(String name, double[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Double.class);
 	}
 
 	public void addNumber(String name, Double[] values) {
-		addNumber(name, String.valueOf(ArrayUtil.toStringArray(values)));
+		addNumber(name, ArrayUtil.toStringArray(values), Double.class);
 	}
 
 	public void addNumber(String name, float value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Float.class);
 	}
 
 	public void addNumber(String name, Float value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Float.class);
 	}
 
 	public void addNumber(String name, float[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Float.class);
 	}
 
 	public void addNumber(String name, Float[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Float.class);
 	}
 
 	public void addNumber(String name, int value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Integer.class);
 	}
 
 	public void addNumber(String name, int[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Integer.class);
 	}
 
 	public void addNumber(String name, Integer value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Integer.class);
 	}
 
 	public void addNumber(String name, Integer[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Integer.class);
 	}
 
 	public void addNumber(String name, long value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Long.class);
 	}
 
 	public void addNumber(String name, Long value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Long.class);
 	}
 
 	public void addNumber(String name, long[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Long.class);
 	}
 
 	public void addNumber(String name, Long[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Long.class);
 	}
 
 	public void addNumber(String name, String value) {
+		addNumber(name, value, Long.class);
+	}
+
+	public void addNumber(
+		String name, String value, Class<? extends Number> clazz) {
+
 		if (Validator.isNotNull(value)) {
 			Field field = new Field(name, value);
 
 			field.setNumeric(true);
+			field.setNumericClass(clazz);
 
 			_fields.put(name, field);
 		}
 	}
 
 	public void addNumber(String name, String[] values) {
+		addNumber(name, values, Long.class);
+	}
+
+	public void addNumber(
+		String name, String[] values, Class<? extends Number> clazz) {
+
 		if (values == null) {
 			return;
 		}
@@ -390,6 +407,7 @@ public class DocumentImpl implements Document {
 		Field field = new Field(name, values);
 
 		field.setNumeric(true);
+		field.setNumericClass(clazz);
 
 		_fields.put(name, field);
 	}
@@ -413,7 +431,7 @@ public class DocumentImpl implements Document {
 					0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
 			}
 
-			addKeyword(getSortableFieldName(name), truncatedValue);
+			addKeyword(getSortableFieldName(name), truncatedValue, true);
 		}
 	}
 
@@ -478,6 +496,15 @@ public class DocumentImpl implements Document {
 		}
 
 		addKeyword(Field.UID, uid);
+	}
+
+	@Override
+	public Object clone() {
+		DocumentImpl documentImpl = new DocumentImpl();
+
+		documentImpl.setSortableTextFields(_sortableTextFields);
+
+		return documentImpl;
 	}
 
 	public String get(Locale locale, String name) {
@@ -585,12 +612,20 @@ public class DocumentImpl implements Document {
 		return field.getValues();
 	}
 
+	public boolean isDocumentSortableTextField(String name) {
+		return _sortableTextFields.contains(name);
+	}
+
 	public void remove(String name) {
 		_fields.remove(name);
 	}
 
 	public void setFields(Map<String, Field> fields) {
 		_fields = fields;
+	}
+
+	public void setSortableTextFields(String[] sortableTextFields) {
+		_sortableTextFields = SetUtil.fromArray(sortableTextFields);
 	}
 
 	@Override
@@ -620,6 +655,10 @@ public class DocumentImpl implements Document {
 		return sb.toString();
 	}
 
+	protected void setSortableTextFields(Set<String> sortableTextFields) {
+		_sortableTextFields = sortableTextFields;
+	}
+
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
@@ -637,9 +676,10 @@ public class DocumentImpl implements Document {
 	private static Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_INDEX_DATE_FORMAT_PATTERN);
-	private static Set<String> _sortableTextFields = SetUtil.fromArray(
+	private static Set<String> _defaultSortableTextFields = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS));
 
 	private Map<String, Field> _fields = new HashMap<String, Field>();
+	private Set<String> _sortableTextFields = _defaultSortableTextFields;
 
 }

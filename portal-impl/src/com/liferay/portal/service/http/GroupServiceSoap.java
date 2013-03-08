@@ -129,8 +129,8 @@ public class GroupServiceSoap {
 	information was invalid, if a layout could not be found, or
 	if a valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addGroup(long, long, String, String, int, String,
-	boolean, boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
+	String, int, String, boolean, boolean, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.GroupSoap addGroup(
 		long parentGroupId, java.lang.String name,
@@ -153,8 +153,8 @@ public class GroupServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #addGroup(long, String, String, int, String, boolean,
-	boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
+	String, int, String, boolean, boolean, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.GroupSoap addGroup(
 		java.lang.String name, java.lang.String description, int type,
@@ -434,16 +434,25 @@ public class GroupServiceSoap {
 	* entity class names, including the Control Panel group if the user is
 	* permitted to view the Control Panel.
 	*
-	* <p>
-	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups. </li>
-	* <li> Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* <ul>
+	* <li>
+	* Class name &quot;User&quot; includes the user's layout set
+	* group.
+	* </li>
+	* <li>
+	* Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups.
+	* </li>
+	* <li>
+	* Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups.
+	* </li>
+	* <li>
+	* A <code>classNames</code>
 	* value of <code>null</code> includes the user's layout set group,
 	* organization groups, inherited organization groups, and site groups.
-	* </li> </ul>
-	* </p>
+	* </li>
+	* </ul>
 	*
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
@@ -492,16 +501,25 @@ public class GroupServiceSoap {
 	* with the group entity class names, including the Control Panel group if
 	* the user is permitted to view the Control Panel.
 	*
-	* <p>
-	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups. </li>
-	* <li> Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* <ul>
+	* <li>
+	* Class name &quot;User&quot; includes the user's layout set
+	* group.
+	* </li>
+	* <li>
+	* Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups.
+	* </li>
+	* <li>
+	* Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups.
+	* </li>
+	* <li>
+	* A <code>classNames</code>
 	* value of <code>null</code> includes the user's layout set group,
 	* organization groups, inherited organization groups, and site groups.
-	* </li> </ul>
-	* </p>
+	* </li>
+	* </ul>
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link

@@ -259,14 +259,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether the permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the organization's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set asset category IDs, asset tag names,
 	and expando bridge attributes for the organization.
 	* @return the organization
@@ -459,16 +459,41 @@ public interface OrganizationLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the sub-organizations of the organizations.
+	* Returns the suborganizations of the organizations.
 	*
 	* @param organizations the organizations from which to get
-	sub-organizations
-	* @return the sub-organizations of the organizations
+	suborganizations
+	* @return the suborganizations of the organizations
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
 		java.util.List<com.liferay.portal.model.Organization> organizations)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the suborganizations of the organization.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
+	* @return the suborganizations of the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
+		long companyId, long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the count of suborganizations of the organization.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
+	* @return the count of suborganizations of the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSuborganizationsCount(long companyId, long organizationId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -602,11 +627,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 
 	/**
 	* Returns <code>true</code> if the user is a member of the organization,
-	* optionally focusing on sub-organizations or the specified organization.
+	* optionally focusing on suborganizations or the specified organization.
 	* This method is usually called to determine if the user has view access to
 	* a resource belonging to the organization.
-	*
-	* <p>
 	*
 	* <ol>
 	* <li>
@@ -637,12 +660,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* </li>
 	* </ol>
 	*
-	* <p>
-	*
 	* @param userId the primary key of the organization's user
 	* @param organizationId the primary key of the organization
-	* @param inheritSuborganizations if <code>true</code> sub-organizations
-	are considered in the determination
+	* @param inheritSuborganizations if <code>true</code> suborganizations are
+	considered in the determination
 	* @param includeSpecifiedOrganization if <code>true</code> the
 	organization specified by <code>organizationId</code> is
 	considered in the determination
@@ -1136,14 +1157,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the organization's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the organization, and merge expando bridge attributes
 	for the organization.

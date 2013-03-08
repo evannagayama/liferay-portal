@@ -79,6 +79,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return getSummary(locale);
 	}
 
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/default.png";
+	}
+
 	public String getURLDownload(ThemeDisplay themeDisplay) {
 		return null;
 	}
@@ -97,9 +107,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			WindowState windowState, PortletURL redirectURL)
 		throws Exception {
 
-		LiferayPortletURL editPortletURL =
-			(LiferayPortletURL)getURLEdit(
-				liferayPortletRequest, liferayPortletResponse);
+		LiferayPortletURL editPortletURL = (LiferayPortletURL)getURLEdit(
+			liferayPortletRequest, liferayPortletResponse);
 
 		if (editPortletURL == null) {
 			return null;

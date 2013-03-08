@@ -309,6 +309,16 @@ public class SocialActivityAchievementWrapper
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_socialActivityAchievement.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_socialActivityAchievement.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_socialActivityAchievement.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -355,7 +365,7 @@ public class SocialActivityAchievementWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public SocialActivityAchievement getWrappedSocialActivityAchievement() {
 		return _socialActivityAchievement;

@@ -591,6 +591,16 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_mdrRuleGroup.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_mdrRuleGroup.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_mdrRuleGroup.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -648,7 +658,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public MDRRuleGroup getWrappedMDRRuleGroup() {
 		return _mdrRuleGroup;

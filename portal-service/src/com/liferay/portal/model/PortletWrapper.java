@@ -233,6 +233,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_portlet.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_portlet.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_portlet.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -1313,23 +1323,23 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Returns the name of the social activity interpreter class of the portlet.
+	* Returns the names of the classes that represent social activity
+	* interpreters associated with the portlet.
 	*
-	* @return the name of the social activity interpreter class of the portlet
+	* @return the names of the classes that represent social activity
+	interpreters associated with the portlet
 	*/
-	public java.lang.String getSocialActivityInterpreterClass() {
-		return _portlet.getSocialActivityInterpreterClass();
+	public java.util.List<java.lang.String> getSocialActivityInterpreterClasses() {
+		return _portlet.getSocialActivityInterpreterClasses();
 	}
 
 	/**
-	* Returns the name of the social activity interpreter instance of the
-	* portlet.
+	* Returns the social activity interpreter instances of the portlet.
 	*
-	* @return the name of the social activity interpreter instance of the
-	portlet
+	* @return the social activity interpreter instances of the portlet
 	*/
-	public com.liferay.portlet.social.model.SocialActivityInterpreter getSocialActivityInterpreterInstance() {
-		return _portlet.getSocialActivityInterpreterInstance();
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
+		return _portlet.getSocialActivityInterpreterInstances();
 	}
 
 	/**
@@ -2758,14 +2768,15 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the name of the social activity interpreter class of the portlet.
+	* Sets the names of the classes that represent social activity interpreters
+	* associated with the portlet.
 	*
-	* @param socialActivityInterpreterClass the name of the activity
-	interpreter class of the portlet
+	* @param socialActivityInterpreterClasses the names of the classes that
+	represent social activity interpreters associated with the portlet
 	*/
-	public void setSocialActivityInterpreterClass(
-		java.lang.String socialActivityInterpreterClass) {
-		_portlet.setSocialActivityInterpreterClass(socialActivityInterpreterClass);
+	public void setSocialActivityInterpreterClasses(
+		java.util.List<java.lang.String> socialActivityInterpreterClasses) {
+		_portlet.setSocialActivityInterpreterClasses(socialActivityInterpreterClasses);
 	}
 
 	/**
@@ -2973,7 +2984,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public Portlet getWrappedPortlet() {
 		return _portlet;

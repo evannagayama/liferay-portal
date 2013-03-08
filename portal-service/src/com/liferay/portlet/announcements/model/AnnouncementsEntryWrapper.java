@@ -570,6 +570,16 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_announcementsEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_announcementsEntry.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_announcementsEntry.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -622,7 +632,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public AnnouncementsEntry getWrappedAnnouncementsEntry() {
 		return _announcementsEntry;

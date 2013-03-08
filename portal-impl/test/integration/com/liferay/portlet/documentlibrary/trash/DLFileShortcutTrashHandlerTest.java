@@ -27,6 +27,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -44,8 +47,13 @@ import org.junit.runner.RunWith;
  * @author Zsolt Berentey
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
@@ -70,12 +78,27 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashVersionAndDelete() throws Exception {
+	public void testTrashMyBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	public void testTrashVersionAndRestore() throws Exception {
+	public void testTrashRecentBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionBaseModelAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -115,7 +138,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		DLFolder dlFolder = (DLFolder)parentBaseModel;
@@ -163,15 +186,6 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
-		throws Exception {
-
-		DLFileShortcut dLFileShortcut = (DLFileShortcut)classedModel;
-
-		return dLFileShortcut.isInTrashFolder();
-	}
-
-	@Override
 	protected BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)
@@ -200,7 +214,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	protected void trashFileEntry() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
@@ -209,7 +223,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsCount = getBaseModelsNotInTrashCount(
+		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
@@ -223,7 +237,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
-			getBaseModelsNotInTrashCount(parentBaseModel));
+			getNotInTrashBaseModelsCount(parentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
@@ -231,7 +245,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
-			getBaseModelsNotInTrashCount(parentBaseModel));
+			getNotInTrashBaseModelsCount(parentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
@@ -240,7 +254,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
-			getBaseModelsNotInTrashCount(parentBaseModel));
+			getNotInTrashBaseModelsCount(parentBaseModel));
 	}
 
 }

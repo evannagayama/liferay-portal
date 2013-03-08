@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/input/init.jsp" %>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("assetTags") && !type.equals("hidden") %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") %>'>
 	<span class="<%= fieldCss %>">
 		<span class="aui-field-content">
 			<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
@@ -124,7 +124,7 @@
 		}
 		%>
 
-		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= valueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= HtmlUtil.escapeAttribute(valueString) %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("timeZone") %>'>
 		<span class="<%= fieldCss %>">
@@ -187,7 +187,7 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("assetTags") && !type.equals("hidden") %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") %>'>
 			</span>
 
 			<c:if test='<%= Validator.isNotNull(suffix) && !inlineLabel.equals("right") %>'>

@@ -245,6 +245,16 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	}
 
 	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_userIdMapper.setExpandoBridgeAttributes(baseModel);
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_userIdMapper.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_userIdMapper.setExpandoBridgeAttributes(serviceContext);
 	}
@@ -290,7 +300,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public UserIdMapper getWrappedUserIdMapper() {
 		return _userIdMapper;

@@ -180,7 +180,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_categoryId);
+		return _categoryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
@@ -636,7 +636,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	/**
-	 * @deprecated {@link #isApproved}
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */
 	public boolean getApproved() {
 		return isApproved();
@@ -796,8 +796,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(mbCategory.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(mbCategory.getName());
 
 		if (value != 0) {
 			return value;

@@ -448,6 +448,14 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
+		long[] groupIds, java.lang.String name,
+		java.lang.String[] tagProperties, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.search(groupIds, name, tagProperties,
+			start, end);
+	}
+
 	public com.liferay.portlet.asset.model.AssetTag updateTag(long userId,
 		long tagId, java.lang.String name, java.lang.String[] tagProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -458,14 +466,14 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AssetTagLocalService getWrappedAssetTagLocalService() {
 		return _assetTagLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {

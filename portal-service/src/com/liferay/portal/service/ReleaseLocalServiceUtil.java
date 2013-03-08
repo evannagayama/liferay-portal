@@ -259,17 +259,16 @@ public class ReleaseLocalServiceUtil {
 		getService().createTablesAndPopulate();
 	}
 
+	public static com.liferay.portal.model.Release fetchRelease(
+		java.lang.String servletContextName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRelease(servletContextName);
+	}
+
 	public static int getBuildNumberOrCreate()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getBuildNumberOrCreate();
-	}
-
-	public static com.liferay.portal.model.Release getRelease(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRelease(servletContextName);
 	}
 
 	public static com.liferay.portal.model.Release updateRelease(
@@ -293,7 +292,7 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(ReleaseLocalService service) {
 	}

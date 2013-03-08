@@ -15,10 +15,11 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
@@ -47,17 +48,24 @@ public class GetStructureJSONAction extends Action {
 
 			String xsd = ParamUtil.getString(request, "xsd");
 
-			DDMStructure structure = DDMStructureServiceUtil.getStructure(
-				structureId);
+			DDMStructure structure = null;
+
+			if (structureId > 0) {
+				structure = DDMStructureServiceUtil.getStructure(structureId);
+			}
 
 			JSONArray jsonArray = DDMXSDUtil.getJSONArray(structure, xsd);
 
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setContentType(ContentTypes.APPLICATION_JSON);
 
 			ServletResponseUtil.write(response, jsonArray.toString());
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.putException(e);
+
+			ServletResponseUtil.write(response, jsonObject.toString());
 		}
 
 		return null;

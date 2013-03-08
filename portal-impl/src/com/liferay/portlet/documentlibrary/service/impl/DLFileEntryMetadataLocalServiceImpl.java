@@ -75,7 +75,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getFileVersionFileEntryMetadatasCount(long)}
 	 */
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws SystemException {
@@ -160,7 +161,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 		if (fileEntryMetadata != null) {
 			StorageEngineUtil.update(
-				fileEntryMetadata.getDDMStorageId(), fields, serviceContext);
+				fileEntryMetadata.getDDMStorageId(), fields, true,
+				serviceContext);
 		}
 		else {
 

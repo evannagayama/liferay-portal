@@ -42,7 +42,8 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author     Brian Chan
  * @author     Jorge Ferrer
- * @deprecated {@link com.liferay.taglib.ui.InputPermissionsParamsTag}
+ * @deprecated As of 6.2.0, replaced by {@link
+ *             com.liferay.taglib.ui.InputPermissionsParamsTag}
  */
 public class InputPermissionsParamsTagUtil {
 
@@ -169,11 +170,11 @@ public class InputPermissionsParamsTagUtil {
 			ResourceActionsUtil.getModelResourceGroupDefaultActions(modelName);
 
 		if (groupDefaultActions.contains(ActionKeys.VIEW)) {
-			Group parentGroup = GroupLocalServiceUtil.getGroup(
-				themeDisplay.getParentGroupId());
+			Group siteGroup = GroupLocalServiceUtil.getGroup(
+				themeDisplay.getSiteGroupId());
 
 			Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
-				parentGroup.getGroupId());
+				siteGroup.getGroupId());
 
 			return defaultGroupRole.getName();
 		}
