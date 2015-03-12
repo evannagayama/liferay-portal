@@ -630,7 +630,7 @@
 			<var name="portletName" value="${portletName} Custom" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="applicationName" value="Sites Directory" />
 			<var name="markAsReadyForPublication" value="true" />
 		</execute>
@@ -831,7 +831,7 @@
 			<var name="postCount" value="1" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="checkPageName" value="Blogs Page 1" />
 		</execute>
 
@@ -910,7 +910,7 @@
 			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="checkPageName" value="Blogs Page 2" />
 			<var name="contentDateRange" value="All" />
 		</execute>
@@ -1210,7 +1210,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="uncheckContentNameList" value="Documents and Media" />
 		</execute>
 
@@ -1229,7 +1229,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="checkContentNameList" value="Documents and Media" />
 			<var name="contentDateRange" value="All" />
 		</execute>
@@ -1801,7 +1801,7 @@
 			<var name="pageName" value="Wiki" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="deleteMissingPages" value="true" />
 		</execute>
 
@@ -2505,7 +2505,7 @@
 
 		<execute macro="Page#viewCustomLogoPG" />
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="uncheckLogo" value="true" />
 		</execute>
 
@@ -2760,7 +2760,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="contentDateRange" value="All" />
 		</execute>
 
@@ -2971,7 +2971,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="checkPageName" value="Page 2" />
 		</execute>
 
@@ -3138,7 +3138,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="checkPageName" value="Home" />
 		</execute>
 
@@ -3410,7 +3410,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="contentDateRange" value="All" />
 		</execute>
 

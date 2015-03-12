@@ -1022,7 +1022,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNow">
+		<execute macro="Staging#publishToLive">
 			<var name="contentDeletion" value="true" />
 		</execute>
 

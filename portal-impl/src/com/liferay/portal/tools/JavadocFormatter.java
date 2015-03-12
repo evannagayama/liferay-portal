@@ -44,6 +44,7 @@ import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.annotation.AnnotationValue;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -192,8 +193,12 @@ public class JavadocFormatter {
 					_format(fileName);
 				}
 				catch (Exception e) {
-					throw new RuntimeException(
-						"Unable to format file " + fileName, e);
+					if (!(e instanceof ParseException) ||
+						!fileName.contains("/tools/templates/")) {
+
+						throw new RuntimeException(
+							"Unable to format file " + fileName, e);
+					}
 				}
 			}
 		}
@@ -1447,7 +1452,17 @@ public class JavadocFormatter {
 
 			JavaMethod ancestorJavaMethod = null;
 
-			if (ancestorJavaClassTuple.getSize() > 1) {
+			String ancestorJavaClassName =
+				ancestorJavaClass.getFullyQualifiedName();
+
+			if ((ancestorJavaClassTuple.getSize() == 1) ||
+				(ancestorJavaClassName.equals("java.util.Map") &&
+				 methodName.equals("get"))) {
+
+				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
+					methodName, types);
+			}
+			else {
 
 				// LPS-35613
 
@@ -1485,10 +1500,6 @@ public class JavadocFormatter {
 
 				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
 					methodName, genericTypes);
-			}
-			else {
-				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
-					methodName, types);
 			}
 
 			if (ancestorJavaMethod == null) {
