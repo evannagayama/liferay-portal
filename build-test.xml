@@ -1657,14 +1657,42 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					flags="g"
-					match="(\s*\&lt;testcase[^/]*)/&gt;"
+					match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
+					replace=""
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(\s*\&lt;testcase[^/\n]*)/&gt;"
 					replace="\1&gt;${line.separator}&lt;/testcase&gt;"
 				/>
 
 				<replaceregexp
 					file="@{file.name}"
 					match="&lt;testcase[^&gt;]*&gt;"
-					replace="${test.suite.properties}\0${test.case.attachments}${line.separator}${test.case.properties}"
+					replace="${test.suite.properties}\0"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="&lt;testcase[^&gt;]*&gt;"
+					replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
+					replace="\1\2#\3"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\$\{testray\.testcase\.name\}"
+					replace="${testray.main.component.name}"
 				/>
 
 				<replaceregexp
@@ -2090,12 +2118,24 @@ ${marketplace.portlet.properties}</echo>
 
 				<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
 
+				<if>
+					<equals arg1="${build.status}" arg2="pass" />
+					<then>
+						<property name="testcase.element"><![CDATA[<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00" />]]></property>
+					</then>
+					<else>
+						<property name="testcase.element"><![CDATA[
+							<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
+								<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
+							</testcase>
+						]]></property>
+					</else>
+				</if>
+
 				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0"?>
 
 <testsuite>
-	<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
-		<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
-	</testcase>
+	${testcase.element}
 	<system-out></system-out>
 	<system-err></system-err>
 </testsuite>]]></echo>
@@ -2447,7 +2487,12 @@ ${marketplace.portlet.properties}</echo>
 
 		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
 
-		<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
+		<if>
+			<contains string="${env.JOB_NAME}" substring="frontend" />
+			<then>
+				<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
+			</then>
+		</if>
 
 		<if>
 			<isset property="jenkins.testray.results.dir" />
@@ -3256,8 +3301,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					mobile.device.enabled=${mobile.device.enabled}
-					mobile.device.resolution=${mobile.device.resolution}
-					mobile.device.user.agent=${mobile.device.user.agent}
 				</echo>
 			</then>
 		</if>

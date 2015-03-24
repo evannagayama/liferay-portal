@@ -213,6 +213,113 @@
 		</execute>
 	</command>
 
+	<command name="ExportImportDDLViaGlobal" priority="5">
+		<var name="ddlDataDefinitionName" value="DDL Definition" />
+		<var name="ddlListDescription" value="DDL List Description" />
+		<var name="ddlListName" value="DDL List" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text Label" />
+		<var name="fieldName" value="Text_Name" />
+		<var name="larFileName" value="DDLexport.lar" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data List" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data List" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlListDescription}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Record" />
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importDDL">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
 	<command name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
