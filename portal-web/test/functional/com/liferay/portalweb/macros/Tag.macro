@@ -282,7 +282,7 @@
 	<command name="removeSelectTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
@@ -318,7 +318,7 @@
 	<command name="removeTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
@@ -410,7 +410,7 @@
 	</command>
 
 	<command name="viewMultipleViaBlogsPG">
-		<for list ="${tagNameList}" param="tagName">
+		<for list="${tagNameList}" param="tagName">
 			<var name="key_tagName" value="${tagName}" />
 
 			<execute function="AssertTextEquals" locator1="PGBlogs#TAG" value1="${tagName}" />
