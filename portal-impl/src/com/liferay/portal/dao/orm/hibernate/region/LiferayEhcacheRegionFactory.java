@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.cache.ehcache.CacheManagerUtil;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
@@ -177,7 +176,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			configuration.setDefaultTransactionManager(transactionManager);*/
 
-			manager = CacheManagerUtil.createCacheManager(configuration);
+			manager = new CacheManager(configuration);
 
 			boolean skipUpdateCheck = GetterUtil.getBoolean(
 				SystemProperties.get("net.sf.ehcache.skipUpdateCheck"));
@@ -206,12 +205,15 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			PortalCacheProvider.registerPortalCacheManager(
 				new HibernatePortalCacheManager(manager));
 
-			Registry registry = RegistryUtil.getRegistry();
+			if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
+				Registry registry = RegistryUtil.getRegistry();
 
-			_serviceTracker = registry.trackServices(
-				MBeanServer.class, new MBeanServerServiceTrackerCustomizer());
+				_serviceTracker = registry.trackServices(
+					MBeanServer.class,
+					new MBeanServerServiceTrackerCustomizer());
 
-			_serviceTracker.open();
+				_serviceTracker.open();
+			}
 		}
 		catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);
@@ -221,8 +223,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	@Override
 	public void stop() {
 		PortalCacheProvider.unregisterPortalCacheManager(manager.getName());
-
-		_managementService.dispose();
 
 		_serviceTracker.close();
 
@@ -299,8 +299,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayEhcacheRegionFactory.class);
 
-	private ManagementService _managementService;
-	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
+	private ServiceTracker<MBeanServer, ManagementService> _serviceTracker;
 	private boolean _usingDefault;
 
 	private class HibernatePortalCache<K extends Serializable, V>
@@ -527,36 +526,40 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	}
 
 	private class MBeanServerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
+		implements ServiceTrackerCustomizer<MBeanServer, ManagementService> {
 
 		@Override
-		public MBeanServer addingService(
+		public ManagementService addingService(
 			ServiceReference<MBeanServer> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			MBeanServer mBeanServer = registry.getService(serviceReference);
 
-			if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
-				_managementService = new ManagementService(
-					manager, mBeanServer, true, true, true, true);
+			ManagementService managementService = new ManagementService(
+				manager, mBeanServer, true, true, true, true);
 
-				_managementService.init();
-			}
+			managementService.init();
 
-			return mBeanServer;
+			return managementService;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<MBeanServer> serviceReference,
-			MBeanServer mBeanServer) {
+			ManagementService managementService) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<MBeanServer> serviceReference,
-			MBeanServer mBeanServer) {
+			ManagementService managementService) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			managementService.dispose();
 		}
 
 	}

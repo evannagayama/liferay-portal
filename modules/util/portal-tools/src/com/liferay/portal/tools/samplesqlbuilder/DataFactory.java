@@ -17,6 +17,7 @@ package com.liferay.portal.tools.samplesqlbuilder;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -250,9 +251,9 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 
 		_dlDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_document.xml"));
+			getResourceInputStream("ddm_structure_basic_document.json"));
 		_journalDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_web_content.xml"));
+			getResourceInputStream("ddm_structure_basic_web_content.json"));
 
 		String defaultAssetPublisherPreference = StringUtil.read(
 			getResourceInputStream("default_asset_publisher_preference.xml"));
@@ -1108,7 +1109,7 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.JOURNAL,
+				plid, JournalPortletKeys.JOURNAL,
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
@@ -1622,7 +1623,7 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.JOURNAL,
+				plid, JournalPortletKeys.JOURNAL,
 				PortletConstants.DEFAULT_PREFERENCES));
 
 		return portletPreferencesModels;
@@ -1997,7 +1998,8 @@ public class DataFactory {
 		layoutModels.add(
 			newLayoutModel(groupId, "document_library", "", "20,"));
 		layoutModels.add(newLayoutModel(groupId, "forums", "", "19,"));
-		layoutModels.add(newLayoutModel(groupId, "wiki", "", "36,"));
+		layoutModels.add(
+			newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
 
 		return layoutModels;
 	}
