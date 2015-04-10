@@ -4842,7 +4842,6 @@ if (ppstate.equals("normal")) {
 					directoryScanner.setBasedir(project.getBaseDir());
 					directoryScanner.setExcludes(
 						new String[] {
-							"modules/apps/bookmarks/bookmarks-test/test/integration/**/*Test.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
 							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
@@ -5767,6 +5766,8 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-class-group">
+		<antcall target="clean-up-java-processes" inheritAll="false" />
+
 		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-class-group" inheritAll="false" />
