@@ -34,6 +34,16 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 	}
 
+	public static void logClassCommandName(String classCommandName) {
+		LoggerElement dividerLineLoggerElement = new LoggerElement();
+
+		dividerLineLoggerElement.setClassName("divider-line");
+		dividerLineLoggerElement.setText(classCommandName);
+
+		_commandLogLoggerElement.addChildLoggerElement(
+			dividerLineLoggerElement);
+	}
+
 	public static void passCommand(Element element) {
 		if (!_isCurrentCommand(element)) {
 			return;
@@ -54,6 +64,29 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.addChildLoggerElement(_commandLoggerElement);
 	}
 
+	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {
+		LoggerElement buttonLoggerElement = new LoggerElement();
+
+		buttonLoggerElement.setAttribute(
+			"data-btnlinkid", "command-" + btnLinkId);
+		buttonLoggerElement.setClassName("btn expand-toggle");
+
+		return buttonLoggerElement;
+	}
+
+	private static LoggerElement _getChildContainerLoggerElement(
+		int btnLinkId) {
+
+		LoggerElement childContainerLoggerElement = new LoggerElement();
+
+		childContainerLoggerElement.setAttribute(
+			"data-btnlinkid", "command-" + btnLinkId);
+		childContainerLoggerElement.setClassName("child-container collapse");
+		childContainerLoggerElement.setName("ul");
+
+		return childContainerLoggerElement;
+	}
+
 	private static LoggerElement _getCommandLoggerElement(Element element)
 		throws Exception {
 
@@ -63,7 +96,15 @@ public final class CommandLoggerHandler {
 		commandLoggerElement.setName("li");
 
 		commandLoggerElement.addChildLoggerElement(
+			_getButtonLoggerElement(_btnLinkId));
+
+		commandLoggerElement.addChildLoggerElement(
 			_getLineContainerLoggerElement(element));
+
+		commandLoggerElement.addChildLoggerElement(
+			_getChildContainerLoggerElement(_btnLinkId));
+
+		_btnLinkId++;
 
 		return commandLoggerElement;
 	}
@@ -165,6 +206,7 @@ public final class CommandLoggerHandler {
 		return element.equals(_commandElement);
 	}
 
+	private static int _btnLinkId;
 	private static Element _commandElement;
 	private static LoggerElement _commandLoggerElement;
 	private static final LoggerElement _commandLogLoggerElement =

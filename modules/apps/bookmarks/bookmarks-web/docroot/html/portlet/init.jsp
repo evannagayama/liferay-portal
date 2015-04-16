@@ -15,6 +15,7 @@
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
@@ -42,7 +43,7 @@ page import="com.liferay.bookmarks.service.permission.BookmarksEntryPermissionCh
 page import="com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker" %><%@
 page import="com.liferay.bookmarks.settings.BookmarksGroupServiceSettings" %><%@
 page import="com.liferay.bookmarks.web.portlet.util.BookmarksUtil" %><%@
-page import="com.liferay.bookmarks.web.settings.BookmarksWebComponentProvider" %><%@
+page import="com.liferay.bookmarks.web.util.BookmarksWebComponentProvider" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchEntry" %><%@
