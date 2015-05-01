@@ -1370,24 +1370,24 @@ public class LocalProcessExecutorTest {
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
 
-		if (Boolean.getBoolean("junit.debug")) {
-			arguments.add(jpdaOptions);
-			arguments.add("-Djunit.debug=true");
-		}
-
-		String agentLine = System.getProperty("junit.cobertura.agent");
-
-		if (Validator.isNotNull(agentLine)) {
-			arguments.add(agentLine);
-			arguments.add("-Djunit.cobertura.agent=" + agentLine);
-		}
-
 		if (Boolean.getBoolean("junit.code.coverage")) {
 			arguments.add("-Djunit.code.coverage=true");
 		}
 
 		if (Boolean.getBoolean("junit.code.coverage.dump")) {
 			arguments.add("-Djunit.code.coverage.dump=true");
+		}
+
+		if (Boolean.getBoolean("junit.debug")) {
+			arguments.add(jpdaOptions);
+			arguments.add("-Djunit.debug=true");
+		}
+
+		String junitWhipAgentLine = System.getProperty("junit.whip.agent");
+
+		if (Validator.isNotNull(junitWhipAgentLine)) {
+			arguments.add(junitWhipAgentLine);
+			arguments.add("-Djunit.whip.agent=" + junitWhipAgentLine);
 		}
 
 		String fileName = System.getProperty(
