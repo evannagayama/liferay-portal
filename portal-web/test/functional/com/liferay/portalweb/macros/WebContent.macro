@@ -507,11 +507,6 @@
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
-		
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
 		<if>
@@ -522,6 +517,9 @@
 				<execute function="Type" locator1="CPWebcontentAddwebcontent#TEXT_FIELD" value1="${webContentText}" />
 			</then>
 		</if>
+
+		<execute function="AssertTextEquals" locator1="CPWebcontentAddwebcontent#SELECTED_STRUCTURE" value1="${structureName}" />
+		<execute function="AssertTextEquals" locator1="CPWebcontentAddwebcontent#SELECTED_TEMPLATE" value1="${templateName}" />
 
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
