@@ -241,9 +241,6 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
 		<if>
 			<isset var="webContentContent" />
 			<then>
