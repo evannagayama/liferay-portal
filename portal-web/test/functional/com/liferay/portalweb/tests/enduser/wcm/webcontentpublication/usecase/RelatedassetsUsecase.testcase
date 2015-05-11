@@ -66,6 +66,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />

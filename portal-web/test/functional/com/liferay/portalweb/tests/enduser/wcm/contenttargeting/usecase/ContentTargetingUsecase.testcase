@@ -984,6 +984,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Users" />
 			<var name="vocabularyName" value="User Segment" />
@@ -1832,6 +1834,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Users" />
 			<var name="vocabularyName" value="User Segment" />
@@ -2102,6 +2106,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="User Segment Name" />
 			<var name="vocabularyName" value="User Segment" />
@@ -2214,6 +2220,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="User Segment Name" />
@@ -2570,6 +2578,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Female Users" />
 			<var name="vocabularyName" value="User Segment" />
@@ -2716,6 +2726,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Female Users" />
@@ -2956,6 +2968,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Female Users" />
@@ -3717,6 +3731,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="User Segment Name" />
 			<var name="vocabularyName" value="User Segment" />
@@ -3870,6 +3886,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Users" />
