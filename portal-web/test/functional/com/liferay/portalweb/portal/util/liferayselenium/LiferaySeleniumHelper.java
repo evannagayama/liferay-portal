@@ -1054,15 +1054,6 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55154, temporary workaround until Shuyang Zhou fixes it
-
-		if (line.contains(
-				"Unable to process message " +
-					"{destinationName=liferay/hot_deploy")) {
-
-			return true;
-		}
-
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {
