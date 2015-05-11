@@ -521,6 +521,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addDraftCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1253,6 +1255,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addDraftCP">
 			<var name="webContentContent" value="WC WebContent Content" />
