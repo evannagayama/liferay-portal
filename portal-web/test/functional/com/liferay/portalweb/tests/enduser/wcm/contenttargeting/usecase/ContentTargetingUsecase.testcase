@@ -73,6 +73,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -82,6 +84,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Higher Priority" />
@@ -202,6 +206,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
@@ -563,6 +569,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -572,6 +580,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
@@ -666,6 +676,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
@@ -1242,6 +1254,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -1560,6 +1574,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -1569,6 +1585,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC Content Unreferenced" />
@@ -1723,6 +1741,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC Content Unreferenced" />
@@ -2316,6 +2336,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -2718,6 +2740,8 @@
 				<var name="siteScopeName" value="Site Name" />
 			</execute>
 
+			<execute macro="WebContentNavigator#gotoAddCP">
+
 			<execute macro="WebContent#addCP">
 				<var name="webContentContent" value="WC Content ${ruleName}" />
 				<var name="webContentTitle" value="WC Title ${ruleName}" />
@@ -2948,6 +2972,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content All" />
 			<var name="webContentTitle" value="Web Content Title All" />
@@ -2957,6 +2983,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
@@ -3048,6 +3076,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Any" />
 			<var name="webContentTitle" value="Web Content Title Any" />
@@ -3057,6 +3087,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
@@ -3293,6 +3325,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Female" />
 			<var name="webContentTitle" value="Web Content Title Female" />
@@ -3302,6 +3336,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Male" />
@@ -3407,6 +3443,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
@@ -3521,6 +3559,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Male" />
 			<var name="webContentTitle" value="Web Content Title Male" />
@@ -3530,6 +3570,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Female" />

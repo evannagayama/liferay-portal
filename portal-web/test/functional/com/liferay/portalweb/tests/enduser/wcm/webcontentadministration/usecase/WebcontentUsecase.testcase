@@ -63,6 +63,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="uploadAudio" value="true" />
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -189,6 +191,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -231,6 +235,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -973,6 +979,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1174,30 +1182,42 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 1 Content" />
 			<var name="webContentTitle" value="WC WebContent 1 Title" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 2 Content" />
 			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 3 Content" />
 			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 4 Content" />
 			<var name="webContentTitle" value="WC WebContent 4 Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 5 Content" />
 			<var name="webContentTitle" value="WC WebContent 5 Title" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent 6 Content" />
