@@ -594,6 +594,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addWithMultipleCategories">
 			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -639,6 +641,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP">
 
 		<execute macro="WebContent#addWithMultipleCategories">
 			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
