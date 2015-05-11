@@ -525,20 +525,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addWithCategorizationTypeCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
-		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
-
-		<execute function="Select" locator1="CPWebcontentCategorization#TYPE_SELECT" value1="${categorizationType}" />
-
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addWithCategoryCP">
 		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
 		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
