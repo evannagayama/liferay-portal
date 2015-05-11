@@ -394,6 +394,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP">
+
 		<execute macro="WebContent#addFailWithoutRequiredCategoryAssetTypeCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
