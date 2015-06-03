@@ -1,5 +1,6 @@
 <definition component-name="extra-apps-content-targeting">
 	<property name="custom.properties" value="javascript.fast.load=false" />
+	<property name="custom.properties" value="layout.parallel.render.enable=false" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<tear-down>
@@ -946,6 +947,16 @@
 	<command name="ClusteringWithContentTargeting" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
 
 		<execute macro="Page#assertnodePortPG">
 			<var name="nodePort" value="8080" />
