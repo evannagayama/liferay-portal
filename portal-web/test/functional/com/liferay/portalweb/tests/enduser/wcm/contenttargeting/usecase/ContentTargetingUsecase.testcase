@@ -10,6 +10,8 @@
 
 		<execute macro="Portlet#startServer" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
