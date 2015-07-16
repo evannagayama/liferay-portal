@@ -37,8 +37,12 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 }
 %>
 
-<c:if test="<%= !group.isControlPanel() && userSetupComplete %>">
+<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && userSetupComplete %>">
 	<ul class="control-menu" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
+
+		<li>
+			<a class="sidenav-toggler" href="#1" id="mySidenavToggleId"><span class="icon-align-justify icon-monospaced"></span></a>
+		</li>
 
 		<%
 		boolean hasLayoutAddPermission = false;
