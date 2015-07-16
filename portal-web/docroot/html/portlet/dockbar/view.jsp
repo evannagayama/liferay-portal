@@ -49,14 +49,6 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 					<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
 				</aui:nav-item>
 			</c:if>
-
-			<c:if test="<%= user.hasMySites() %>">
-				<aui:nav-item cssClass="my-sites" dropdown="<%= true %>" iconCssClass="icon-globe" id="mySites" label="my-sites" toggleTouch="<%= false %>" wrapDropDownMenu="<%= false %>">
-					<liferay-ui:my-sites classNames="<%= new String[] {Group.class.getName(), Organization.class.getName()} %>" cssClass="dropdown-menu my-sites-menu" />
-				</aui:nav-item>
-			</c:if>
-
-			<aui:nav-item cssClass="divider-vertical"></aui:nav-item>
 		</aui:nav>
 	</c:if>
 </aui:nav-bar>
