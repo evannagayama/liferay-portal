@@ -41,7 +41,6 @@ $theme.include($body_top_include)
 								</span>
 							#end
 						</a>
-
 					</h1>
 				</div>
 

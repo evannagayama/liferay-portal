@@ -25,7 +25,9 @@ ${theme.include(body_top_include)}
 <div class="sidenav-container open" id="mySidenavContainerId">
 	<div class="sidenav-menu-slider">
 		<div class="sidenav-menu sidebar sidebar-inverse product-menu">
-			<@liferay.product_menu />
+			<#if is_signed_in>
+				<@liferay.product_menu />
+			</#if>
 		</div>
 	</div>
 
@@ -90,16 +92,18 @@ ${theme.include(body_bottom_include)}
 
 ${theme.include(bottom_include)}
 
-<script>
-	AUI.$('#mySidenavContainerId').sideNavigation(
-		{
-			toggler: '#mySidenavToggleId',
-			type: 'fixed-push',
-			typeMobile: 'fixed',
-			width: '320px'
-		}
-	);
-</script>
+<#if is_signed_in>
+	<script>
+		AUI.$('#mySidenavContainerId').sideNavigation(
+			{
+				toggler: '#mySidenavToggleId',
+				type: 'fixed-push',
+				typeMobile: 'fixed',
+				width: '320px'
+			}
+		);
+	</script>
+</#if>
 
 </body>
 
