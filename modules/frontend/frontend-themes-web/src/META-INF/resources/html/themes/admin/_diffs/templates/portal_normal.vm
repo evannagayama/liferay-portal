@@ -20,7 +20,7 @@ $theme.include($body_top_include)
 
 #set ($scope_group = $theme_display.getScopeGroup())
 
-#if ($scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#if (($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
 	#dockbar()
 #end
 

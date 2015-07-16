@@ -29,7 +29,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 %>
 
 <aui:nav-bar cssClass="dockbar navbar-static-top" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
-	<c:if test="<%= group.isControlPanel() || group.isUserPersonalPanel() %>">
+	<c:if test="<%= group.isControlPanel() %>">
 
 		<%
 		String controlPanelCategory = themeDisplay.getControlPanelCategory();
@@ -82,7 +82,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		}
 		%>
 
-		<c:if test="<%= group.isUserPersonalPanel() || controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
 			<div class="navbar-brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
@@ -94,7 +94,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 				<h1>
 					<c:choose>
-						<c:when test="<%= !group.isUserPersonalPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+						<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 							<liferay-ui:control-panel-site-selector />
 
 							<span class="site-administration-title">
@@ -121,7 +121,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 	String controlPanelCategory = themeDisplay.getControlPanelCategory();
 	%>
 
-	<c:if test="<%= !((group.isControlPanel() || group.isUserPersonalPanel()) && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) %>">
+	<c:if test="<%= !(group.isControlPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) %>">
 		<aui:nav collapsible="<%= false %>" cssClass="nav-navigation navbar-nav">
 			<c:if test="<%= !group.isControlPanel() %>">
 				<aui:nav-item anchorCssClass="site-navigation-btn" anchorId="navSiteNavigation" href="javascript:;" iconCssClass="icon-reorder" />
