@@ -19,7 +19,16 @@
 
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogs#TAG" value1="${tagName}" />
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTagPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="${tagName}" />
+		</execute>
 	</command>
 
 	<command name="addCP">
@@ -218,8 +227,8 @@
 		<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="TagsEditTag#TAG_HEADER" value1="${tagName}" />
-		<execute function="AssertClick" locator1="CPTagsEdit#CANCEL_BUTTON" value1="Cancel" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${tagName}" />
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 	</command>
@@ -325,7 +334,9 @@
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 
-		<execute function="Type" locator1="Tags#SEARCH_FIELD" value1="tag" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="tag" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
