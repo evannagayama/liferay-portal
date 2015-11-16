@@ -36,7 +36,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("teamId", String.valueOf(teamId));
 
-SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
+SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
 
