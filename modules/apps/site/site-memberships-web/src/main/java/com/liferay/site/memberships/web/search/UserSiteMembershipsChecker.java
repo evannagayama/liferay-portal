@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.search;
+package com.liferay.site.memberships.web.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -29,9 +27,11 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SiteMembershipChecker extends RowChecker {
+public class UserSiteMembershipsChecker extends EmptyOnClickRowChecker {
 
-	public SiteMembershipChecker(RenderResponse renderResponse, Group group) {
+	public UserSiteMembershipsChecker(
+		RenderResponse renderResponse, Group group) {
+
 		super(renderResponse);
 
 		_group = group;
@@ -67,25 +67,14 @@ public class SiteMembershipChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (isChecked(user)) {
-				if (SiteMembershipPolicyUtil.isMembershipProtected(
-						permissionChecker, user.getUserId(),
-						_group.getGroupId()) ||
-					SiteMembershipPolicyUtil.isMembershipRequired(
-						user.getUserId(), _group.getGroupId())) {
-
-					return true;
-				}
+				return true;
 			}
-			else {
-				if (!SiteMembershipPolicyUtil.isMembershipAllowed(
-						user.getUserId(), _group.getGroupId())) {
 
-					return true;
-				}
+			if (!SiteMembershipPolicyUtil.isMembershipAllowed(
+					user.getUserId(), _group.getGroupId())) {
+
+				return true;
 			}
 		}
 		catch (Exception e) {
@@ -96,7 +85,7 @@ public class SiteMembershipChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteMembershipChecker.class);
+		UserSiteMembershipsChecker.class);
 
 	private final Group _group;
 

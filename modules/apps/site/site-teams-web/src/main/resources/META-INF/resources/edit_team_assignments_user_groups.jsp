@@ -142,9 +142,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								var form = AUI.$(document.<portlet:namespace />fm);
-
-								form.fm('addUserGroupIds').val(selectedItem.value);
+								form.fm('addUserGroupIds').val(selectedItem.addUserGroupIds);
 
 								submitForm(form);
 							}

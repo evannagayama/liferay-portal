@@ -126,33 +126,20 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 </aui:form>
 
 <aui:script>
-	var A = AUI();
+	var Util = Liferay.Util;
 
-	var <portlet:namespace />userIds = [];
+	var form = AUI.$(document.<portlet:namespace />fm);
 
 	$('input[name="<portlet:namespace />rowIds"]').on(
 		'change',
 		function(event) {
-			var target = event.target;
+			var values = {
+				data: {
+					addUserIds: Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+				}
+			};
 
-			if (target.checked) {
-				<portlet:namespace />userIds.push(target.value);
-			}
-			else {
-				A.Array.removeItem(<portlet:namespace />userIds, target.value);
-			}
-
-			var values = {};
-
-			if (<portlet:namespace />userIds.length > 0) {
-				values = {
-					data: {
-						value: <portlet:namespace />userIds.join(',')
-					}
-				};
-			}
-
-			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
 		}
 	);
 </aui:script>
