@@ -91,6 +91,7 @@ page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.site.memberships.web.context.SiteMembershipsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.search.OrganizationSiteMembershipsChecker" %><%@
+page import="com.liferay.site.memberships.web.search.UserGroupSiteMembershipsChecker" %><%@
 page import="com.liferay.site.memberships.web.search.UserSiteMembershipsChecker" %>
 
 <%@ page import="java.util.ArrayList" %><%@
