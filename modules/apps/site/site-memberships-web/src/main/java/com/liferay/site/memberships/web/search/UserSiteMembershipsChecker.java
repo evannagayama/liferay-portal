@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.search;
+package com.liferay.site.memberships.web.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
@@ -29,9 +29,11 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SiteMembershipChecker extends RowChecker {
+public class UserSiteMembershipsChecker extends RowChecker {
 
-	public SiteMembershipChecker(RenderResponse renderResponse, Group group) {
+	public UserSiteMembershipsChecker(
+		RenderResponse renderResponse, Group group) {
+
 		super(renderResponse);
 
 		_group = group;
@@ -96,7 +98,7 @@ public class SiteMembershipChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteMembershipChecker.class);
+		UserSiteMembershipsChecker.class);
 
 	private final Group _group;
 
