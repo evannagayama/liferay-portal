@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.search;
+package com.liferay.site.memberships.web.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
@@ -26,9 +26,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Charles May
  */
-public class OrganizationGroupChecker extends RowChecker {
+public class OrganizationSiteMembershipsChecker extends RowChecker {
 
-	public OrganizationGroupChecker(
+	public OrganizationSiteMembershipsChecker(
 		RenderResponse renderResponse, Group group) {
 
 		super(renderResponse);
@@ -69,7 +69,7 @@ public class OrganizationGroupChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationGroupChecker.class);
+		OrganizationSiteMembershipsChecker.class);
 
 	private final Group _group;
 
