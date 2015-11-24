@@ -45,8 +45,17 @@
 	<command name="gotoSites">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
+		<if>
+			<not>
+				<isset var="site" />
+			</not>
+			<then>
+				<var name="site" value="Sites" />
+			</then>
+		</if>
+
 		<execute macro="ProductMenuHelper#gotoTab">
-			<var name="tab" value="Sites" />
+			<var name="tab" value="${site}" />
 		</execute>
 	</command>
 

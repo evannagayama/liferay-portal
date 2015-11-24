@@ -78,6 +78,7 @@
 
 				<execute macro="ProductMenu#gotoSitesPages">
 					<var name="page" value="${page}" />
+					<var name="siteName" value="${siteName}" />
 				</execute>
 			</then>
 		</if>

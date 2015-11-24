@@ -315,7 +315,14 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
+		<if>
+			<not>
+				<isset var="siteName" />
+			</not>
+			<then>
+				<var name="siteName" value="Liferay" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="siteScopeName" />
@@ -326,6 +333,10 @@
 			</then>
 		</if>
 
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="${siteName}" />
+
 		<if>
 			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
 			<then>
@@ -335,15 +346,22 @@
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
+		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+			<then>
+				<var name="key_siteName" value="${siteName}" />
+
+				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="${siteName}" />
+			</then>
+		</if>
 
 		<var name="key_portletName" value="${portletName}" />
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 			<then>
-				<var name="key_portletCategoryName" value="${portletCategoryName}" />
-
 				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
 			</then>
 		</if>

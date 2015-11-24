@@ -172,7 +172,9 @@
 	</command>
 
 	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${page}">
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#gotoSites">
+			<var name="site" value="${siteName}" />
+		</execute>
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Pages" />
@@ -184,7 +186,9 @@
 	</command>
 
 	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing Tools > ${portlet}">
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#gotoSites">
+			<var name="site" value="${site}" />
+		</execute>
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Publishing Tools" />
