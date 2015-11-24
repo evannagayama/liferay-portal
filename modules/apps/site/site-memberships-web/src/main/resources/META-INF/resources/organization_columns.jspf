@@ -14,10 +14,9 @@
  */
 --%>
 
-<liferay-ui:search-container-row-parameter
-	name="group"
-	value="<%= group %>"
-/>
+<%
+Group group = siteMembershipsDisplayContext.getGroup();
+%>
 
 <liferay-util:buffer var="name">
 	<%= organization.getName() %>
@@ -41,6 +40,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 				title="<%= name %>"
 			/>
