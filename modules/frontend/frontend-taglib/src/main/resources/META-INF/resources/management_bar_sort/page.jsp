@@ -25,7 +25,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 
 <c:if test="<%= !orderColumns.isEmpty() %>">
 	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" data-qa-id="orderBy" href="javascript:;">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="orderBy" data-toggle="dropdown" href="javascript:;">
 			<span class="management-bar-item-title"><liferay-ui:message key="order-by" />: <liferay-ui:message key="<%= orderColumns.get(orderByCol) %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
