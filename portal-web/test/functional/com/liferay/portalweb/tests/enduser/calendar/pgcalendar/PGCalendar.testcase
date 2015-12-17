@@ -353,16 +353,16 @@
 	</command>
 
 	<command name="AddCalendarEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -1781,8 +1781,8 @@
 	</command>
 
 	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1820,8 +1820,8 @@
 			<var name="eventTitle" value="Site Name Calendar Event Regular" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#deactivateCP">
@@ -1842,8 +1842,8 @@
 			<var name="eventTitle" value="Site Name Calendar Event Regular" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#deleteCP">
@@ -3761,8 +3761,8 @@
 		<var name="userLoginFullName" value="userfn userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addCP">
@@ -3770,8 +3770,8 @@
 			<var name="siteType" value="Blank" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -4219,16 +4219,16 @@
 	<command name="ViewInactiveResourceNotPresent" priority="2">
 		<description message="This is a use case for LPS-55171." />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -4503,16 +4503,16 @@
 	</command>
 
 	<command name="ViewSiteNameUpdate" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -4600,8 +4600,8 @@
 		</execute>
 
 		<for list="Site A,Site B,Site C" param="siteName">
-			<execute macro="Page#gotoCP">
-				<var name="portletName" value="Sites" />
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Sites" />
 			</execute>
 
 			<execute macro="Site#addBlankCP">
