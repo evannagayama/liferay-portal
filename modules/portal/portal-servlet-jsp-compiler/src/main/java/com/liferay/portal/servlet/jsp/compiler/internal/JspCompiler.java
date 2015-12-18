@@ -64,9 +64,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
-import org.phidias.compile.BundleJavaManager;
-import org.phidias.compile.ResourceResolver;
-
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
@@ -169,8 +166,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_bundle = _allParticipatingBundles[0];
 
-		_resourceResolver = new JspResourceResolver(
-			_bundle, _jspBundle, _logger);
+		_classResolver = new JspClassResolver(_bundle, _jspBundle, _logger);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -180,10 +176,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
 	}
 
-	protected void addBundleWirings(BundleJavaManager bundleJavaManager) {
+	protected void addBundleWirings(
+		BundleJavaFileManager bundleJavaFileManager) {
+
 		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
 
-		bundleJavaManager.addBundleWiring(bundleWiring);
+		bundleJavaFileManager.addBundleWiring(bundleWiring);
 
 		List<BundleWire> requiredBundleWires = bundleWiring.getRequiredWires(
 			null);
@@ -191,7 +189,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		for (BundleWire bundleWire : requiredBundleWires) {
 			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
 
-			bundleJavaManager.addBundleWiring(providedBundleWiring);
+			bundleJavaFileManager.addBundleWiring(providedBundleWiring);
 		}
 	}
 
@@ -288,19 +286,20 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			try {
 				standardJavaFileManager.setLocation(
 					StandardLocation.CLASS_PATH, _classPath);
-
-				BundleJavaManager bundleJavaManager = new BundleJavaManager(
-					_bundle, standardJavaFileManager, options, true);
-
-				addBundleWirings(bundleJavaManager);
-
-				bundleJavaManager.setResourceResolver(_resourceResolver);
-
-				javaFileManager = bundleJavaManager;
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 			}
+
+			BundleJavaFileManager bundleJavaFileManager =
+				new BundleJavaFileManager(
+					_bundle, standardJavaFileManager, _logger,
+					options.contains(BundleJavaFileManager.OPT_VERBOSE),
+					_classResolver);
+
+			addBundleWirings(bundleJavaFileManager);
+
+			javaFileManager = bundleJavaFileManager;
 		}
 
 		return super.getJavaFileManager(javaFileManager);
@@ -451,8 +450,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
+	private ClassResolver _classResolver;
 	private Bundle _jspBundle;
 	private Logger _logger;
-	private ResourceResolver _resourceResolver;
 
 }
