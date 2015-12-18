@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_PLUS_ICON_COLLAPSED</td>
+	<td>//ul[contains(@class,'tree-container')]//span[contains(@class,'icon-plus') and not (contains(@class,'hidden'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_PLUS_ICON_EXPANDED</td>
+	<td>//ul[contains(@class,'tree-container')]//span[contains(@class,'tree-hitarea') and contains(@class,'icon-minus')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_OPENED</td>
 	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
 	<td></td>
@@ -91,6 +101,16 @@
 <tr>
 	<td>PUBLIC_SITE_LINK</td>
 	<td>//div[contains(@class,'list-group-item-content') and contains (.,'Public')]//h5[contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_LINK</td>
+	<td>//*[@data-qa-id='live']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_LINK</td>
+	<td>//*[@data-qa-id='staging']</td>
 	<td></td>
 </tr>
 <tr>
