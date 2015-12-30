@@ -3214,11 +3214,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>portletURL</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>privateLayout</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3230,11 +3225,6 @@
 		</attribute>
 		<attribute>
 			<name>rootNodeName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>rootPortletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -3260,6 +3250,11 @@
 		</attribute>
 		<attribute>
 			<name>treeId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURLs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
