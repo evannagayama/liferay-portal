@@ -127,10 +127,10 @@
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
@@ -154,10 +154,10 @@
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title Edit" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title Edit" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content Edit" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content Edit" />
+			<var name="assetTitle" value="WC WebContent Title Edit" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
@@ -176,13 +176,17 @@
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title Edit" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content Edit" />
-		<execute function="AssertTextNotPresent" locator1="Link#READ_MORE" value1="Read More" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent Content Edit" />
+			<var name="assetTitle" value="WC WebContent Title Edit" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewReadMoreLinkNotPresentPG" />
 	</command>
 
 	<command name="AddWebContentWithGlobalScopeViaCPToSiteAP" priority="4">
@@ -274,10 +278,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content" />
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -302,10 +307,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title Edit" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title Edit" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content Edit" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content Edit" />
+			<var name="assetTitle" value="WC WebContent Title Edit" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
@@ -326,13 +331,17 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title Edit" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content" />
-		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Content Edit" />
-		<execute function="AssertTextNotPresent" locator1="Link#READ_MORE" value1="Read More" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent Content Edit" />
+			<var name="assetTitle" value="WC WebContent Title Edit" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewReadMoreLinkNotPresentPG" />
 	</command>
 
 	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="3">
@@ -449,10 +458,10 @@
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Text" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 	</command>
 
 	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="3">
@@ -593,10 +602,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_assetTitle" value="WC WebContent Title" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="WC WebContent Title" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Text" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 	</command>
 
 	<command name="DisplayWebContentTagViaAP" priority="4">
