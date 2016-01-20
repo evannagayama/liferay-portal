@@ -18,6 +18,7 @@ import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
@@ -45,6 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddContentControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
+
+	@Override
+	public String getBodyJspPath() {
+		return "/entries/add_content_body.jsp";
+	}
 
 	@Override
 	public String getJspPath() {
