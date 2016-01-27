@@ -129,7 +129,7 @@
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
@@ -403,6 +403,12 @@
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addViaCKEditor">
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${webContentContent}" />
 	</command>
 
 	<command name="addWithCategoryCP">
@@ -1102,7 +1108,6 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="WC#SEARCH_FOLDER" value1="${webContentFolder}" />
 	</command>
 
 	<command name="searchNoResultsCP">
@@ -1113,7 +1118,6 @@
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No web content was found that matched the keywords: ${searchQuery}." />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_BODY" value1="${webContentContent}" />
 		<execute function="Click" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" />
 		<execute function="AssertTextPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 	</command>
@@ -1185,8 +1189,16 @@
 
 	<command name="uploadAudio">
 		<execute function="Click#pauseClickAt" locator1="WCEditWebContent#AUDIO_BUTTON" />
-		<execute function="Type" locator1="CKEditor#CONTENT_AUDIO_LINK_URL_FIELD" value1="${dmDocumentURL}" />
-		<execute function="AssertClick" locator1="WCEditWebContent#AUDIO_OK_BUTTON" value1="OK" />
+
+		<execute macro="ItemSelector#addFromURL">
+			<var name="imageSourceURL" value="${dmDocumentURL}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="CKEditor#CONTENT_AUDIO_LINK_IMAGE" />
+
+		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
 	<command name="viewApprovedStatus">
