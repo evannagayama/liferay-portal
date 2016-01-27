@@ -68,39 +68,6 @@ public class StructuresPortletConfigurationIcon
 		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
 		portletURL.setParameter("showManageTemplates", Boolean.TRUE.toString());
 
-		/*
-		ddmURL.setDoAsGroupId(
-			config.doAsGroupId || themeDisplay.getScopeGroupId());
-
-		ddmURL.setParameter("classNameId", config.classNameId);
-		ddmURL.setParameter("classPK", config.classPK);
-		ddmURL.setParameter("resourceClassNameId", config.resourceClassNameId);
-		ddmURL.setParameter("eventName", config.eventName);
-		ddmURL.setParameter("mode", config.mode);
-		ddmURL.setParameter(
-			"portletResourceNamespace", config.portletResourceNamespace);
-
-		ddmURL.setParameter("scopeTitle", config.title);
-
-		if ("showBackURL" in config) {
-			ddmURL.setParameter("showBackURL", config.showBackURL);
-		}
-
-		if ("showHeader" in config) {
-			ddmURL.setParameter("showHeader", config.showHeader);
-		}
-
-		if ("showToolbar" in config) {
-			ddmURL.setParameter("showToolbar", config.showToolbar);
-		}
-
-		ddmURL.setParameter(
-			"structureAvailableFields", config.structureAvailableFields);
-		ddmURL.setParameter("templateId", config.templateId);
-
-		ddmURL.setPortletId(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING);
-		*/
-
 		return portletURL.toString();
 	}
 
