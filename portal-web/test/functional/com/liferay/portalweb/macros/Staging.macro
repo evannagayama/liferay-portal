@@ -5,7 +5,7 @@
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />
 
 		<if>
-			<equals arg1="${remoteStaging}" arg2="true" />
+			<equals arg1="${dremoteStaging}" arg2="true" />
 			<then>
 				<execute function="Check" locator1="Radio#REMOTE_LIVE" />
 				<execute function="Type" locator1="SiteSettingsStaging#REMOTE_STAGING_IP" value1="localhost" />
