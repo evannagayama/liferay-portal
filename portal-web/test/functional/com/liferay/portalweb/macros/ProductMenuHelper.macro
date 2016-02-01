@@ -62,6 +62,17 @@
 		</if>
 	</command>
 
+	<command name="expanPagePagination">
+		<while>
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" />
+			<then>
+				<execute function="AssertClick" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+			</then>
+		</while>
+
+		<execute function="AssertTextNotPresent" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+	</command>
+
 	<command name="gotoAddPage">
 		<var name="key_page" value="${page}" />
 
