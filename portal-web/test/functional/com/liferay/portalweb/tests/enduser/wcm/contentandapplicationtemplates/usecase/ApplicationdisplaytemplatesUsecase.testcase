@@ -163,6 +163,10 @@
 	</command>
 
 	<command name="ADTAssetPublisher" priority="3">
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -170,10 +174,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -281,6 +281,10 @@
 	</command>
 
 	<command name="ADTCategoriesNavigation" priority="5">
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />
 		</execute>
@@ -352,6 +356,10 @@
 	</command>
 
 	<command name="ADTDMMediaGallery" priority="3">
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -455,6 +463,10 @@
 	</command>
 
 	<command name="ADTSiteMap" priority="3">
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -555,7 +567,9 @@
 		</execute>
 	</command>
 
-	<command name="ADTStagingCategoriesNavigation" priority="5">
+	<command name="ADTStagingCategoriesNavigation" priority="4">
+		<property name="portal.acceptance" value="false" />
+
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -656,7 +670,9 @@
 	</command>
 
 	<command name="ADTTagsNavigationPortlet" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
@@ -795,6 +811,10 @@
 	</command>
 
 	<command name="ADTWiki" priority="3">
+		<property name="portal.acceptance" value="false" />
+
+		<var name="siteName" value="${siteName}" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
