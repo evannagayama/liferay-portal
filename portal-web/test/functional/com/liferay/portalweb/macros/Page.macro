@@ -67,8 +67,6 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-
 		<if>
 			<not>
 				<isset var="pageTypeURL" />
