@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
+package com.liferay.portlet.configuration.web.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,26 +24,22 @@ import javax.portlet.PortletResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Rafael Praxedes
+ * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
-	service = PortletConfigurationIconFactory.class
-)
-public class DDMStructuresPortletConfigurationIconFactory
+@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+public class PermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return new DDMStructuresPortletConfigurationIcon(portletRequest);
+		return new PermissionsPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 13.0;
 	}
 
 }
