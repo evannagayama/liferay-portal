@@ -67,20 +67,9 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<var name="key_pageName" value="${pageName}" />
 
-		<if>
-			<not>
-				<isset var="pageTypeURL" />
-			</not>
-			<then>
-				<execute macro="Navigator#gotoViewPage">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="pageName" value="${pageName}" />
-				</execute>
-			</then>
-		</if>
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="addChild">
