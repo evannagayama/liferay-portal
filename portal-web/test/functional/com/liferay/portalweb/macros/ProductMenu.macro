@@ -177,13 +177,13 @@
 		<execute function="AssertClick" locator1="ProductMenu#PUBLIC_SITE_LINK" value1="${site}" />
 	</command>
 
-	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Sites Popup > ${site}">
+	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Sites Popup > ${siteName}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#openSitesPopup" />
 
 		<execute macro="ProductMenuHelper#gotoSite">
-			<var name="site" value="${site}" />
+			<var name="site" value="${siteName}" />
 		</execute>
 	</command>
 

@@ -92,7 +92,7 @@
 	<command name="gotoSite">
 		<var name="key_site" value="${site}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#SITE" value1="${site}" />
+		<execute function="AssertClick" locator1="ProductMenu#SITE" value1="${key_site}" />
 	</command>
 
 	<command name="gotoTab">
