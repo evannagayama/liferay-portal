@@ -1,4 +1,10 @@
 <definition>
+	<command name="viewPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="the-page-has-been-created-succesfully" />
+	</command>
+
 	<command name="viewRequestCompletedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
