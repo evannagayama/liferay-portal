@@ -63,6 +63,7 @@
 			<var name="roleType" value="Organization" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -134,6 +135,7 @@
 			<var name="roleType" value="Organization" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -361,6 +363,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -430,6 +433,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -640,6 +644,7 @@
 			<var name="roleType" value="Organization" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -736,6 +741,7 @@
 			<var name="roleType" value="Organization" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -1118,6 +1124,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -1212,6 +1219,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -1971,6 +1979,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
@@ -2037,6 +2046,7 @@
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Blogs Page" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />

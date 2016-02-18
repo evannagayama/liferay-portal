@@ -53,9 +53,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Home" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="SitePage#addPageTranslations">

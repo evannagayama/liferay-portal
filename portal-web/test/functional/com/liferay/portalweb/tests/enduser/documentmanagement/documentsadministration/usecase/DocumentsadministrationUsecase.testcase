@@ -93,9 +93,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page 1" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoEditPage">
@@ -107,9 +106,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page 2" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoEditPage">

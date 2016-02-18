@@ -90,9 +90,9 @@
 			</execute>
 
 			<execute macro="Page#add">
-				<var name="page" value="Private Pages" />
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Organization Name" />
+				<var name="sitePagePrivacy" value="Private" />
 			</execute>
 		</for>
 
@@ -179,7 +179,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Page" />
 			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
@@ -1151,9 +1150,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="TestCase#getSiteName">
@@ -1234,9 +1233,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<for list="Liferay,Site Name,Global" param="siteName">
@@ -1555,9 +1554,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

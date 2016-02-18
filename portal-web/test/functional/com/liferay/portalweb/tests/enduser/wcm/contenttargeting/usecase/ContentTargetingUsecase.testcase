@@ -25,9 +25,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
 
@@ -3085,9 +3085,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Child SiteName" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -3169,10 +3169,9 @@
 
 	<command name="UserSegmentAddMultipleViaUserContentDisplayPortletPG" priority="4">
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<for list="Admin,Page Visited,Male,Person" param="ruleName">

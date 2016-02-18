@@ -368,9 +368,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="AP Test Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -386,9 +386,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="WC Test Page" />
 			<var name="siteName" value="Child SiteName" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -517,9 +517,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="AP Test Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

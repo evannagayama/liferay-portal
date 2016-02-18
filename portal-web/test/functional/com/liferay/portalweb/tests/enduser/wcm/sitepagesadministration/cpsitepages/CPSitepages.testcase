@@ -64,9 +64,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName" >
@@ -221,10 +221,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -267,10 +266,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -415,10 +413,9 @@
 			</execute>
 
 			<execute macro="Page#add">
-				<var name="page" value="Public Pages" />
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Site Name" />
-				<var name="siteURL" value="true" />
+				<var name="sitePagePrivacy" value="Public" />
 			</execute>
 		</for>
 
@@ -441,9 +438,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
-			<var name="siteScopeSelected" value="Liferay" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages" >
@@ -478,9 +474,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -517,10 +513,10 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="pageTemplateName" value="Blog" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
