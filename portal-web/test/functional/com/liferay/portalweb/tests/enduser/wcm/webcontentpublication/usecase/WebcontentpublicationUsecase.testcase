@@ -90,7 +90,7 @@
 			</execute>
 
 			<execute macro="Page#add">
-				<var name="page" value="Private Pages" />
+				<var name="sitePagePrivacy" value="Private Pages" />
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Organization Name" />
 			</execute>
@@ -179,7 +179,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Page" />
 			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
@@ -1151,7 +1150,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -1234,7 +1233,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -1555,7 +1554,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>

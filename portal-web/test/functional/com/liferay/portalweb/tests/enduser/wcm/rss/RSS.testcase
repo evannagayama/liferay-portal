@@ -19,9 +19,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 	</set-up>
 
@@ -431,9 +430,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page Name 2" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

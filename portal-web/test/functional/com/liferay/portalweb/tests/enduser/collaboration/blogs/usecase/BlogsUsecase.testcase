@@ -132,15 +132,13 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page 1" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page 2" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -737,7 +735,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -762,7 +760,6 @@
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -799,7 +796,6 @@
 			<var name="pageName" value="Blogs Page 2" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1001,7 +997,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -1156,16 +1152,14 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Public Blogs Page" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
+			<var name="sitePagePrivacy" value="Private Pages" />
 			<var name="pageName" value="Private Blogs Page" />
 			<var name="sitePagePrivacy" value="Private" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#expandPanelSites" />
