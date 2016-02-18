@@ -101,9 +101,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -269,9 +269,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -438,9 +438,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -461,9 +461,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Child SiteName" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

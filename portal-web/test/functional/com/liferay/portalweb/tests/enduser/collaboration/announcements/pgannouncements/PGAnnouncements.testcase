@@ -195,9 +195,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

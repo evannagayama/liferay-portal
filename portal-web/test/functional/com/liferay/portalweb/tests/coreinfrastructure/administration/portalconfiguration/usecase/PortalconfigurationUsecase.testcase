@@ -62,7 +62,7 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="landing" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -310,7 +310,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Public Page" />
-			<var name="sitePagePrivacy" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -318,8 +318,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Private Pages" />
 			<var name="pageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#openURL">
