@@ -16,10 +16,10 @@
 			</then>
 		</if>
 	</command>
-
 	<command name="viewDefaultPG">
-		<for list="${listPageName}" param="pageName">
+		
 			<var name="key_pageName" value="${pageName}" />
+<<<<<<< 39564949315f232738234016f8c823a2a346fa8d
 			<execute function="AssertTextEquals#assertPartialText" locator1="SiteMap#SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
 		</for>
 
@@ -33,5 +33,10 @@
 				</for>
 			</then>
 		</if>
+=======
+			<execute function="AssertTextEquals" locator1="SiteMap#SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
+			<var name="key_childPageName" value="${childPageName}" />
+			<execute function="AssertTextEquals" locator1="SiteMap#SITE_MAP_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
+>>>>>>> LPS-19777: Test Case for SiteMap for Public Page and Child Page
 	</command>
 </definition>
