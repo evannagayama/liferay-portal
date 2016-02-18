@@ -60,9 +60,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="landing" />
 			<var name="siteName" value="${siteName}" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -309,8 +309,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Public Page" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
