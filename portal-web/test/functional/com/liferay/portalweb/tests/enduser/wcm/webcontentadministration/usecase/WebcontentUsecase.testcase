@@ -49,7 +49,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Home" />
 		</execute>
 
@@ -386,7 +386,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -469,7 +469,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -543,7 +543,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
@@ -1411,7 +1411,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="sitePagePrivacy" value="Public Pages" />
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
