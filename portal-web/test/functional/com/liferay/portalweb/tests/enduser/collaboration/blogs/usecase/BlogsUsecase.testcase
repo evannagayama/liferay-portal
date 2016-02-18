@@ -760,7 +760,6 @@
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -797,7 +796,6 @@
 			<var name="pageName" value="Blogs Page 2" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
