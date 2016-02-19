@@ -1157,7 +1157,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="sitePagePrivacy" value="Private Pages" />
 			<var name="pageName" value="Private Blogs Page" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
