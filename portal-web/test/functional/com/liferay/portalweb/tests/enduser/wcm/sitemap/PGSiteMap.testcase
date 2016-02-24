@@ -21,7 +21,7 @@
 			<execute macro="Page#add">
 				<var name="page" value="Public Pages" />
 				<var name="siteName" value="QA team Site" />
-				<var name="pageName" value="QA team Public Page" />
+				<var name="pageName" value="QA team Public Page " />
 			</execute>
 		
 			<execute macro="ProductMenu#gotoControlPanelSites">
@@ -30,7 +30,7 @@
 
 			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
-				<var name="childPageName" value="QA Child Public Page"/>
+				<var name="childPageName" value="QA Child Public Page "/>
 				<var name="siteName" value="QA team Site" />
 				<var name="pageName" value="QA team Public Page" />
 			</execute>
@@ -68,8 +68,8 @@
 			</execute>
 		
 				<execute macro= "SiteMapPortlet#viewDefaultPG">
-					<var name="pageName" value="QA team Public Page"/>
-					<var name="childPageName" value="QA Child Public Page"/>				
+					<var name="pageName" value="${pageName}"/>
+					<var name="childPageName" value="${childPageName}"/>				
 				</execute>
 		
 		</command>
