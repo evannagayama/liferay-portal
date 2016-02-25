@@ -55,8 +55,6 @@
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 
-				<execute function="Refresh" />
-
 				<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 			</else>
 		</if>
@@ -196,8 +194,6 @@
 		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="Button#ADD" value1="Add" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="Refresh" />
 
 		<execute function="AssertTextEquals" locator1="UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
