@@ -53,11 +53,8 @@
 		</if>
 		</tear-down>
 
-		<command name="DisplayPublicPagesWChildrenPagesasAdm">
-
-			<execute macro="ProductMenu#gotoSite">
-				<var name="siteName" value="QA team Site"/>
-			</execute>
+		<command name="DisplayPublicPagesWChildrenPagesasAdm" priority="5">
+			<property name="portal.acceptance" value="true" />
 
 			<execute macro="Portlet#addPG">
 				<var name="portletName" value="Site Map"/>
@@ -67,10 +64,9 @@
 				<var name="portletName" value="Site Map"/>
 			</execute>
 		
-				<execute macro= "SiteMapPortlet#viewDefaultPG">
-					<var name="pageName" value="${pageName}"/>
-					<var name="childPageName" value="${childPageName}"/>				
-				</execute>
-		
+			<execute macro= "SiteMapPortlet#viewDefaultPG">
+				<var name="pageName" value='QA team Public Page'/>
+				<var name="childPageName" value="QA Child Public Page"/>				
+			</execute>
 		</command>
 </definition>
