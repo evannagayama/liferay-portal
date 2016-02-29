@@ -14,6 +14,8 @@
 			<var name="siteName" value="QA team Site" />
 		</execute>
 		
+		<for list="1,2" param="number">
+
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
 			</execute>
@@ -21,7 +23,7 @@
 			<execute macro="Page#add">
 				<var name="page" value="Public Pages" />
 				<var name="siteName" value="QA team Site" />
-				<var name="pageName" value="QA team Public Page " />
+				<var name="pageName" value="QA team Public Page ${number}" />
 			</execute>
 		
 			<execute macro="ProductMenu#gotoControlPanelSites">
@@ -30,11 +32,11 @@
 
 			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
-				<var name="childPageName" value="QA Child Public Page "/>
+				<var name="childPageName" value="QA Child Public Page ${number} "/>
 				<var name="siteName" value="QA team Site" />
-				<var name="pageName" value="QA team Public Page" />
+				<var name="pageName" value="QA team Public Page ${number}" />
 			</execute>
-	
+		</for>
 	</set-up>
 
 		<tear-down>
@@ -60,13 +62,15 @@
 				<var name="portletName" value="Site Map"/>
             </execute>
 
+         <for list="1,2" param="number">
 			<execute macro= "Portlet#viewSpecificPG">
 				<var name="portletName" value="Site Map"/>
 			</execute>
 		
 			<execute macro= "SiteMapPortlet#viewDefaultPG">
-				<var name="pageName" value='QA team Public Page'/>
-				<var name="childPageName" value="QA Child Public Page"/>				
+				<var name="pageName" value='QA team Public Page ${number}'/>
+				<var name="childPageName" value="QA Child Public Page ${number}"/>				
 			</execute>
+		</for>	
 		</command>
 </definition>
