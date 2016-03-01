@@ -14,7 +14,7 @@
 			<var name="siteName" value="QA team Site" />
 		</execute>
 		
-		<for list="1,2" param="number">
+		<for list="1,2,3" param="N">
 
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
@@ -23,20 +23,23 @@
 			<execute macro="Page#add">
 				<var name="page" value="Public Pages" />
 				<var name="siteName" value="QA team Site" />
-				<var name="pageName" value="QA team Public Page ${number}" />
+				<var name="pageName" value="QA team Public Page ${N}" />
 			</execute>
 		
-			<execute macro="ProductMenu#gotoControlPanelSites">
-				<var name="portlet" value="Sites" />
-			</execute>
+			<for list="1,2" param="M">
 
-			<execute macro="Page#addChild">
-				<var name="page" value="Public Pages" />
-				<var name="childPageName" value="QA Child Public Page ${number} "/>
-				<var name="siteName" value="QA team Site" />
-				<var name="pageName" value="QA team Public Page ${number}" />
-			</execute>
-		</for>
+				<execute macro="ProductMenu#gotoControlPanelSites">
+					<var name="portlet" value="Sites" />
+				</execute>
+
+				<execute macro="Page#addChild">
+					<var name="page" value="Public Pages" />
+					<var name="childPageName" value="QA Child Public Page ${M} "/>
+					<var name="siteName" value="QA team Site" />
+					<var name="pageName" value="QA team Public Page ${N}" />
+				</execute>
+			</for>
+		</for>	
 	</set-up>
 
 		<tear-down>
@@ -62,15 +65,19 @@
 				<var name="portletName" value="Site Map"/>
             </execute>
 
-         <for list="1,2" param="number">
+		<for list="1,2,3" param="N">
 			<execute macro= "Portlet#viewSpecificPG">
 				<var name="portletName" value="Site Map"/>
 			</execute>
 		
-			<execute macro= "SiteMapPortlet#viewDefaultPG">
-				<var name="pageName" value='QA team Public Page ${number}'/>
-				<var name="childPageName" value="QA Child Public Page ${number}"/>				
-			</execute>
+			<for list="1,2" param="M">
+				<execute macro= "SiteMapPortlet#viewDefaultPG">
+					<var name="pageName" value='QA team Public Page ${N}'/>
+					<var name="childPageName" value="QA Child Public Page ${M}"/>
+					<var name="listPageName" value="${N}"/>
+					<var name="listChildPageName" value="${M}" />				
+				</execute>
+			</for>
 		</for>	
 		</command>
 </definition>
