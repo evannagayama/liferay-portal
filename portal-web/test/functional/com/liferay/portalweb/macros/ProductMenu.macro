@@ -182,7 +182,7 @@
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoSite">
-			<var name="site" value="${siteName}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute function="SelectFrameTop" />
