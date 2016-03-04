@@ -16,6 +16,7 @@
 			</then>
 		</if>
 	</command>
+
 	<command name="viewDefaultPG">
 		<for list="${listPageName}" param="pageName">
 			<var name="key_pageName" value="${pageName}" />
