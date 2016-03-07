@@ -152,9 +152,9 @@
 		<execute macro="Page#addChild">
 			<var name="childSitepageName" value="true" />
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page2 Name" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page2 Name" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
@@ -243,8 +243,8 @@
 		<for list="${childPageNameList}" param="siteChildPageName">
 			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
+				<var name="pageName" value="Welcome" />
 				<var name="siteChildPageName" value="${siteChildPageName}" />
-				<var name="sitePageName" value="Welcome" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -305,7 +305,7 @@
 	</command>
 
 	<command name="SitesPrivatePagesPermissions" priority="4">
-		<var name="sitePageName" value="Site Page" />
+		<var name="pageName" value="Site Page" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -382,7 +382,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
-			<var name="sitePageName" value="Site Page" />
+			<var name="pageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -402,8 +402,8 @@
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="site Name" />
-			<var name="sitePageName" value="Site Page" />
 			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -426,7 +426,7 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="page" value="Private" />
-			<var name="sitePageName" value="Site Page" />
+			<var name="pageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -441,8 +441,8 @@
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="site Name" />
-			<var name="sitePageName" value="Site Page" />
 			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1245,7 +1245,7 @@
 		</execute>
 
 		<execute macro="Page#firstPageCanNotBeOfTypeLinkToURL">
-			<var name="sitePageName" value="Blank Page" />
+			<var name="pageName" value="Blank Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -1272,8 +1272,8 @@
 
 		<execute macro="Page#viewPanelPortletListCP">
 			<var name="componentName" value="Community" />
+			<var name="pageName" value="Panel Page" />
 			<var name="portletNameList" value="Bookmarks,Friends Directory,Invitation,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory" />
-			<var name="sitePageName" value="Panel Page" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

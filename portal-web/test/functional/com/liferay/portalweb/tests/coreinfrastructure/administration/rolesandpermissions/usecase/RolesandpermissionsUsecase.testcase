@@ -456,8 +456,8 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 		</execute>
 
 		<var name="key_roleName" value="Guest" />
@@ -466,8 +466,8 @@
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 			<var name="siteURL" value="true" />
 		</execute>
 
