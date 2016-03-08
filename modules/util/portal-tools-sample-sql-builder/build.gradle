@@ -15,12 +15,12 @@ dependencies {
 	compile project(":apps:collaboration:message-boards:message-boards-web")
 	compile project(":apps:collaboration:wiki:wiki-api")
 	compile project(":apps:collaboration:wiki:wiki-service")
-	compile project(":apps:platform:login:login-web")
-	compile project(":apps:web-experience-management:journal:journal-api")
-	compile project(":apps:web-experience-management:journal:journal-service")
+	compile project(":apps:foundation:login:login-web")
+	compile project(":apps:web-experience:journal:journal-api")
+	compile project(":apps:web-experience:journal:journal-service")
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 }
 
