@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>ROOT_PAGE_MENU_SELECT</td>
-	<td>//select[contains(@id,'rootLayoutUuid')]</td>
+	<td>1ST_ROOT_PAGE_SELECT_MENU</td>
+	<td>//select[contains(@id,'rootLayoutUuid')]/option[contains(.,'Site Page Name')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_DEPTH_MENU_SELECT</td>
-	<td>//select[contains(@id,'displayDepth')]</td>
+	<td>DISPLAY_1ST_DEPTH_LEVEL_SELECT_MENU</td>
+	<td>//select[contains(@id,'displayDepth')]/option[.,'1']</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,8 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'displayStyle')]</td>
+	<td>MULTI_COLUMN_DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]/option[contains(.,'Multi Column Layout')]</td>
 	<td></td>
 </tr>
 <tr>

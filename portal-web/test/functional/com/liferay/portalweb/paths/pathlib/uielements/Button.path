@@ -339,6 +339,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HIDE_PAGE_TOGGLE</td>
+	<td>//span[contains(@class,'toggle-switch-bar') and (@aria-hidden="true")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
