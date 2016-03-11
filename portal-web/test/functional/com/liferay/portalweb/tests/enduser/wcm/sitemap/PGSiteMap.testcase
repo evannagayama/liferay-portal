@@ -72,4 +72,83 @@
 			<var name="listPageName" value="Site Page Name" />
 		</execute>
 	</command>
+
+        <command name="DisplayHiddenPage" priority="4">
+			<property name="portal.acceptance" value="true" />      
+
+            <execute macro="SitePageNavigator#gotoEditPage">
+                <var name="page" value="Site Page Name 2"/>
+            </execute>
+
+            <execute function="Click" locator1="TextInput#NAME"/>
+            <execute function="Click" locator1="Button#HIDE_PAGE_TOGGLE"/>
+            <execute macro="Button#clickSave" />
+            <execute macro="ProductMenu#gotoSite" >
+                <var name="site" value="Site Name"/>
+            </execute>
+
+            <execute macro="Portlet#gotoPortletOptions">
+                 <var name="portletName" value="Site Map" />
+                 <var name="portletOption" value="Configuration"/>
+            </execute> 
+
+            <if>     
+                    <condition function="IsElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />    
+
+                    <then>
+                        <execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+                        <execute function="Click" locator1="SiteMapConfiguration#SHOW_HIDDEN_PAGES_TOGGLE"/>
+                    </then>
+                    <else>
+                        <execute function="Pause" locator1="3000" />
+                        <execute function="Click" locator1="SiteMapConfiguration#SHOW_HIDDEN_PAGES_TOGGLE"/>
+                    </else>
+             </if>
+            
+            <execute macro="Button#clickSave" />
+            <execute macro="Alert#viewSuccessMessage"/>
+            <execute function="SelectFrameTop" value1="relative=top"/>
+            <execute function="Click" locator1="Icon#CLOSE"/>
+
+        <var name="N" value="2"/> 
+        <for list="1,2" param="M">
+            <execute macro="SiteMapPortlet#viewDefaultPG">
+                <var name="listChildPageName" value="Child Page Name 2${M}"/>
+                <var name="listPageName" value="Site Page Name 2"/>
+            </execute>
+        </for>
+    </command>
+
+	<command name="DisplayPageWithMulticolumnLayoutTemplate" priority="4">
+
+            <execute macro="Portlet#gotoPortletOptions">
+                 <var name="portletName" value="Site Map" />
+                 <var name="portletOption" value="Configuration"/>
+             </execute>    
+
+            <if>     
+                    <condition function="IsElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />    
+
+                    <then>
+                        <execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+                        <execute function="Click" locator1="SiteMapConfiguration#MULTI_COLUMN_DISPLAY_TEMPLATE_SELECT"/>
+                        <execute function="Check" locator1="SiteMapConfiguration#MULTI_COLUMN_DISPLAY_TEMPLATE_SELECT"/>
+                    </then>
+                    <else>
+                        <execute function="Pause" locator1="3000" />
+                        <execute function="Click" locator1="SiteMapConfiguration#MULTI_COLUMN_DISPLAY_TEMPLATE_SELECT"/>
+                        <execute function="Check" locator1="SiteMapConfiguration#MULTI_COLUMN_DISPLAY_TEMPLATE_SELECT"/>
+                    </else>
+             </if>
+            
+            <execute macro="Button#clickSave" />
+            <execute macro="Alert#viewSuccessMessage"/>
+            <execute function="SelectFrameTop" value1="relative=top"/>
+            <execute function="Click" locator1="Icon#CLOSE"/>
+
+            <execute macro="SiteMapPortlet#viewCustomADTMultiColumnPG">
+                <var name="listPageName" value="Site Page Name"/>
+                <var name="listChildPageName" value="Child Page Name"/>
+            </execute>
+    </command>
 </definition>

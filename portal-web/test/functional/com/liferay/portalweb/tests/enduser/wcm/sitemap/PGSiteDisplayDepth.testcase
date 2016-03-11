@@ -1,0 +1,96 @@
+<definition component-name="portal-wcm">
+    <property name="testray.main.component.name" value="Sitemap" />
+
+    <set-up>
+        <execute macro="TestCase#setUpPortalInstance" />
+
+        <execute macro="User#firstLoginPG" />
+
+        <execute macro="ProductMenu#gotoControlPanelSites">
+            <var name="portlet" value="Sites" />
+        </execute>
+
+        <execute macro="Site#addBlankCP">
+            <var name="siteName" value="Site Name" />
+        </execute>
+
+        <execute macro="ProductMenu#gotoControlPanelSites">
+            <var name="portlet" value="Sites" />
+        </execute>
+
+        <execute macro="Page#add">
+            <var name="pageName" value="Site Page Name" />
+            <var name="siteName" value="Site Name" />
+            <var name="sitePagePrivacy" value="Private" />
+        </execute>
+
+        <execute macro="ProductMenu#gotoControlPanelSites">
+            <var name="portlet" value="Sites" />
+        </execute>
+
+        <execute macro="ProductMenu#gotoControlPanelSites">
+            <var name="portlet" value="Sites" />
+        </execute>
+
+        <execute macro="Page#addChild">
+            <var name="childSitepageName" value="true" />
+            <var name="page" value="Private Pages" />
+            <var name="siteChildPageName" value="Child Page Name" />
+            <var name="siteName" value="Site Name" />
+            <var name="sitePageName" value="Site Page Name" />
+        </execute>
+
+        <execute macro="Portlet#addPG">
+            <var name="portletName" value="Site Map"/>
+        </execute>
+
+    </set-up>
+
+    <tear-down>
+        <var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+        <if>
+            <equals arg1="${testPortalInstance}" arg2="true" />
+            <then>
+                <execute macro="PortalInstances#tearDownCP" />
+            </then>
+            <else>
+                <execute macro="Site#tearDownCP">
+                    <var name="siteName" value="Site Name" />
+                </execute>
+            </else>
+        </if>
+    </tear-down>
+
+        <command name="DisplayPublicPagesWDepthtillALevel" priority="4">
+
+            <execute macro="Portlet#gotoPortletOptions">
+                 <var name="portletName" value="Site Map" />
+                 <var name="portletOption" value="Configuration"/>
+             </execute> 
+
+            <if>
+                <and>
+                    <condition function="IsElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />    
+                    <condition function="IsVisible" locator1="IFRAME#CONFIGURATION" />
+                </and>
+                    <then>
+                        <execute function="Click" locator1="SiteMapConf#DISPLAY_DEPTH_MENU_SELECT"/>
+                        <execute function="Type" locator1="SiteMapConf#DISPLAY_DEPTH_MENU_SELECT" value1="1"/>
+                    </then>
+                    <else>
+                        <execute function="Pause" locator1="3000" />
+                        <execute function="Click" locator1="SiteMapConf#DISPLAY_DEPTH_MENU_SELECT"/>
+                        <execute function="Type" locator1="SiteMapConf#DISPLAY_DEPTH_MENU_SELECT" value1="1"/>
+                    </else>
+             </if>
+            
+            <execute macro="IFrame#saveConfiguration"/>
+            <execute macro="Alert#viewSuccessMessage"/>
+            <execute macro="IFrame#closeFrame"/>
+
+            <execute macro="SiteMapPortlet#viewDefaultPG">
+                <var name="listPageName" value="${pageName}"/>
+            </execute>
+        </command>
+</definition>
