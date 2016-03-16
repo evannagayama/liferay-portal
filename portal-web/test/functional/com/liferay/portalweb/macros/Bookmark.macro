@@ -447,7 +447,7 @@
 
 		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
-		<execute function="AssertLocation" value1="${bookmarkURL}/" />
+		<execute function="AssertLocation" value1="${bookmarkURL}" />
 	</command>
 
 	<command name="viewBookmarkViaAP">
