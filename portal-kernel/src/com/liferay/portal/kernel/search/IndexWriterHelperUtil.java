@@ -169,6 +169,12 @@ public class IndexWriterHelperUtil {
 			searchEngineId, companyId, locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 *             isIndexReadOnly}
+	 */
+	@Deprecated
 	public static boolean isIndexReadOnly() {
 		return _indexWriterHelper.isIndexReadOnly();
 	}
@@ -209,6 +215,12 @@ public class IndexWriterHelperUtil {
 			userId, jobName, companyIds, className, taskContextMap);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 *             setIndexReadOnly(boolean)}
+	 */
+	@Deprecated
 	public static void setIndexReadOnly(boolean indexReadOnly) {
 		_indexWriterHelper.setIndexReadOnly(indexReadOnly);
 	}

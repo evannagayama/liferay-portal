@@ -91,10 +91,8 @@ public class WabDirURLStreamHandlerService
 
 			uri = warDir.toURI();
 
-			URL wabDirURL = uri.toURL();
-
 			WabDirHandler wabDirHandler = new WabDirHandler(
-				wabDirURL.toExternalForm());
+				uri.toASCIIString());
 
 			return wabDirHandler.openConnection(url);
 		}
