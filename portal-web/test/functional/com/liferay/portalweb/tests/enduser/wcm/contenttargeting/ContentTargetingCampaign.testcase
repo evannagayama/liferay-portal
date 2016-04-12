@@ -49,7 +49,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddBlankCP" priority="4">
+	<command name="AddBlankCP1" priority="4">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
