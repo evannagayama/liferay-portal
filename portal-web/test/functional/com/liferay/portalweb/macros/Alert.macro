@@ -11,7 +11,15 @@
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="Pause" locator1="10000" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
+			<then>
+				<execute function="Click" locator1="Icon#REMOVE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewSuccessMessageText">
