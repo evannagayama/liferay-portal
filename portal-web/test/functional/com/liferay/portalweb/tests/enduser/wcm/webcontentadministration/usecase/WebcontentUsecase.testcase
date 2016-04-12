@@ -35,7 +35,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddAndViewStructureAndTemplateWithPermissions" priority="4">
+	<command name="AddAndViewStructureAndTemplateWithPermissionsTEST" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
