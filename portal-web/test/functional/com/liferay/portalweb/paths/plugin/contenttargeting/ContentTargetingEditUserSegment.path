@@ -35,6 +35,11 @@
 </tr>
 <!--USER_SEGMENT_TABLE_NAME-->
 <tr>
+	<td>USER_SEGMENT_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
 	<td>//tr[contains(.,'${key_rowEntry}')]//td[3]</td>
 	<td></td>
