@@ -162,16 +162,13 @@
 			<var name="campaignName" value="Campaign Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addReportName">
-			<var name="reportDescription" value="Content Report Description" />
-			<var name="reportName" value="Content Report Name" />
-		</execute>
-
 		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
 			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="contentTrackingActionSelect" value="View" />
-			<var name="menulistContent" value="Document" />
+			<var name="menulistContent" value="Basic Document" />
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -349,6 +346,11 @@
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
